@@ -1,8 +1,12 @@
 //jshint esversion: 8
 
 (function() {
-  'use strict';
+  'use strict'; // this will throw more errors instead of hiding them
   
+  // unless you overwrite elements with .innerHTML = 'whatever' your id lookups should just work if run once
+  const goalElement = document.getElementById('goal');
+  const habitElement = document.getElementById('habit');
+
   let goalIndex;
   let habits = [];
   let i = 0;
@@ -62,10 +66,10 @@
     $('.editGoal').on('click', function() {
       goalIndex = this.closest('tr').getElementsByTagName('th')[0].innerHTML - 1;
       for (let i = 0; i < goals[goalIndex].habits.length; i++) {
-        document.getElementById("habit").value = goals[goalIndex].habits[i];
+        habitElement.value = goals[goalIndex].habits[i];
         addHabit();
       }
-      document.getElementById("goal").value = goals[goalIndex].goal;
+      goalElement.value = goals[goalIndex].goal;
       $('table').hide();
       $('.card').show();
       $('.now').hide();
@@ -118,8 +122,8 @@
   //Submit goal
   $("#submit").on('click',
     (function() {
-      if (document.getElementById("goal").value.length > 0) {
-        for (j = 0; j < i; j++) {
+      if (goalElement.value.length > 0) {
+        for (var j = 0; j < i; j++) {
           if (document.getElementById(`habit${j}`) != null) {
             habits.push(document.getElementById(`habit${j}`).value);
           }
@@ -127,8 +131,8 @@
         if (goalIndex != null) {
           goals.splice(goalIndex, 1);
         }
-        var goal = new Goal(document.getElementById("goal").value, habits);
-        var goalValue = document.getElementById("goal").value;
+        var goal = new Goal(goalElement.value, habits);
+        var goalValue = goalElement.value;
         var temporaryDiv = document.createElement('div'); // this will create a div but only in memory and not attached to the page. we can use it to escape html so the user cant inject code- we can make this a helper function later. in jquery you can also do $('<div>').text('<b>value here</b>').html() - try the output in the console
         temporaryDiv.textContent = goalValue;
   
@@ -140,8 +144,8 @@
               <td><button class="editGoal btn btn-outline-secondary" type="button">Edit</button></td>
             </tr>`);
   
-        document.getElementById("goal").value = '';
-        document.getElementById("habit").value = '';
+        goalElement.value = '';
+        habitElement.value = '';
   
         $('.remove').parent("div").parent("div").remove(); // anytime you need to fish around for parent x y z it's an indicator we can restructure the output of the row and its event handler, we'll make changes in another commit to try to tighten it up
         goals.push(goal);
@@ -164,10 +168,10 @@
   
     goalIndex = this.closest('tr').getElementsByTagName('th')[0].innerHTML - 1;
     for (let i = 0; i < goals[goalIndex].habits.length; i++) {
-      document.getElementById("habit").value = goals[goalIndex].habits[i];
+      habitElement.value = goals[goalIndex].habits[i];
       addHabit();
     }
-    document.getElementById("goal").value = goals[goalIndex].goal;
+    goalElement.value = goals[goalIndex].goal;
     $('table').hide();
     $('.card').show();
     $('.now').hide();
@@ -182,8 +186,8 @@
     $('.card').hide();
     $('.now').hide();
     $();
-    document.getElementById("goal").value = '';
-    document.getElementById("habit").value = '';
+    goalElement.value = '';
+    habitElement.value = '';
     $('.remove').parent("div").parent("div").remove();
   });
   
@@ -192,8 +196,8 @@
     $('table').hide();
     $('.card').show();
     $('.now').hide();
-    document.getElementById("goal").value = '';
-    document.getElementById("habit").value = '';
+    goalElement.value = '';
+    habitElement.value = '';
     $('.remove').parent("div").parent("div").remove();
   });
   
