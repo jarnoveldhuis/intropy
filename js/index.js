@@ -1,13 +1,27 @@
 //jshint esversion: 8
 let goalIndex;
-let goals = [];
 let habits = [];
 let i = 0;
-goals = JSON.parse(localStorage.getItem('goals'));
+let goals = [];
+
+try {
+	goals = JSON.parse(localStorage.getItem('goals'));
+	if(Array.isArray(goals) === false) {
+		goals = []; // we always want an array- if goals fails to be restored properly this gives us a slight safety net
+	}
+} catch(e) {
+	// might be invalid json in localstorage- because we initted goals on line 5 with [] we should be alright
+}
 
 const nextGoal = function() {
   goalIndex = null;
-  let randomGoal = goals[Math.floor(Math.random() * goals.length)];
+	let randomGoal = goals[Math.floor(Math.random() * goals.length)];
+	
+	if(!randomGoal) {
+		// randomGoal is undefined if goals is empty, it's doing myEmptyArray[0]- not an error but it'll return undefined making randomGoal.habits on the next line fail
+		return;
+	}
+
   let randomHabit = randomGoal.habits[Math.floor(Math.random() * randomGoal.habits.length)];
   $('.goal').text(randomGoal.goal);
   $('.habitG').text(randomHabit);
@@ -21,11 +35,15 @@ nextGoal();
 function loadTable() {
   $('tr').remove();
   for (let i = 0; i < goals.length; i++) {
+
+		var temporaryDiv = document.createElement('div'); // this will create a div but only in memory and not attached to the page. we can use it to escape html so the user cant inject code- we can make this a helper function later. in jquery you can also do $('<div>').text('<b>value here</b>').html() - try the output in the console
+		temporaryDiv.textContent = goals[i].goal;
+		
     $('.table').append(
       `
     <tr>
       <th scope="row">${i+1}</th>
-      <td>${goals[i].goal}</td>
+      <td>${temporaryDiv.innerHTML}</td>
       <td>${goals[i].habits.length}</td>
       <td><button class="remove btn btn-outline-secondary" type="button">Remove</button>
       <button class="editGoal btn btn-outline-secondary" type="button">Edit</button></td>
@@ -106,10 +124,13 @@ $("#submit").on('click',
         goals.splice(goalIndex, 1);
       }
       var goal = new Goal(document.getElementById("goal").value, habits);
+			var goalValue = document.getElementById("goal").value;
+			var temporaryDiv = document.createElement('div'); // this will create a div but only in memory and not attached to the page. we can use it to escape html so the user cant inject code- we can make this a helper function later. in jquery you can also do $('<div>').text('<b>value here</b>').html() - try the output in the console
+			temporaryDiv.textContent = goalValue;
 
       $('.table').append(`<tr>
             <th scope="row">${goals.length+1}</th>
-            <td>${document.getElementById("goal").value}</td>
+            <td>${temporaryDiv.innerHTML}</td>
             <td>${habits.length}</td>
             <td><button class="remove btn btn-outline-secondary" type="button">Remove</button></td>
             <td><button class="editGoal btn btn-outline-secondary" type="button">Edit</button></td>
@@ -118,7 +139,7 @@ $("#submit").on('click',
       document.getElementById("goal").value = '';
       document.getElementById("habit").value = '';
 
-      $('.remove').parent("div").parent("div").remove();
+      $('.remove').parent("div").parent("div").remove(); // anytime you need to fish around for parent x y z it's an indicator we can restructure the output of the row and its event handler, we'll make changes in another commit to try to tighten it up
       goals.push(goal);
       localStorage.setItem('goals', JSON.stringify(goals));
       loadTable();
