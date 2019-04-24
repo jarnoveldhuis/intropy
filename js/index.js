@@ -44,7 +44,7 @@
     $('tr').remove();
     for (let i = 0; i < goals.length; i++) {
   
-      var temporaryDiv = document.createElement('div'); // this will create a div but only in memory and not attached to the page. we can use it to escape html so the user cant inject code- we can make this a helper function later. in jquery you can also do $('<div>').text('<b>value here</b>').html() - try the output in the console
+      const temporaryDiv = document.createElement('div'); // this will create a div but only in memory and not attached to the page. we can use it to escape html so the user cant inject code- we can make this a helper function later. in jquery you can also do $('<div>').text('<b>value here</b>').html() - try the output in the console
       temporaryDiv.textContent = goals[i].goal;
       
       $('.table').append(
@@ -123,7 +123,7 @@
   $("#submit").on('click',
     (function() {
       if (goalElement.value.length > 0) {
-        for (var j = 0; j < i; j++) {
+        for (let j = 0; j < i; j++) {
           if (document.getElementById(`habit${j}`) != null) {
             habits.push(document.getElementById(`habit${j}`).value);
           }
@@ -131,9 +131,9 @@
         if (goalIndex != null) {
           goals.splice(goalIndex, 1);
         }
-        var goal = new Goal(goalElement.value, habits);
-        var goalValue = goalElement.value;
-        var temporaryDiv = document.createElement('div'); // this will create a div but only in memory and not attached to the page. we can use it to escape html so the user cant inject code- we can make this a helper function later. in jquery you can also do $('<div>').text('<b>value here</b>').html() - try the output in the console
+        const goal = new Goal(goalElement.value, habits);
+        const goalValue = goalElement.value;
+        const temporaryDiv = document.createElement('div'); // this will create a div but only in memory and not attached to the page. we can use it to escape html so the user cant inject code- we can make this a helper function later. in jquery you can also do $('<div>').text('<b>value here</b>').html() - try the output in the console
         temporaryDiv.textContent = goalValue;
   
         $('.table').append(`<tr>
