@@ -1,0 +1,29 @@
+body {
+  background-color: #343a40;
+  color: #eeeeee;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.card {
+  background-color: #2b2e4a;
+
+}
+
+.btn {
+  background-color: #53354a;
+}
+
+.all {
+  padding: 15% 15% 15% 15%;
+}
+
+h1 {
+  font-family: 'Permanent Marker', cursive;
+  padding: 50px;
+  font-size: 4em;
+  color: #e84545;
+}
+h2 {
+  font-family: 'Allerta Stencil', sans-serif;
+}

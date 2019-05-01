@@ -3,36 +3,38 @@
 
 <head>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-
-  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css?family=Allerta+Stencil|Permanent+Marker" rel="stylesheet">
+  <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="CSS/style.css">
+  <link rel="stylesheet" href="CSS/styles.css">
   <title>Intropy</title>
 </head>
 <header>
-  <nav class="navbar navbar-light bg-light">
+  <nav class="navbar navbar-dark bg-dark">
     <span class="navbar-brand mb-0 h1">Intropy</span>
     <ul class="nav">
       <li class="nav-item">
-        <a class="addGoal p-2 text-dark" href="#">Add Goal</a>
+        <a class="addGoal p-2 text-light" href="#">Add Goal</a>
       </li>
       <li class="nav-item">
-        <a class="editGoals p-3 text-dark" href="#">Edit Goals</a>
+        <a class="editGoals p-3 text-light" href="#">Edit Goals</a>
       </li>
       <li class="nav-item">
-        <a class="focus p-2 text-dark" href="#">Focus</a>
+        <a class="focus p-2 text-light" href="#">Focus</a>
       </li>
     </ul>
 
   </nav>
 </header>
 
-<body class="pagination-centered">
+<body class="pagination-centered  vertical-center mx-auto">
+
+<div class= "all">
 
 
-  <table class="table table-striped">
+  <table class="table table-striped mx-auto w-100" style="width: 800px;">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -41,7 +43,7 @@
         <th scope="col"></th>
       </tr>
     </thead>
-    <tbody>
+      <tbody>
 
     </tbody>
   </table>
@@ -57,7 +59,7 @@
         <div class="input-group mb-3">
           <input type="text" autocomplete="off" id='habit' class="habit form-control" placeholder="Habit">
           <div class="input-group-append">
-            <button class="add btn btn-outline-secondary" type="button">Add</button>
+            <button class="add btn btn-primary" type="button">Add</button>
           </div>
         </div>
         <div class="form-group form-check">
@@ -68,17 +70,20 @@
   </div>
 
   <main role="main" class="now inner cover text-center pagination-centered">
-    <h1 class="goal">Test</h1>
-    <p class="lead habitG">Test</p>
+  <p class="lead goal">Test</p>
+    <h1 class="habitG">Test</h1>
+
     <p class="lead">
       <a href="#" class="done focus btn btn-lg btn-secondary">Done</a>
     </p>
+
   </main>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   <script src="js/index.js"></script>
+  </div>
 </body>
 
 </html>
