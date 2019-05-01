@@ -86,7 +86,7 @@
     this.habits = habits;
   }
 
-  function addGoal() {
+  const addGoal = function() {
     goalIndex = null;
     $('table').hide();
     $('.card').show();
@@ -94,7 +94,7 @@
     goalElement.value = '';
     habitElement.value = '';
     $('.remove').parent("div").parent("div").remove();
-  }
+  };
 
   //Add new habit
   const addHabit = function() {
@@ -204,7 +204,7 @@
     $('.remove').parent("div").parent("div").remove();
   });
 
-  $('.addGoal').on('click', addGoal());
+  $('.addGoal').on('click', addGoal);
 
   $('.focus').on('click', nextGoal);
   $('.done').on('click', nextGoal);
