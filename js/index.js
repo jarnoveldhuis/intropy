@@ -21,6 +21,8 @@
     // might be invalid json in localstorage- because we initted goals on line 5 with [] we should be alright
   }
 
+
+
   const nextGoal = function() {
     goalIndex = null;
     let randomGoal = goals[Math.floor(Math.random() * goals.length)];
@@ -84,7 +86,15 @@
     this.habits = habits;
   }
 
-
+  function addGoal() {
+    goalIndex = null;
+    $('table').hide();
+    $('.card').show();
+    $('.now').hide();
+    goalElement.value = '';
+    habitElement.value = '';
+    $('.remove').parent("div").parent("div").remove();
+  }
 
   //Add new habit
   const addHabit = function() {
@@ -194,16 +204,11 @@
     $('.remove').parent("div").parent("div").remove();
   });
 
-  $('.addGoal').on('click', function() {
-    goalIndex = null;
-    $('table').hide();
-    $('.card').show();
-    $('.now').hide();
-    goalElement.value = '';
-    habitElement.value = '';
-    $('.remove').parent("div").parent("div").remove();
-  });
+  $('.addGoal').on('click', addGoal());
 
   $('.focus').on('click', nextGoal);
   $('.done').on('click', nextGoal);
+
+
+
 })();
