@@ -205,10 +205,11 @@
   });
 
   $('.addGoal').on('click', addGoal);
-
   $('.focus').on('click', nextGoal);
   $('.done').on('click', nextGoal);
 
-
+if (goals.length<1){
+  addGoal();
+}
 
 })();
