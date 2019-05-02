@@ -1,17 +1,17 @@
 body {
-  background-color: #343a40;
-  color: #eeeeee;
+  background-color: #3e4149;
+  color: #e84545;
   text-align: center;
   font-family: 'Montserrat', sans-serif;
 }
 
 .card {
-  background-color: #2b2e4a;
+  background-color: #343a40;
 
 }
 
 .btn {
-  background-color: #53354a;
+  background-color: #343a40;
 }
 
 .all {
@@ -20,10 +20,23 @@ body {
 
 h1 {
   font-family: 'Permanent Marker', cursive;
-  padding: 50px;
+  padding-bottom: 25px;
   font-size: 4em;
   color: #e84545;
 }
 h2 {
   font-family: 'Allerta Stencil', sans-serif;
+}
+
+.text-muted {
+  color: #ffffff!important;
+}
+
+.form-text {
+  margin-bottom: .75rem;
+}
+
+#addGoal {
+ width: 80%;
+ text-align: center;
 }

@@ -37,7 +37,7 @@
     $('.habitG').text(randomHabit);
     $('.now').show();
     $('table').hide();
-    $('.card').hide();
+    $('#addGoal').hide();
   };
   nextGoal();
 
@@ -63,7 +63,7 @@
       );
     }
     $('table').show();
-    $('.card').hide();
+    $('#addGoal').hide();
     $('.now').hide();
     //Edit table
     $('.editGoal').on('click', function() {
@@ -74,7 +74,7 @@
       }
       goalElement.value = goals[goalIndex].goal;
       $('table').hide();
-      $('.card').show();
+      $('#addGoal').show();
       $('.now').hide();
 
     });
@@ -89,7 +89,7 @@
   const addGoal = function() {
     goalIndex = null;
     $('table').hide();
-    $('.card').show();
+    $('#addGoal').show();
     $('.now').hide();
     goalElement.value = '';
     habitElement.value = '';
@@ -186,7 +186,7 @@
     }
     goalElement.value = goals[goalIndex].goal;
     $('table').hide();
-    $('.card').show();
+    $('#addGoal').show();
     $('.now').hide();
 
   });
@@ -196,7 +196,7 @@
     loadTable();
     goalIndex = null;
     $('table').show();
-    $('.card').hide();
+    $('#addGoal').hide();
     $('.now').hide();
     $();
     goalElement.value = '';
