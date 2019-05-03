@@ -26,18 +26,27 @@
   const nextGoal = function() {
     goalIndex = null;
     let randomGoal = goals[Math.floor(Math.random() * goals.length)];
-
+    let randomHabit = randomGoal.habits[Math.floor(Math.random() * randomGoal.habits.length)];
     if(!randomGoal) {
       // randomGoal is undefined if goals is empty, it's doing myEmptyArray[0]- not an error but it'll return undefined making randomGoal.habits on the next line fail
       return;
     }
-
-    let randomHabit = randomGoal.habits[Math.floor(Math.random() * randomGoal.habits.length)];
-    $('.goal').text(randomGoal.goal+':');
-    $('.habitG').text(randomHabit);
     $('.now').show();
     $('table').hide();
     $('#addGoal').hide();
+    $('.goal').text(`Calculating Optimal Task:`);
+    $('.habitG').hide();
+    $('.lds-roller').show();
+
+    dispGoal= function(){
+    $('.goal').text(randomGoal.goal+':');
+    $('.habitG').text(randomHabit).show();
+    $('.lds-roller').hide();
+    $('.goal').show();
+    };
+
+    setTimeout(dispGoal, 3000);
+
   };
   nextGoal();
 
