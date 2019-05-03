@@ -10,6 +10,9 @@ body {
 
 }
 
+.goal {
+  color: #ffffff
+}
 .btn {
   background-color: #343a40;
 }
@@ -22,14 +25,15 @@ h1 {
   font-family: 'Permanent Marker', cursive;
   padding-bottom: 25px;
   font-size: 4em;
-  color: #ffffff;
+  color: #e84545;
 }
 h2 {
   font-family: 'Allerta Stencil', sans-serif;
+  color: #e84545;
 }
 
 .text-muted {
-  color: #ffffff!important;
+  color: #e84545!important;
 }
 
 .form-text {
@@ -39,4 +43,14 @@ h2 {
 #addGoal {
  width: 80%;
  text-align: center;
+}
+
+thead {
+  color: #ffffff;
+}
+
+label {
+
+    color: #ffffff;
+
 }
