@@ -1,7 +1,7 @@
 //jshint esversion: 8
 
 (function() {
-//   'use strict'; // this will throw more errors instead of hiding them
+  //   'use strict'; // this will throw more errors instead of hiding them
 
   // unless you overwrite elements with .innerHTML = 'whatever' your id lookups should just work if run once
   const goalElement = document.getElementById('goal');
@@ -14,10 +14,10 @@
 
   try {
     goals = JSON.parse(localStorage.getItem('goals'));
-    if(Array.isArray(goals) === false) {
+    if (Array.isArray(goals) === false) {
       goals = []; // we always want an array- if goals fails to be restored properly this gives us a slight safety net
     }
-  } catch(e) {
+  } catch (e) {
     // might be invalid json in localstorage- because we initted goals on line 5 with [] we should be alright
   }
 
@@ -27,7 +27,7 @@
     goalIndex = null;
     let randomGoal = goals[Math.floor(Math.random() * goals.length)];
     let randomHabit = randomGoal.habits[Math.floor(Math.random() * randomGoal.habits.length)];
-    if(!randomGoal) {
+    if (!randomGoal) {
       // randomGoal is undefined if goals is empty, it's doing myEmptyArray[0]- not an error but it'll return undefined making randomGoal.habits on the next line fail
       return;
     }
@@ -38,21 +38,21 @@
     $('.habitG').hide();
     $('.lds-roller').show();
 
-    dispGoal= function(){
-    $('.goal').text(randomGoal.goal+':');
-    $('.habitG').text(randomHabit).show();
-    $('.lds-roller').hide();
-    $('.goal').show();
+    dispGoal = function() {
+      $('.goal').text(randomGoal.goal + ':');
+      $('.habitG').text(randomHabit).show();
+      $('.lds-roller').hide();
+      $('.goal').show();
     };
 
     setTimeout(dispGoal, 3000);
 
   };
-  nextGoal();
+
 
   //Load table from local storage
   function loadTable() {
-    i=0;
+    i = 0;
     $('.goals').remove();
     for (let i = 0; i < goals.length; i++) {
 
@@ -116,11 +116,16 @@
       <button class="add btn btn-primary" type="button">Add</button>
     </div>
   </div>`).insertBefore('#submit');
-  habitElement = document.getElementById('habit');
+    habitElement = document.getElementById('habit');
     $('.remove').text('Remove');
     i++;
   };
 
+  if (goals.length > 0) {
+    nextGoal();
+  } else {
+    addGoal();
+  }
   $(document).on('click', '.add', addHabit);
 
   //Remove habit
@@ -217,8 +222,8 @@
   $('.focus').on('click', nextGoal);
   $('.done').on('click', nextGoal);
 
-if (goals.length<1){
-  addGoal();
-}
+  if (goals.length < 1) {
+    addGoal();
+  }
 
 })();
