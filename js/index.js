@@ -21,46 +21,54 @@
     // might be invalid json in localstorage- because we initted goals on line 5 with [] we should be alright
   }
 
+  //Goal constructor
+  function Goal(goal, habit) {
+    this.goal = goal;
+    this.habits = habits;
+  }
 
+  const focus = function() {
+    if (goals.length > 0) {
+      goalIndex = null;
 
-  const nextGoal = function() {
-    goalIndex = null;
-    let randomGoal = goals[Math.floor(Math.random() * goals.length)];
-    let randomHabit = randomGoal.habits[Math.floor(Math.random() * randomGoal.habits.length)];
-    if (!randomGoal) {
-      // randomGoal is undefined if goals is empty, it's doing myEmptyArray[0]- not an error but it'll return undefined making randomGoal.habits on the next line fail
-      return;
+      let randomGoal = goals[Math.floor(Math.random() * goals.length)];
+      let randomHabit = randomGoal.habits[Math.floor(Math.random() * randomGoal.habits.length)];
+
+      $('.now').show();
+      $('table').hide();
+      $('#addGoal').hide();
+      $('.goal').text(`Calculating Optimal Task:`);
+      $('.habitG').hide();
+      $('.lds-roller').show();
+
+      dispGoal = function() {
+        $('.goal').text(randomGoal.goal + ':');
+        $('.habitG').text(randomHabit).show();
+        $('.lds-roller').hide();
+        $('.goal').show();
+      };
+
+      setTimeout(dispGoal, 3000);
+    } else {
+      addGoal();
     }
-    $('.now').show();
-    $('table').hide();
-    $('#addGoal').hide();
-    $('.goal').text(`Calculating Optimal Task:`);
-    $('.habitG').hide();
-    $('.lds-roller').show();
-
-    dispGoal = function() {
-      $('.goal').text(randomGoal.goal + ':');
-      $('.habitG').text(randomHabit).show();
-      $('.lds-roller').hide();
-      $('.goal').show();
-    };
-
-    setTimeout(dispGoal, 3000);
-
   };
 
 
   //Load table from local storage
-  function loadTable() {
-    i = 0;
-    $('.goals').remove();
-    for (let i = 0; i < goals.length; i++) {
+  const editGoals = function() {
+    if (goals.length < 1) {
+      addGoal();
+    } else {
+      i = 0;
+      $('.goals').remove();
+      for (let i = 0; i < goals.length; i++) {
 
-      const temporaryDiv = document.createElement('div'); // this will create a div but only in memory and not attached to the page. we can use it to escape html so the user cant inject code- we can make this a helper function later. in jquery you can also do $('<div>').text('<b>value here</b>').html() - try the output in the console
-      temporaryDiv.textContent = goals[i].goal;
+        const temporaryDiv = document.createElement('div'); // this will create a div but only in memory and not attached to the page. we can use it to escape html so the user cant inject code- we can make this a helper function later. in jquery you can also do $('<div>').text('<b>value here</b>').html() - try the output in the console
+        temporaryDiv.textContent = goals[i].goal;
 
-      $('.table').append(
-        `
+        $('.table').append(
+          `
       <tr class='goals'>
         <th scope="row">${i+1}</th>
         <td>${temporaryDiv.innerHTML}</td>
@@ -69,36 +77,40 @@
         <button class="editGoal btn btn-sm btn-secondary" type="button">Edit</button></td>
       </tr>
       `
-      );
-    }
-    $('table').show();
-    $('#addGoal').hide();
-    $('.now').hide();
-    //Edit table
-    $('.editGoal').on('click', function() {
-      goalIndex = this.closest('tr').getElementsByTagName('th')[0].innerHTML - 1;
-      for (let i = 0; i < goals[goalIndex].habits.length; i++) {
-        habitElement.value = goals[goalIndex].habits[i];
-        addHabit();
+        );
       }
-      goalElement.value = goals[goalIndex].goal;
-      $('table').hide();
-      $('#addGoal').show();
+      $('table').show();
+      $('#addGoal').hide();
       $('.now').hide();
+      // goalIndex = null;
+      // $('table').show();
+      // $('#addGoal').hide();
+      // $('.now').hide();
+      // $();
+      // goalElement.value = '';
+      // habitElement.value = '';
+      // $('.remove').parent("div").parent("div").remove();
+      //Edit table
+      $('.editGoal').on('click', function() {
+        goalIndex = this.closest('tr').getElementsByTagName('th')[0].innerHTML - 1;
+        for (let i = 0; i < goals[goalIndex].habits.length; i++) {
+          habitElement.value = goals[goalIndex].habits[i];
+          addHabit();
+        }
+        goalElement.value = goals[goalIndex].goal;
+        $('table').hide();
+        $('#addGoal').show();
+        $('.now').hide();
 
-    });
-  }
+      });
 
-  //Goal constructor
-  function Goal(goal, habit) {
-    this.goal = goal;
-    this.habits = habits;
-  }
+    }
+  };
 
   const addGoal = function() {
     goalIndex = null;
-    $('table').hide();
     $('#addGoal').show();
+    $('table').hide();
     $('.now').hide();
     goalElement.value = '';
     habitElement.value = '';
@@ -108,7 +120,6 @@
   //Add new habit
   const addHabit = function() {
     $('.habit').attr("id", `habit${i}`).removeClass('habit');
-    console.log(i);
     $('.add').addClass('remove').removeClass('add');
     $(`<div class="input-group mb-3">
     <input type="text" autocomplete="off" id='habit' class="habit form-control" placeholder="Habit">
@@ -121,11 +132,6 @@
     i++;
   };
 
-  if (goals.length > 0) {
-    nextGoal();
-  } else {
-    addGoal();
-  }
   $(document).on('click', '.add', addHabit);
 
   //Remove habit
@@ -139,8 +145,6 @@
   $(document).on('click', '.remove',
     (function() {
       goals.splice(this.closest('tr').getElementsByTagName('th')[0].innerHTML - 1, 1);
-      console.log(this.closest('tr').getElementsByTagName('th')[0].innerHTML - 1);
-      console.log(goals);
       localStorage.setItem('goals', JSON.stringify(goals));
       $(this).parent("td").parent("tr").remove();
     })
@@ -162,23 +166,13 @@
         const goalValue = goalElement.value;
         const temporaryDiv = document.createElement('div'); // this will create a div but only in memory and not attached to the page. we can use it to escape html so the user cant inject code- we can make this a helper function later. in jquery you can also do $('<div>').text('<b>value here</b>').html() - try the output in the console
         temporaryDiv.textContent = goalValue;
-
-        // $('.table').append(`<tr>
-        //       <th scope="row">${goals.length+1}</th>
-        //       <td>${temporaryDiv.innerHTML}</td>
-        //       <td>${habits.length}</td>
-        //       <td><button class="remove btn btn-primary" type="button">Remove</button>
-        //       <button class="editGoal btn btn-primary" type="button">Edit</button></td>
-        //     </tr>`);
-
         goalElement.value = '';
         habitElement.value = '';
 
         $('.remove').parent("div").parent("div").remove(); // anytime you need to fish around for parent x y z it's an indicator we can restructure the output of the row and its event handler, we'll make changes in another commit to try to tighten it up
         goals.push(goal);
         localStorage.setItem('goals', JSON.stringify(goals));
-        loadTable();
-        console.log(goals);
+        editGoals();
         goal = '';
         habits = [];
         goalIndex = null;
@@ -191,39 +185,32 @@
   );
 
   //Edit a goal
-  $('.editGoal').on('click', function() {
-    goalIndex = this.closest('tr').getElementsByTagName('th')[0].innerHTML - 1;
-    for (let i = 0; i < goals[goalIndex].habits.length; i++) {
-      habitElement.value = goals[goalIndex].habits[i];
-      console.log(habitElement.value);
-      addHabit();
-    }
-    goalElement.value = goals[goalIndex].goal;
-    $('table').hide();
-    $('#addGoal').show();
-    $('.now').hide();
+  $('.editGoal').on('click',
+    (function() {
+      goalIndex = this.closest('tr').getElementsByTagName('th')[0].innerHTML - 1;
+      for (let i = 0; i < goals[goalIndex].habits.length; i++) {
+        habitElement.value = goals[goalIndex].habits[i];
+        addHabit();
+      }
+      goalElement.value = goals[goalIndex].goal;
+      $('table').hide();
+      $('#addGoal').show();
+      $('.now').hide();
 
-  });
+    })
+  );
 
-  $('.editGoals').on('click', function() {
 
-    loadTable();
-    goalIndex = null;
-    $('table').show();
-    $('#addGoal').hide();
-    $('.now').hide();
-    $();
-    goalElement.value = '';
-    habitElement.value = '';
-    $('.remove').parent("div").parent("div").remove();
-  });
-
+  $('.editGoals').on('click', editGoals);
   $('.addGoal').on('click', addGoal);
-  $('.focus').on('click', nextGoal);
-  $('.done').on('click', nextGoal);
+  $('.focus').on('click', focus);
+  $('.done').on('click', focus);
 
-  if (goals.length < 1) {
+  if (goals.length > 0) {
+    focus();
+  } else {
     addGoal();
   }
+
 
 })();
