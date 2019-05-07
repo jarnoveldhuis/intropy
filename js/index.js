@@ -27,6 +27,13 @@
     this.habits = habits;
   }
 
+  //Habit constructor
+  function Habit(importance, difficulty, duration) {
+    this.priority = priority;
+    this.difficulty = difficulty;
+    this.duration = duration;
+  }
+
   const focus = function() {
     if (goals.length > 0) {
       goalIndex = null;
@@ -122,15 +129,51 @@
     $('.habit').attr("id", `habit${i}`).removeClass('habit');
     $('.add').addClass('remove').removeClass('add');
     $(`<div class="input-group mb-3">
-    <input type="text" autocomplete="off" id='habit' class="habit form-control" placeholder="Habit">
-    <div class="input-group-append">
-      <button class="add btn btn-primary" type="button">Add</button>
-    </div>
-  </div>`).insertBefore('#submit');
+                  <div class="input-group-prepend">
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" aria-haspopup="true" aria-expanded="true">
+                      <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu open">
+                      <h6 class="dropdown-header">Priority</h6>
+                      <a class="dropdown-item" href="#">
+                        <div class="btn-group" data-toggle="buttons-radio">
+                          <button type="button" class="btn low-priority btn-primary">Low</button>
+                          <button type="button" class="btn btn-primary">Medium</button>
+                          <button type="button" class="btn btn-primary">High</button>
+                        </div>
+                      </a>
+                                      <div role="separator" class="dropdown-divider"></div>
+                      <h6 class="dropdown-header">Challenge</h6>
+                      <a class="dropdown-item" href="#">
+                        <div class="btn-group" data-toggle="buttons-radio">
+                          <button type="button" class="btn btn-primary">Low</button>
+                          <button type="button" class="btn btn-primary">Medium</button>
+                          <button type="button" class="btn btn-primary">High</button>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                  <input type="text" autocomplete="off" id='habit' class="habit form-control" placeholder="Habit">
+                  <div class"input-group-append">
+                    <button class="add btn btn-primary" type="button">Add</button>
+                  </div>
+                </div>`).insertBefore('#submit');
+                $('.dropdown-toggle').on('click', function(event) {
+                  console.log('click');
+                  $(this).parent().toggleClass('show');
+                  $(this).next('div').toggleClass('show');
+                });
     habitElement = document.getElementById('habit');
     $('.remove').text('Remove');
     i++;
   };
+
+
+  $('.dropdown-toggle').on('click', function(event) {
+    console.log('click');
+    $(this).parent().toggleClass('show');
+    $(this).next('div').toggleClass('show');
+  });
 
   $(document).on('click', '.add', addHabit);
 
@@ -211,6 +254,9 @@
   } else {
     addGoal();
   }
+
+
+
 
 
 })();

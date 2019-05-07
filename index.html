@@ -57,16 +57,40 @@
             <small id="emailHelp" class="form-text text-muted">Think of a major goal in your life. List all of the habits you will need to develop in order to make this goal a reality.</small>
             <input type="text" autocomplete="off" id="goal" class="form-control" placeholder="Goal">
           </div>
+
           <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" aria-haspopup="true" aria-expanded="true">
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu open">
+                <h6 class="dropdown-header">Priority</h6>
+                <a class="dropdown-item" href="#">
+                  <div class="btn-group" data-toggle="buttons-radio">
+                    <button type="button" class="btn low-priority btn-primary">Low</button>
+                    <button type="button" class="btn btn-primary">Medium</button>
+                    <button type="button" class="btn btn-primary">High</button>
+                  </div>
+                </a>
+                                <div role="separator" class="dropdown-divider"></div>
+                <h6 class="dropdown-header">Challenge</h6>
+                <a class="dropdown-item" href="#">
+                  <div class="btn-group" data-toggle="buttons-radio">
+                    <button type="button" class="btn btn-primary">Low</button>
+                    <button type="button" class="btn btn-primary">Medium</button>
+                    <button type="button" class="btn btn-primary">High</button>
+                  </div>
+                </a>
+              </div>
+            </div>
             <input type="text" autocomplete="off" id='habit' class="habit form-control" placeholder="Habit">
-            <div class="input-group-append">
+            <div class"input-group-append">
               <button class="add btn btn-primary" type="button">Add</button>
             </div>
           </div>
-          <div class="form-group form-check">
-          </div>
           <button type="button" id="submit" class="saveB btn btn-primary">Save</button>
         </form>
+
       </div>
 
 
