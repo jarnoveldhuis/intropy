@@ -158,22 +158,28 @@
                     <button class="add btn btn-primary" type="button">Add</button>
                   </div>
                 </div>`).insertBefore('#submit');
-                $('.dropdown-toggle').on('click', function(event) {
-                  console.log('click');
-                  $(this).parent().toggleClass('show');
-                  $(this).next('div').toggleClass('show');
-                });
+
     habitElement = document.getElementById('habit');
     $('.remove').text('Remove');
     i++;
+    $('.dropdown-toggle').on('click', function() {
+      event.stopPropagation();
+      $(this).parent().toggleClass('show');
+      $(this).next('div').toggleClass('show');
+    });
   };
 
+  $('body').on('click', function () {
+    $('.show').toggleClass('show');
+});
 
-  $('.dropdown-toggle').on('click', function(event) {
-    console.log('click');
+  $('.dropdown-toggle').on('click', function() {
+    event.stopPropagation();
     $(this).parent().toggleClass('show');
     $(this).next('div').toggleClass('show');
   });
+
+
 
   $(document).on('click', '.add', addHabit);
 
