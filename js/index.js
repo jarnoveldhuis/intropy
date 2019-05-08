@@ -125,15 +125,17 @@
     $('.remove').parent("div").parent("div").remove();
   };
 
-  const addToggle = function(e) {
-    $('.temptog').on('click', function() {
+  const addToggle = function() {
+    $('.temptog').on('click', function(event) {
       event.stopPropagation();
+      $('.show').removeClass('show');
       $(this).parent().toggleClass('show');
       $(this).next('div').toggleClass('show');
-
+      $("button").removeClass("temptog");
       console.log('Toggle');
       console.log(i);
     });
+
 
 
   };
@@ -141,7 +143,7 @@
   //Add new habit
   const addHabit = function() {
     $('.habit').attr("id", `habit${i}`).removeClass('habit');
-          $("button").removeClass("temptog");
+    $("button").removeClass("temptog");
     $('.add').addClass('remove').removeClass('add');
     $(`<div class="input-group mb-3">
       <div class="input-group-prepend">
@@ -179,20 +181,16 @@
     i++;
 
     addToggle();
-      $("button").removeClass("temptog");
+
   };
 
   addToggle();
 
-//   $('body').on('click', function(ev) {
-//     console.log('body');
-//     $('.show').removeClass('show');
-//
-//   });
-//
-// $('.dropdown-toggle').on('click', function(ev) {
-//   ev.stopPropagation();
-// });
+  $('body').on('click', function(ev) {
+    console.log('body');
+    $('.show').removeClass('show');
+
+  });
 
 
 
