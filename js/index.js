@@ -127,6 +127,7 @@
 
   const addToggle = function(e) {
     $('.temptog').on('click', function() {
+      event.stopPropagation();
       $(this).parent().toggleClass('show');
       $(this).next('div').toggleClass('show');
 
@@ -183,12 +184,15 @@
 
   addToggle();
 
-  // $('body').on('click', function() {
-  //   console.log('body');
-  //   $('.show').removeClass('show');
-  //
-  // });
-
+//   $('body').on('click', function(ev) {
+//     console.log('body');
+//     $('.show').removeClass('show');
+//
+//   });
+//
+// $('.dropdown-toggle').on('click', function(ev) {
+//   ev.stopPropagation();
+// });
 
 
 
