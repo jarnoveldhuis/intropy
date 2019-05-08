@@ -66,19 +66,31 @@
               <div class="dropdown-menu open">
                 <h6 class="dropdown-header">Priority</h6>
                 <a class="dropdown-item" href="#">
-                  <div class="btn-group" data-toggle="buttons-radio">
-                    <button type="button" class="btn low-priority btn-primary">Low</button>
-                    <button type="button" class="btn btn-primary">Medium</button>
-                    <button type="button" class="btn btn-primary">High</button>
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn radio btn-secondary">
+                      <input type="radio" name="options" id="option1" autocomplete="off" checked> Low
+                    </label>
+                    <label class="btn radio btn-secondary active">
+                      <input type="radio" name="options" id="option2" autocomplete="off"> Medium
+                    </label>
+                    <label class="btn radio btn-secondary">
+                      <input type="radio" name="options" id="option3" autocomplete="off"> High
+                    </label>
                   </div>
                 </a>
-                                <div role="separator" class="dropdown-divider"></div>
+                <div role="separator" class="dropdown-divider"></div>
                 <h6 class="dropdown-header">Challenge</h6>
                 <a class="dropdown-item" href="#">
-                  <div class="btn-group" data-toggle="buttons-radio">
-                    <button type="button" class="btn btn-primary">Low</button>
-                    <button type="button" class="btn btn-primary">Medium</button>
-                    <button type="button" class="btn btn-primary">High</button>
+                  <div class="btn-group radio btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary">
+                      <input type="radio" name="options" id="option1" autocomplete="off" checked> Low
+                    </label>
+                    <label class="btn radio btn-secondary active">
+                      <input type="radio" name="options" id="option2" autocomplete="off"> Medium
+                    </label>
+                    <label class="btn radio btn-secondary">
+                      <input type="radio" name="options" id="option3" autocomplete="off"> High
+                    </label>
                   </div>
                 </a>
               </div>
@@ -88,6 +100,7 @@
               <button class="add btn btn-primary" type="button">Add</button>
             </div>
           </div>
+
           <button type="button" id="submit" class="saveB btn btn-primary">Save</button>
         </form>
 

@@ -145,27 +145,39 @@
     $('.habit').attr("id", `habit${i}`).removeClass('habit');
     $("button").removeClass("temptog");
     $('.add').addClass('remove').removeClass('add');
-    $(`<div class="input-group mb-3">
+    $(`  <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split temptog" aria-haspopup="true" aria-expanded="true">
+        <button type="button" class="btn btn-outline-secondary dropdown-toggle temptog dropdown-toggle-split" aria-haspopup="true" aria-expanded="true">
           <span class="sr-only">Toggle Dropdown</span>
         </button>
         <div class="dropdown-menu open">
           <h6 class="dropdown-header">Priority</h6>
           <a class="dropdown-item" href="#">
-            <div class="btn-group" data-toggle="buttons-radio">
-              <button type="button" class="btn low-priority btn-primary">Low</button>
-              <button type="button" class="btn btn-primary">Medium</button>
-              <button type="button" class="btn btn-primary">High</button>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn radio btn-secondary">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked> Low
+              </label>
+              <label class="btn radio btn-secondary active">
+                <input type="radio" name="options" id="option2" autocomplete="off"> Medium
+              </label>
+              <label class="btn radio btn-secondary">
+                <input type="radio" name="options" id="option3" autocomplete="off"> High
+              </label>
             </div>
           </a>
-                          <div role="separator" class="dropdown-divider"></div>
+          <div role="separator" class="dropdown-divider"></div>
           <h6 class="dropdown-header">Challenge</h6>
           <a class="dropdown-item" href="#">
-            <div class="btn-group" data-toggle="buttons-radio">
-              <button type="button" class="btn btn-primary">Low</button>
-              <button type="button" class="btn btn-primary">Medium</button>
-              <button type="button" class="btn btn-primary">High</button>
+            <div class="btn-group radio btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked> Low
+              </label>
+              <label class="btn radio btn-secondary active">
+                <input type="radio" name="options" id="option2" autocomplete="off"> Medium
+              </label>
+              <label class="btn radio btn-secondary">
+                <input type="radio" name="options" id="option3" autocomplete="off"> High
+              </label>
             </div>
           </a>
         </div>
@@ -181,6 +193,10 @@
     i++;
 
     addToggle();
+    $('.radio').on('click', function(event) {
+      console.log('radio');
+      event.stopPropagation();
+    });
 
   };
 
@@ -192,6 +208,10 @@
 
   });
 
+  $('.radio').on('click', function(event) {
+    console.log('radio');
+    event.stopPropagation();
+  });
 
 
 
