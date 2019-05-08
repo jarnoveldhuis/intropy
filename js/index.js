@@ -136,7 +136,11 @@
       console.log(i);
     });
 
-
+    $('.radio').on('click', function(event) {
+      console.log('radio');
+      event.stopPropagation();
+      $(this).button('toggle');
+    });
 
   };
 
@@ -169,7 +173,7 @@
           <h6 class="dropdown-header">Challenge</h6>
           <a class="dropdown-item" href="#">
             <div class="btn-group radio btn-group-toggle" data-toggle="buttons">
-              <label class="btn btn-secondary">
+              <label class="btn radio btn-secondary">
                 <input type="radio" name="options" id="option1" autocomplete="off" checked> Low
               </label>
               <label class="btn radio btn-secondary active">
@@ -193,10 +197,7 @@
     i++;
 
     addToggle();
-    $('.radio').on('click', function(event) {
-      console.log('radio');
-      event.stopPropagation();
-    });
+
 
   };
 
@@ -208,10 +209,7 @@
 
   });
 
-  $('.radio').on('click', function(event) {
-    console.log('radio');
-    event.stopPropagation();
-  });
+
 
 
 
