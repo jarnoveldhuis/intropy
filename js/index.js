@@ -62,6 +62,7 @@
   };
 
 
+
   //Load table from local storage
   const editGoals = function() {
     if (goals.length < 1) {
@@ -124,60 +125,73 @@
     $('.remove').parent("div").parent("div").remove();
   };
 
+  const addToggle = function(e) {
+    $('.temptog').on('click', function() {
+      $(this).parent().toggleClass('show');
+      $(this).next('div').toggleClass('show');
+
+      console.log('Toggle');
+      console.log(i);
+    });
+
+
+  };
+
   //Add new habit
   const addHabit = function() {
     $('.habit').attr("id", `habit${i}`).removeClass('habit');
+          $("button").removeClass("temptog");
     $('.add').addClass('remove').removeClass('add');
     $(`<div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" aria-haspopup="true" aria-expanded="true">
-                      <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <div class="dropdown-menu open">
-                      <h6 class="dropdown-header">Priority</h6>
-                      <a class="dropdown-item" href="#">
-                        <div class="btn-group" data-toggle="buttons-radio">
-                          <button type="button" class="btn low-priority btn-primary">Low</button>
-                          <button type="button" class="btn btn-primary">Medium</button>
-                          <button type="button" class="btn btn-primary">High</button>
-                        </div>
-                      </a>
-                                      <div role="separator" class="dropdown-divider"></div>
-                      <h6 class="dropdown-header">Challenge</h6>
-                      <a class="dropdown-item" href="#">
-                        <div class="btn-group" data-toggle="buttons-radio">
-                          <button type="button" class="btn btn-primary">Low</button>
-                          <button type="button" class="btn btn-primary">Medium</button>
-                          <button type="button" class="btn btn-primary">High</button>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                  <input type="text" autocomplete="off" id='habit' class="habit form-control" placeholder="Habit">
-                  <div class"input-group-append">
-                    <button class="add btn btn-primary" type="button">Add</button>
-                  </div>
-                </div>`).insertBefore('#submit');
+      <div class="input-group-prepend">
+        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split temptog" aria-haspopup="true" aria-expanded="true">
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <div class="dropdown-menu open">
+          <h6 class="dropdown-header">Priority</h6>
+          <a class="dropdown-item" href="#">
+            <div class="btn-group" data-toggle="buttons-radio">
+              <button type="button" class="btn low-priority btn-primary">Low</button>
+              <button type="button" class="btn btn-primary">Medium</button>
+              <button type="button" class="btn btn-primary">High</button>
+            </div>
+          </a>
+                          <div role="separator" class="dropdown-divider"></div>
+          <h6 class="dropdown-header">Challenge</h6>
+          <a class="dropdown-item" href="#">
+            <div class="btn-group" data-toggle="buttons-radio">
+              <button type="button" class="btn btn-primary">Low</button>
+              <button type="button" class="btn btn-primary">Medium</button>
+              <button type="button" class="btn btn-primary">High</button>
+            </div>
+          </a>
+        </div>
+      </div>
+      <input type="text" autocomplete="off" id='habit' class="habit form-control" placeholder="Habit">
+      <div class"input-group-append">
+        <button class="add btn btn-primary" type="button">Add</button>
+      </div>
+    </div>`).insertBefore('#submit');
 
     habitElement = document.getElementById('habit');
     $('.remove').text('Remove');
     i++;
-    $('.dropdown-toggle').on('click', function() {
-      event.stopPropagation();
-      $(this).parent().toggleClass('show');
-      $(this).next('div').toggleClass('show');
-    });
+
+    addToggle();
+      $("button").removeClass("temptog");
   };
 
-  $('body').on('click', function () {
-    $('.show').toggleClass('show');
-});
+  addToggle();
 
-  $('.dropdown-toggle').on('click', function() {
-    event.stopPropagation();
-    $(this).parent().toggleClass('show');
-    $(this).next('div').toggleClass('show');
-  });
+  // $('body').on('click', function() {
+  //   console.log('body');
+  //   $('.show').removeClass('show');
+  //
+  // });
+
+
+
+
 
 
 
