@@ -15,7 +15,7 @@
   try {
     goals = JSON.parse(localStorage.getItem('goals'));
     if (Array.isArray(goals) === false) {
-      goals = []; // we always want an array- if goals fails to be restored properly this gives us a slight safety net
+      goals = [];
     }
   } catch (e) {
     // might be invalid json in localstorage- because we initted goals on line 5 with [] we should be alright
@@ -28,10 +28,9 @@
   }
 
   //Habit constructor
-  function Habit(importance, difficulty, duration) {
+  function Habit(importance, difficulty) {
     this.priority = priority;
     this.difficulty = difficulty;
-    this.duration = duration;
   }
 
   const focus = function() {
@@ -39,7 +38,7 @@
       goalIndex = null;
 
       let randomGoal = goals[Math.floor(Math.random() * goals.length)];
-      let randomHabit = randomGoal.habits[Math.floor(Math.random() * randomGoal.habits.length)];
+      let randomHabit = randomGoal.habits[Math.floor(Math.random() * randomGoal.habits.length)][0];
 
       $('.now').show();
       $('table').hide();
@@ -55,7 +54,7 @@
         $('.goal').show();
       };
 
-      setTimeout(dispGoal, 3000);
+      setTimeout(dispGoal, 2000);
     } else {
       addGoal();
     }
@@ -149,48 +148,48 @@
     $('.habit').attr("id", `habit${i}`).removeClass('habit');
     $("button").removeClass("temptog");
     $('.add').addClass('remove').removeClass('add');
-    $(`  <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <button type="button" class="btn btn-outline-secondary dropdown-toggle temptog dropdown-toggle-split" aria-haspopup="true" aria-expanded="true">
-          <span class="sr-only">Toggle Dropdown</span>
-        </button>
-        <div class="dropdown-menu open">
-          <h6 class="dropdown-header">Priority</h6>
-          <a class="dropdown-item" href="#">
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-              <label class="btn radio btn-secondary">
-                <input type="radio" name="options" id="option1" autocomplete="off" checked> Low
-              </label>
-              <label class="btn radio btn-secondary active">
-                <input type="radio" name="options" id="option2" autocomplete="off"> Medium
-              </label>
-              <label class="btn radio btn-secondary">
-                <input type="radio" name="options" id="option3" autocomplete="off"> High
-              </label>
-            </div>
-          </a>
-          <div role="separator" class="dropdown-divider"></div>
-          <h6 class="dropdown-header">Challenge</h6>
-          <a class="dropdown-item" href="#">
-            <div class="btn-group radio btn-group-toggle" data-toggle="buttons">
-              <label class="btn radio btn-secondary">
-                <input type="radio" name="options" id="option1" autocomplete="off" checked> Low
-              </label>
-              <label class="btn radio btn-secondary active">
-                <input type="radio" name="options" id="option2" autocomplete="off"> Medium
-              </label>
-              <label class="btn radio btn-secondary">
-                <input type="radio" name="options" id="option3" autocomplete="off"> High
-              </label>
-            </div>
-          </a>
-        </div>
-      </div>
-      <input type="text" autocomplete="off" id='habit' class="habit form-control" placeholder="Habit">
-      <div class"input-group-append">
-        <button class="add btn btn-primary" type="button">Add</button>
-      </div>
-    </div>`).insertBefore('#submit');
+    $(`        <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <button type="button" class="btn btn-outline-secondary dropdown-toggle temptog dropdown-toggle-split" aria-haspopup="true" aria-expanded="true">
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <div class="dropdown-menu open">
+                    <h6 class="dropdown-header">Priority</h6>
+                    <a class="dropdown-item" href="#">
+                      <div class="btn-group priority btn-group-toggle" id='priority' data-toggle="buttons">
+                        <label class="btn radio btn-secondary" id='0'>
+                          <input type="radio" name="options" id="option1" autocomplete="off"> Low
+                        </label>
+                        <label class="btn radio btn-secondary active" id='1'>
+                          <input type="radio" name="options" id="option2" autocomplete="off" checked> Medium
+                        </label>
+                        <label class="btn radio btn-secondary" id='2'>
+                          <input type="radio" name="options" id="option3" autocomplete="off"> High
+                        </label>
+                      </div>
+                    </a>
+                    <div role="separator" class="dropdown-divider"></div>
+                    <h6 class="dropdown-header">Challenge</h6>
+                    <a class="dropdown-item" href="#">
+                      <div class="btn-group challenge btn-group-toggle" data-toggle="buttons">
+                        <label class="btn radio btn-secondary" id='0'>
+                          <input type="radio" name="options" id="option1" autocomplete="off" checked> Low
+                        </label>
+                        <label class="btn radio btn-secondary active" id='1'>
+                          <input type="radio" name="options" id="option2" autocomplete="off"> Medium
+                        </label>
+                        <label class="btn radio btn-secondary" id='2'>
+                          <input type="radio" name="options" id="option3" autocomplete="off"> High
+                        </label>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <input type="text" autocomplete="off" id='habit' class="habit form-control" placeholder="Habit">
+                <div class"input-group-append">
+                  <button class="add btn btn-primary" type="button">Add</button>
+                </div>
+              </div>`).insertBefore('#submit');
 
     habitElement = document.getElementById('habit');
     $('.remove').text('Remove');
@@ -239,7 +238,9 @@
       if (goalElement.value.length > 0) {
         for (let j = 0; j < i; j++) {
           if (document.getElementById(`habit${j}`) != null) {
-            habits.push(document.getElementById(`habit${j}`).value);
+            habit = [document.getElementById(`habit${j}`).value, $('.active')[j*2].id, $('.active')[(j*2) + 1].id];
+            habits.push(habit);
+            console.log(habit);
           }
         }
         if (goalIndex != null) {
@@ -251,7 +252,7 @@
         temporaryDiv.textContent = goalValue;
         goalElement.value = '';
         habitElement.value = '';
-
+        console.log(habits);
         $('.remove').parent("div").parent("div").remove(); // anytime you need to fish around for parent x y z it's an indicator we can restructure the output of the row and its event handler, we'll make changes in another commit to try to tighten it up
         goals.push(goal);
         localStorage.setItem('goals', JSON.stringify(goals));
@@ -296,6 +297,18 @@
   }
 
 
+  function findEvenIndex(arr) {
+    for (let i = 0; i < arr.length - 1; i++) {
+      console.log(arr.slice(0, i).reduce((a, b) => a + b));
+      console.log(arr.slice(i + 1, arr.length).reduce((a, b) => a + b));
+      let left = (arr.slice(0, i).length > 0 ? arr.slice(0, i).reduce((a, b) => a + b) : 0);
+      let right = (arr.slice(i + 1, arr.length).length > 0 ? arr.slice(i + 1, arr.length).reduce((a, b) => a + b) : 0);
+      if (left === right) {
+        return i;
+      }
+    }
+    return -1;
+  }
 
 
 
