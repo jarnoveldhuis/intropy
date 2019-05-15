@@ -57,13 +57,27 @@
       $('#addGoal').hide();
       $('.goal').text(`Calculating Optimal Task:`);
       $('.habitG').hide();
+      $('.progress').hide();
       $('.lds-roller').show();
 
       dispGoal = function() {
+        if (nextHabit.length>0){
         $('.goal').text(nextHabit[0].goal + ':');
         $('.habitG').text(nextHabit[0].habit).show();
         $('.lds-roller').hide();
+        $('.progress').show();
         $('.goal').show();
+      }else{
+        $('.goal').text('You did it!');
+        $('.habitG').text('You are done for the day!');
+        $('.lds-roller').hide();
+        $('.progress').show();
+        $('.goal').show();
+      }
+      let percentComplete= 100*(allHabits.filter(e=>e.completed===d.getDay()).length)/allHabits.length;
+      $('.progress-bar').attr('aria-valuenow',`${percentComplete}`);
+      $('.progress-bar').attr('style','width: '+`${percentComplete}`+'%');
+
       };
 
       setTimeout(dispGoal, 1500);
