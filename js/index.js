@@ -7,15 +7,25 @@
   const goalElement = document.getElementById('goal');
   let habitElement = document.getElementById('habit');
 
-  let goalIndex;
+  let thisGoal = 'woops';
   let habits = [];
   let i = 0;
   let goals = [];
+  let allHabits = [];
 
   try {
     goals = JSON.parse(localStorage.getItem('goals'));
     if (Array.isArray(goals) === false) {
       goals = [];
+    }
+  } catch (e) {
+    // might be invalid json in localstorage- because we initted goals on line 5 with [] we should be alright
+  }
+
+  try {
+    allHabits = JSON.parse(localStorage.getItem('allHabits'));
+    if (Array.isArray(allHabits) === false) {
+      allHabits = [];
     }
   } catch (e) {
     // might be invalid json in localstorage- because we initted goals on line 5 with [] we should be alright
@@ -28,17 +38,19 @@
   }
 
   //Habit constructor
-  function Habit(importance, difficulty) {
+  function Habit(goal, habit, priority, difficulty, completed) {
+    this.goal = goal;
+    this.habit = habit;
     this.priority = priority;
     this.difficulty = difficulty;
+    this.completed = completed;
+    this.points = priority + difficulty;
   }
 
   const focus = function() {
-    if (goals.length > 0) {
-      goalIndex = null;
-
-      let randomGoal = goals[Math.floor(Math.random() * goals.length)];
-      let randomHabit = randomGoal.habits[Math.floor(Math.random() * randomGoal.habits.length)][0];
+    if (allHabits.length > 0) {
+      let d = new Date();
+      let nextHabit = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != d.getDay());
 
       $('.now').show();
       $('table').hide();
@@ -48,13 +60,19 @@
       $('.lds-roller').show();
 
       dispGoal = function() {
-        $('.goal').text(randomGoal.goal + ':');
-        $('.habitG').text(randomHabit).show();
+        $('.goal').text(nextHabit[0].goal + ':');
+        $('.habitG').text(nextHabit[0].habit).show();
         $('.lds-roller').hide();
         $('.goal').show();
       };
 
-      setTimeout(dispGoal, 2000);
+      setTimeout(dispGoal, 1500);
+      const done = function() {
+        let d = new Date();
+        nextHabit[0].completed = d.getDay();
+        focus();
+      };
+      $('.done').on('click', done);
     } else {
       addGoal();
     }
@@ -64,23 +82,31 @@
 
   //Load table from local storage
   const editGoals = function() {
-    if (goals.length < 1) {
+    let goalsX = allHabits.map(a => a.goal);
+    let uniqueGoals = goalsX.filter((e, i) => goalsX.indexOf(e) === i);
+    let counts = uniqueGoals.map(a => allHabits.filter(g=>a===g.goal).length);
+    console.log('unique goals: '+ uniqueGoals);
+    console.log('counts: '+counts);
+    if (uniqueGoals.length < 1) {
       addGoal();
     } else {
       i = 0;
       $('.goals').remove();
-      for (let i = 0; i < goals.length; i++) {
+      for (let i = 0; i < uniqueGoals.length; i++) {
 
-        const temporaryDiv = document.createElement('div'); // this will create a div but only in memory and not attached to the page. we can use it to escape html so the user cant inject code- we can make this a helper function later. in jquery you can also do $('<div>').text('<b>value here</b>').html() - try the output in the console
-        temporaryDiv.textContent = goals[i].goal;
+        const goalDiv = document.createElement('div');
+        goalDiv.textContent = uniqueGoals[i];
+        const habitDiv = document.createElement('div');
+        habitDiv.textContent = counts[i];
+
 
         $('.table').append(
           `
       <tr class='goals'>
         <th scope="row">${i+1}</th>
-        <td>${temporaryDiv.innerHTML}</td>
-        <td>${goals[i].habits.length}</td>
-        <td><button class="remove btn btn-sm btn-secondary" type="button">Remove</button>
+        <td id='goal'>${goalDiv.innerHTML}</td>
+        <td>${habitDiv.innerHTML}</td>
+        <td><button class="removeGoal btn btn-sm btn-secondary" type="button">Remove</button>
         <button class="editGoal btn btn-sm btn-secondary" type="button">Edit</button></td>
       </tr>
       `
@@ -89,39 +115,53 @@
       $('table').show();
       $('#addGoal').hide();
       $('.now').hide();
-      // goalIndex = null;
-      // $('table').show();
-      // $('#addGoal').hide();
-      // $('.now').hide();
-      // $();
-      // goalElement.value = '';
-      // habitElement.value = '';
-      // $('.remove').parent("div").parent("div").remove();
-      //Edit table
-      $('.editGoal').on('click', function() {
-        goalIndex = this.closest('tr').getElementsByTagName('th')[0].innerHTML - 1;
-        for (let i = 0; i < goals[goalIndex].habits.length; i++) {
-          habitElement.value = goals[goalIndex].habits[i];
-          addHabit();
-        }
-        goalElement.value = goals[goalIndex].goal;
-        $('table').hide();
-        $('#addGoal').show();
-        $('.now').hide();
 
-      });
+      // //Edit table
+      // $('.editGoal').on('click', function() {
+      //   goalIndex = this.closest('tr').getElementsByTagName('th')[0].innerHTML - 1;
+      //   for (let i = 0; i < goals[goalIndex].habits.length; i++) {
+      //     habitElement.value = goals[goalIndex].habits[i];
+      //     addHabit();
+      //   }
+      //   goalElement.value = goals[goalIndex].goal;
+      //   $('table').hide();
+      //   $('#addGoal').show();
+      //   $('.now').hide();
+      //
+      // });
 
+      //Edit a goal
+      $('.editGoal').on('click',
+        function() {
+          $('table').hide();
+          $('#addGoal').show();
+          $('.now').hide();
+
+          addGoal();
+          $('.newHabit').remove();
+
+          let thisGoal = this.closest('tr').getElementsByTagName('td')[0].innerHTML;
+          console.log('this goal: '+thisGoal);
+          filteredHabits = allHabits.filter(g => g.goal === thisGoal);
+          for (let i = 0; i < filteredHabits.length; i++) {
+            habitElement.value = filteredHabits[i].habit;
+            addHabit();
+            $('.input-group').eq(i).addClass('newHabit');
+          }
+          goalElement.value = thisGoal;
+          return thisGoal;
+
+        });
     }
   };
 
   const addGoal = function() {
-    goalIndex = null;
+    $('.newHabit').remove();
     $('#addGoal').show();
     $('table').hide();
     $('.now').hide();
     goalElement.value = '';
     habitElement.value = '';
-    $('.remove').parent("div").parent("div").remove();
   };
 
   const addToggle = function() {
@@ -131,12 +171,9 @@
       $(this).parent().toggleClass('show');
       $(this).next('div').toggleClass('show');
       $("button").removeClass("temptog");
-      console.log('Toggle');
-      console.log(i);
     });
 
     $('.radio').on('click', function(event) {
-      console.log('radio');
       event.stopPropagation();
       $(this).button('toggle');
     });
@@ -147,6 +184,7 @@
   const addHabit = function() {
     $('.habit').attr("id", `habit${i}`).removeClass('habit');
     $("button").removeClass("temptog");
+    $(this).parent('div').parent('div').addClass('newHabit');
     $('.add').addClass('remove').removeClass('add');
     $(`        <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -203,7 +241,6 @@
   addToggle();
 
   $('body').on('click', function(ev) {
-    console.log('body');
     $('.show').removeClass('show');
 
   });
@@ -224,28 +261,42 @@
   );
 
   //Remove goal
-  $(document).on('click', '.remove',
+  $(document).on('click', '.removeGoal',
     (function() {
-      goals.splice(this.closest('tr').getElementsByTagName('th')[0].innerHTML - 1, 1);
+      let thisGoal = this.closest('tr').getElementsByTagName('td')[0].innerHTML;
+      console.log(thisGoal);
+      allHabits = allHabits.filter(g => g.goal != thisGoal);
       localStorage.setItem('goals', JSON.stringify(goals));
+      localStorage.setItem('allHabits', JSON.stringify(allHabits));
       $(this).parent("td").parent("tr").remove();
+      return thisGoal;
     })
   );
 
   //Submit goal
   $("#submit").on('click',
     (function() {
+      console.log(i);
+      console.log('this goal: '+thisGoal);
+      console.log('habits: '+$('.newHabit').length);
+      allHabits = allHabits.filter(g => g.goal != goalElement.value);
       if (goalElement.value.length > 0) {
-        for (let j = 0; j < i; j++) {
-          if (document.getElementById(`habit${j}`) != null) {
-            habit = [document.getElementById(`habit${j}`).value, $('.active')[j*2].id, $('.active')[(j*2) + 1].id];
-            habits.push(habit);
-            console.log(habit);
+        for (let j = 0; j < $('.newHabit').length; j++) {
+          if (document.getElementById(`habit`) != null) {
+            console.log(i);
+            let habit = new Habit(
+              goalElement.value,
+              $('.newHabit')[j].childNodes[3].value,
+              parseInt($('.active')[j * 2].id, 10),
+              parseInt($('.active')[(j * 2) + 1].id, 10)
+            );
+            // habits.push(document.getElementById(`habit${j}`).value);
+            allHabits.push(habit);
+
           }
         }
-        if (goalIndex != null) {
-          goals.splice(goalIndex, 1);
-        }
+
+
         let goal = new Goal(goalElement.value, habits);
         const goalValue = goalElement.value;
         const temporaryDiv = document.createElement('div'); // this will create a div but only in memory and not attached to the page. we can use it to escape html so the user cant inject code- we can make this a helper function later. in jquery you can also do $('<div>').text('<b>value here</b>').html() - try the output in the console
@@ -253,13 +304,14 @@
         goalElement.value = '';
         habitElement.value = '';
         console.log(habits);
-        $('.remove').parent("div").parent("div").remove(); // anytime you need to fish around for parent x y z it's an indicator we can restructure the output of the row and its event handler, we'll make changes in another commit to try to tighten it up
+        $('.removeGoal').parent("div").parent("div").remove(); // anytime you need to fish around for parent x y z it's an indicator we can restructure the output of the row and its event handler, we'll make changes in another commit to try to tighten it up
         goals.push(goal);
         localStorage.setItem('goals', JSON.stringify(goals));
+        localStorage.setItem('allHabits', JSON.stringify(allHabits));
         editGoals();
         goal = '';
         habits = [];
-        goalIndex = null;
+        thisGoal = null;
         i = 0;
       } else {
         alert("Please name your goal.");
@@ -268,48 +320,17 @@
 
   );
 
-  //Edit a goal
-  $('.editGoal').on('click',
-    (function() {
-      goalIndex = this.closest('tr').getElementsByTagName('th')[0].innerHTML - 1;
-      for (let i = 0; i < goals[goalIndex].habits.length; i++) {
-        habitElement.value = goals[goalIndex].habits[i];
-        addHabit();
-      }
-      goalElement.value = goals[goalIndex].goal;
-      $('table').hide();
-      $('#addGoal').show();
-      $('.now').hide();
-
-    })
-  );
 
 
   $('.editGoals').on('click', editGoals);
   $('.addGoal').on('click', addGoal);
   $('.focus').on('click', focus);
-  $('.done').on('click', focus);
+
 
   if (goals.length > 0) {
     focus();
   } else {
     addGoal();
   }
-
-
-  function findEvenIndex(arr) {
-    for (let i = 0; i < arr.length - 1; i++) {
-      console.log(arr.slice(0, i).reduce((a, b) => a + b));
-      console.log(arr.slice(i + 1, arr.length).reduce((a, b) => a + b));
-      let left = (arr.slice(0, i).length > 0 ? arr.slice(0, i).reduce((a, b) => a + b) : 0);
-      let right = (arr.slice(i + 1, arr.length).length > 0 ? arr.slice(i + 1, arr.length).reduce((a, b) => a + b) : 0);
-      if (left === right) {
-        return i;
-      }
-    }
-    return -1;
-  }
-
-
 
 })();
