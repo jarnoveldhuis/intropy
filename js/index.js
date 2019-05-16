@@ -99,8 +99,6 @@
     let goalsX = allHabits.map(a => a.goal);
     let uniqueGoals = goalsX.filter((e, i) => goalsX.indexOf(e) === i);
     let counts = uniqueGoals.map(a => allHabits.filter(g => a === g.goal).length);
-    console.log('unique goals: ' + uniqueGoals);
-    console.log('counts: ' + counts);
     if (uniqueGoals.length < 1) {
       addGoal();
     } else {
@@ -281,7 +279,6 @@
   $(document).on('click', '.removeGoal',
     (function() {
       let thisGoal = this.closest('tr').getElementsByTagName('td')[0].innerHTML;
-      console.log(thisGoal);
       allHabits = allHabits.filter(g => g.goal != thisGoal);
       localStorage.setItem('goals', JSON.stringify(goals));
       localStorage.setItem('allHabits', JSON.stringify(allHabits));
@@ -293,14 +290,10 @@
   //Submit goal
   $("#submit").on('click',
     (function() {
-      console.log(i);
-      console.log('this goal: ' + goalElement.value);
-      console.log('habits: ' + allHabits);
       allHabits = allHabits.filter(g => g.goal != goalElement.value);
       if (goalElement.value.length > 0) {
         for (let j = 0; j < $('.newHabit').length; j++) {
           if (document.getElementById(`habit`) != null) {
-            console.log(i);
             let habit = new Habit(
               goalElement.value,
               $('.newHabit')[j].childNodes[3].value,
@@ -320,7 +313,6 @@
         temporaryDiv.textContent = goalValue;
         goalElement.value = '';
         habitElement.value = '';
-        console.log(habits);
         $('.removeGoal').parent("div").parent("div").remove(); // anytime you need to fish around for parent x y z it's an indicator we can restructure the output of the row and its event handler, we'll make changes in another commit to try to tighten it up
         goals.push(goal);
         localStorage.setItem('goals', JSON.stringify(goals));
