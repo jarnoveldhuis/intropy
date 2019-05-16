@@ -44,7 +44,7 @@
     this.priority = priority;
     this.difficulty = difficulty;
     this.completed = completed;
-    this.points = priority + difficulty;
+    this.points = priority + (2-difficulty);
   }
 
   const focus = function() {
