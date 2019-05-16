@@ -61,22 +61,22 @@
       $('.lds-roller').show();
 
       dispGoal = function() {
-        if (nextHabit.length>0){
-        $('.goal').text(nextHabit[0].goal + ':');
-        $('.habitG').text(nextHabit[0].habit).show();
-        $('.lds-roller').hide();
-        $('.progress').show();
-        $('.goal').show();
-      }else{
-        $('.goal').text('You did it!');
-        $('.habitG').text('You are done for the day!');
-        $('.lds-roller').hide();
-        $('.progress').show();
-        $('.goal').show();
-      }
-      let percentComplete= 100*(allHabits.filter(e=>e.completed===d.getDay()).length)/allHabits.length;
-      $('.progress-bar').attr('aria-valuenow',`${percentComplete}`);
-      $('.progress-bar').attr('style','width: '+`${percentComplete}`+'%');
+        if (nextHabit.length > 0) {
+          $('.goal').text(nextHabit[0].goal + ':');
+          $('.habitG').text(nextHabit[0].habit).show();
+          $('.lds-roller').hide();
+          $('.progress').show();
+          $('.goal').show();
+        } else {
+          $('.goal').text('You did it!');
+          $('.habitG').text('You are done for the day!');
+          $('.lds-roller').hide();
+          $('.progress').show();
+          $('.goal').show();
+        }
+        let percentComplete = 100 * (allHabits.filter(e => e.completed === d.getDay()).length) / allHabits.length;
+        $('.progress-bar').attr('aria-valuenow', `${percentComplete}`);
+        $('.progress-bar').attr('style', 'width: ' + `${percentComplete}` + '%');
 
       };
 
@@ -98,9 +98,9 @@
   const editGoals = function() {
     let goalsX = allHabits.map(a => a.goal);
     let uniqueGoals = goalsX.filter((e, i) => goalsX.indexOf(e) === i);
-    let counts = uniqueGoals.map(a => allHabits.filter(g=>a===g.goal).length);
-    console.log('unique goals: '+ uniqueGoals);
-    console.log('counts: '+counts);
+    let counts = uniqueGoals.map(a => allHabits.filter(g => a === g.goal).length);
+    console.log('unique goals: ' + uniqueGoals);
+    console.log('counts: ' + counts);
     if (uniqueGoals.length < 1) {
       addGoal();
     } else {
@@ -155,12 +155,14 @@
           $('.newHabit').remove();
 
           let thisGoal = this.closest('tr').getElementsByTagName('td')[0].innerHTML;
-          console.log('this goal: '+thisGoal);
           filteredHabits = allHabits.filter(g => g.goal === thisGoal);
           for (let i = 0; i < filteredHabits.length; i++) {
             habitElement.value = filteredHabits[i].habit;
             addHabit();
-            $('.input-group').eq(i).addClass('newHabit');
+            $('.radio').eq((i * 6) + 1).removeClass('active');
+            $('.radio').eq((i * 6) + 4).removeClass('active');
+            $('.radio').eq((i * 6) + parseInt(filteredHabits[i].priority, 10)).addClass('active');
+            $('.radio').eq((i * 6) + 3 + parseInt(filteredHabits[i].difficulty, 10)).addClass('active');
           }
           goalElement.value = thisGoal;
           return thisGoal;
@@ -198,7 +200,8 @@
   const addHabit = function() {
     $('.habit').attr("id", `habit${i}`).removeClass('habit');
     $("button").removeClass("temptog");
-    $(this).parent('div').parent('div').addClass('newHabit');
+    // $(this).parent('div').parent('div').addClass('newHabit');
+    $('.input-group').eq(i).addClass('newHabit');
     $('.add').addClass('remove').removeClass('add');
     $(`        <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -291,8 +294,8 @@
   $("#submit").on('click',
     (function() {
       console.log(i);
-      console.log('this goal: '+thisGoal);
-      console.log('habits: '+$('.newHabit').length);
+      console.log('this goal: ' + goalElement.value);
+      console.log('habits: ' + allHabits);
       allHabits = allHabits.filter(g => g.goal != goalElement.value);
       if (goalElement.value.length > 0) {
         for (let j = 0; j < $('.newHabit').length; j++) {
