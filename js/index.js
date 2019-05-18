@@ -50,8 +50,9 @@
   const focus = function() {
     if (allHabits.length > 0) {
       let d = new Date();
-      let nextHabit = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != d.getDay());
-
+      date=`${d.getMonth()}:${d.getDate()}:${d.getYear()}`;
+      console.log(date);
+      let nextHabit = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != date);
       $('.now').show();
       $('table').hide();
       $('#addGoal').hide();
@@ -74,7 +75,7 @@
           $('.progress').show();
           $('.goal').show();
         }
-        let percentComplete = 100 * (allHabits.filter(e => e.completed === d.getDay()).length) / allHabits.length;
+        let percentComplete = 100 * (allHabits.filter(e => e.completed === date).length) / allHabits.length;
         $('.progress-bar').attr('aria-valuenow', `${percentComplete}`);
         $('.progress-bar').attr('style', 'width: ' + `${percentComplete}` + '%');
 
@@ -83,7 +84,8 @@
       setTimeout(dispGoal, 1500);
       const done = function() {
         let d = new Date();
-        nextHabit[0].completed = d.getDay();
+        date=`${d.getMonth()}:${d.getDate()}:${d.getYear()}`;
+        nextHabit[0].completed = date;
         focus();
       };
       $('.done').on('click', done);
@@ -127,20 +129,6 @@
       $('table').show();
       $('#addGoal').hide();
       $('.now').hide();
-
-      // //Edit table
-      // $('.editGoal').on('click', function() {
-      //   goalIndex = this.closest('tr').getElementsByTagName('th')[0].innerHTML - 1;
-      //   for (let i = 0; i < goals[goalIndex].habits.length; i++) {
-      //     habitElement.value = goals[goalIndex].habits[i];
-      //     addHabit();
-      //   }
-      //   goalElement.value = goals[goalIndex].goal;
-      //   $('table').hide();
-      //   $('#addGoal').show();
-      //   $('.now').hide();
-      //
-      // });
 
       //Edit a goal
       $('.editGoal').on('click',
@@ -198,7 +186,6 @@
   const addHabit = function() {
     $('.habit').attr("id", `habit${i}`).removeClass('habit');
     $("button").removeClass("temptog");
-    // $(this).parent('div').parent('div').addClass('newHabit');
     $('.input-group').eq(i).addClass('newHabit');
     $('.add').addClass('remove').removeClass('add');
     $(`        <div class="input-group mb-3">
@@ -259,12 +246,6 @@
     $('.show').removeClass('show');
 
   });
-
-
-
-
-
-
 
   $(document).on('click', '.add', addHabit);
 
