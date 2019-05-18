@@ -50,8 +50,9 @@
   const focus = function() {
     if (allHabits.length > 0) {
       let d = new Date();
-      let nextHabit = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != d.getDay());
-
+      d=`${d.getMonth()}${d.getDay()}:${d.getYear()}`;
+      let nextHabit = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != d);
+      console.log(d);
       $('.now').show();
       $('table').hide();
       $('#addGoal').hide();
@@ -74,7 +75,7 @@
           $('.progress').show();
           $('.goal').show();
         }
-        let percentComplete = 100 * (allHabits.filter(e => e.completed === d.getDay()).length) / allHabits.length;
+        let percentComplete = 100 * (allHabits.filter(e => e.completed === d).length) / allHabits.length;
         $('.progress-bar').attr('aria-valuenow', `${percentComplete}`);
         $('.progress-bar').attr('style', 'width: ' + `${percentComplete}` + '%');
 
@@ -83,7 +84,8 @@
       setTimeout(dispGoal, 1500);
       const done = function() {
         let d = new Date();
-        nextHabit[0].completed = d.getDay();
+        d=`${d.getMonth()}${d.getDay()}${d.getYear()}`;
+        nextHabit[0].completed = d;
         focus();
       };
       $('.done').on('click', done);
@@ -259,12 +261,6 @@
     $('.show').removeClass('show');
 
   });
-
-
-
-
-
-
 
   $(document).on('click', '.add', addHabit);
 
