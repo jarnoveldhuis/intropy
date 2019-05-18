@@ -1,7 +1,7 @@
 {
-  "name": "Getting Started Example",
+  "name": "Intropy Tab",
   "version": "1.0",
-  "description": "Build an Extension!",
+  "description": "Replaces New Tab page with Intropy.",
   "manifest_version": 2,
   "chrome_url_overrides": {
     "newtab": "redirect.html"
