@@ -53,6 +53,7 @@
       date=`${d.getMonth()}:${d.getDate()}:${d.getYear()}`;
       console.log(date);
       let nextHabit = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != date);
+      console.log(nextHabit);
       $('.now').show();
       $('table').hide();
       $('#addGoal').hide();
