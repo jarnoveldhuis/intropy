@@ -3,7 +3,13 @@
 - [x]Track completed tasks
 - []Set frequency
 - []Goal templates
+- []Suggestions
 - [x]Create extension
 - [x]Skip Button
 - []Update tasks without clearing completion date
 - []Gifs
+- []Links
+- []Reward Features
+- []Rate success upon completing task
+- []Track time of task completion
+- []Use data to predict best times to suggest tasks
