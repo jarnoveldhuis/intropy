@@ -1,5 +1,9 @@
-- []Prioritization
+- [x]Prioritization
 - []Mobile friendly
-- []Track completed tasks
+- [x]Track completed tasks
 - []Set frequency
 - []Goal templates
+- [x]Create extension
+- [x]Skip Button
+- []Update tasks without clearing completion date
+- []Gifs

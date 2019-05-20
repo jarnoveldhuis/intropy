@@ -1,9 +1,13 @@
 {
-  "name": "Intropy Tab",
+  "name": "Intropy",
   "version": "1.0",
   "description": "Replaces New Tab page with Intropy.",
   "manifest_version": 2,
+  "icons": { "16": "icon.png",
+           "48": "icon.png",
+          "128": "icon.png" },
   "chrome_url_overrides": {
     "newtab": "redirect.html"
   }
+
 }

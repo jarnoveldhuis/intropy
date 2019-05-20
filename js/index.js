@@ -13,15 +13,6 @@
   // let goals = [];
   let allHabits = [];
 
-  // try {
-  //   goals = JSON.parse(localStorage.getItem('goals'));
-  //   if (Array.isArray(goals) === false) {
-  //     goals = [];
-  //   }
-  // } catch (e) {
-  //   // might be invalid json in localstorage- because we initted goals on line 5 with [] we should be alright
-  // }
-
   try {
     allHabits = JSON.parse(localStorage.getItem('allHabits'));
     if (Array.isArray(allHabits) === false) {
@@ -44,13 +35,14 @@
     this.priority = priority;
     this.difficulty = difficulty;
     this.completed = completed;
-    this.points = priority + (2-difficulty);
+    this.points = priority + (2 - difficulty);
   }
 
   const focus = function() {
     if (allHabits.length > 0) {
+      let i=0;
       let d = new Date();
-      date=`${d.getMonth()}:${d.getDate()}:${d.getYear()}`;
+      date = `${d.getMonth()}:${d.getDate()}:${d.getYear()}`;
       console.log(date);
       let nextHabit = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != date);
       console.log(nextHabit);
@@ -64,15 +56,15 @@
 
       dispGoal = function() {
         if (nextHabit.length > 0) {
-          $('.goal').text(nextHabit[0].goal + ':');
-          $('.habitG').text(nextHabit[0].habit).show();
+          $('.goal').text(nextHabit[i].goal + ':');
+          $('.habitG').text(nextHabit[i].habit).show();
           $('.lds-roller').hide();
           $('.progress').show();
           $('.goal').show();
         } else {
           $('.goal').text('You did it!');
           $('.habitG').show();
-          $('.habitG').text('You are done for the day!');
+          $('.habitG').text('Relax!');
           $('.lds-roller').hide();
           $('.progress').show();
           $('.goal').show();
@@ -83,18 +75,28 @@
 
       };
 
+
       setTimeout(dispGoal, 1000);
       const done = function() {
-        if (nextHabit[0]){
+        if (nextHabit[i]) {
           console.log(nextHabit);
-        let d = new Date();
-        date=`${d.getMonth()}:${d.getDate()}:${d.getYear()}`;
-        nextHabit[0].completed = date;
-        localStorage.setItem('allHabits', JSON.stringify(allHabits));
-        focus();
-      }
+          let d = new Date();
+          date = `${d.getMonth()}:${d.getDate()}:${d.getYear()}`;
+          nextHabit[i].completed = date;
+          localStorage.setItem('allHabits', JSON.stringify(allHabits));
+          focus();
+        }
+      };
+
+      const skip = function() {
+        if (nextHabit[i+1]) {
+          i+=1;
+          dispGoal();
+          console.log(nextHabit[i]);
+        }
       };
       $('.done').on('click', done);
+      $('.skip').on('click', skip);
     } else {
       addGoal();
     }
@@ -325,5 +327,6 @@
   } else {
     addGoal();
   }
+
 
 })();

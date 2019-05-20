@@ -26,6 +26,7 @@
       <li class="nav-item">
         <a class="focus p-2 text-light" href="#">Focus</a>
       </li>
+
     </ul>
 
   </nav>
@@ -103,13 +104,20 @@
           </div>
 
           <button type="button" id="submit" class="saveB btn btn-primary">Save</button>
+
         </form>
 
       </div>
 
 
       <main role="main" class="now inner cover text-center pagination-centered">
-
+        <div class="btn-group focusMenu">
+          <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item skip" href="#">skip</a>
+          </div>
+        </div>
         <p class="lead goal"></p>
 
         <div class="lds-roller">
@@ -129,10 +137,11 @@
           <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
         </div>
         <p class="lead">
-          <a href="#" class="done focus btn btn-lg btn-secondary">Done</a>
+          <a href="#" class="done focus btn btn-lg btn-secondary ">Done</a>
         </p>
 
       </main>
+
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
