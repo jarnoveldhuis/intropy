@@ -92,6 +92,7 @@
         if (nextHabit[i+1]) {
           nextHabit[i].points-=0.01;
           console.log(nextHabit[i]);
+          localStorage.setItem('allHabits', JSON.stringify(allHabits));
           i+=1;
           dispGoal();
         }
