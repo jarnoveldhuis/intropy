@@ -7,7 +7,7 @@
   const goalElement = document.getElementById('goal');
   let habitElement = document.getElementById('habit');
 
-  let thisGoal = 'woops';
+  let thisGoal;
   let habits = [];
   let i = 0;
   // let goals = [];
@@ -90,9 +90,10 @@
 
       const skip = function() {
         if (nextHabit[i+1]) {
+          nextHabit[i].points-=0.01;
+          console.log(nextHabit[i]);
           i+=1;
           dispGoal();
-          console.log(nextHabit[i]);
         }
       };
       $('.done').on('click', done);
@@ -148,7 +149,7 @@
           addGoal();
           $('.newHabit').remove();
 
-          let thisGoal = this.closest('tr').getElementsByTagName('td')[0].innerHTML;
+          thisGoal = this.closest('tr').getElementsByTagName('td')[0].innerHTML;
           filteredHabits = allHabits.filter(g => g.goal === thisGoal);
           for (let i = 0; i < filteredHabits.length; i++) {
             habitElement.value = filteredHabits[i].habit;
@@ -267,7 +268,7 @@
   //Remove goal
   $(document).on('click', '.removeGoal',
     (function() {
-      let thisGoal = this.closest('tr').getElementsByTagName('td')[0].innerHTML;
+      thisGoal = this.closest('tr').getElementsByTagName('td')[0].innerHTML;
       allHabits = allHabits.filter(g => g.goal != thisGoal);
       // localStorage.setItem('goals', JSON.stringify(goals));
       localStorage.setItem('allHabits', JSON.stringify(allHabits));
@@ -279,7 +280,8 @@
   //Submit goal
   $("#submit").on('click',
     (function() {
-      allHabits = allHabits.filter(g => g.goal != goalElement.value);
+      console.log('this goal:'+thisGoal);
+      allHabits = allHabits.filter(g => g.goal != thisGoal);
       if (goalElement.value.length > 0) {
         for (let j = 0; j < $('.newHabit').length; j++) {
           if (document.getElementById(`habit`) != null) {

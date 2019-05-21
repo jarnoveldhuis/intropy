@@ -1,3 +1,5 @@
+Features:
+
 - [x]Prioritization
 - []Mobile friendly
 - [x]Track completed tasks
@@ -13,3 +15,9 @@
 - []Rate success upon completing task
 - []Track time of task completion
 - []Use data to predict best times to suggest tasks
+- []Lower priority points after skipping task
+
+
+Bugs:
+
+-[]Saving renamed habit will create new object.

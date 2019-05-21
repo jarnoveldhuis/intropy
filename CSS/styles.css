@@ -1,12 +1,12 @@
 body {
-  background-color: #3e4149;
-  color: #e84545;
+  background-color: #482E4E;
+  color: #F22643;
   text-align: center;
   font-family: 'Mukta', sans-serif;
 }
 
 .card {
-  background-color: #343a40;
+  background-color: #331E3A;
   position: relative;
 }
 
@@ -24,8 +24,12 @@ body {
   margin: 25px;
 }
 
+.navbar {
+  background-color: #331E3A !important;
+}
+
 .btn {
-  background-color: #343a40;
+  background-color: #331E3A;
   outline: none !important;
   box-shadow: none;
 }
@@ -39,18 +43,18 @@ body {
 }
 
 h1 {
-  font-family: 'Questrial', sans-serif;
+font-family: 'Cinzel', serif;
   font-size: 4em;
-  color: #e84545;
+  color: #F22643;
 }
 
 h2 {
   font-family: 'Allerta Stencil', sans-serif;
-  color: #e84545;
+  color: #F22643;
 }
 
 .text-muted {
-  color: #e84545 !important;
+  color: #F22643 !important;
 }
 
 .form-text {
@@ -89,7 +93,7 @@ label {
   width: 12px;
   height: 12px;
   border-radius: 100%;
-  background: #e84545;
+  background: #F22643;
   margin: -6px 0 0 -6px;
 }
 
