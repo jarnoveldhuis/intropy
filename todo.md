@@ -15,9 +15,9 @@ Features:
 - []Rate success upon completing task
 - []Track time of task completion
 - []Use data to predict best times to suggest tasks
-- []Lower priority points after skipping task
+- [x]Lower priority points after skipping task
 
 
 Bugs:
 
--[]Saving renamed habit will create new object.
+-[x]Saving renamed habit will create new object.

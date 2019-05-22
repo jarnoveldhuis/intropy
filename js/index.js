@@ -40,7 +40,7 @@
 
   const focus = function() {
     if (allHabits.length > 0) {
-      let i=0;
+      let i = 0;
       let d = new Date();
       date = `${d.getMonth()}:${d.getDate()}:${d.getYear()}`;
       console.log(date);
@@ -89,11 +89,11 @@
       };
 
       const skip = function() {
-        if (nextHabit[i+1]) {
-          nextHabit[i].points-=0.01;
+        if (nextHabit[i + 1]) {
+          nextHabit[i].points -= 0.01;
           console.log(nextHabit[i]);
           localStorage.setItem('allHabits', JSON.stringify(allHabits));
-          i+=1;
+          i += 1;
           dispGoal();
         }
       };
@@ -174,6 +174,30 @@
     $('.now').hide();
     goalElement.value = '';
     habitElement.value = '';
+
+    $('.editGoal').on('click',
+      function() {
+        $('table').hide();
+        $('#addGoal').show();
+        $('.now').hide();
+
+        addGoal();
+        $('.newHabit').remove();
+
+        thisGoal = this.closest('tr').getElementsByTagName('td')[0].innerHTML;
+        filteredHabits = allHabits.filter(g => g.goal === thisGoal);
+        for (let i = 0; i < filteredHabits.length; i++) {
+          habitElement.value = filteredHabits[i].habit;
+          addHabit();
+          $('.radio').eq((i * 6) + 1).removeClass('active');
+          $('.radio').eq((i * 6) + 4).removeClass('active');
+          $('.radio').eq((i * 6) + parseInt(filteredHabits[i].priority, 10)).addClass('active');
+          $('.radio').eq((i * 6) + 3 + parseInt(filteredHabits[i].difficulty, 10)).addClass('active');
+        }
+        goalElement.value = thisGoal;
+        return thisGoal;
+
+      });
   };
 
   const addToggle = function() {
@@ -281,7 +305,7 @@
   //Submit goal
   $("#submit").on('click',
     (function() {
-      console.log('this goal:'+thisGoal);
+      console.log('this goal:' + thisGoal);
       allHabits = allHabits.filter(g => g.goal != thisGoal);
       if (goalElement.value.length > 0) {
         for (let j = 0; j < $('.newHabit').length; j++) {
@@ -331,5 +355,89 @@
     addGoal();
   }
 
+  function tickets(peopleInLine) {
+    hundred = [];
+    fifty = [];
+    twentyFive = [];
+    for (i = 0; i < peopleInLine.length; i++) {
+      if (peopleInLine[i] === 25) {
+        twentyFive.push(peopleInLine[i]);
+      } else if (peopleInLine[i] === 50) {
+        if (twentyFive.length > 0) {
+          fifty.push(peopleInLine[i]);
+          twentyFive.pop();
+        } else {
+          return "NO";
+        }
+      } else {
+        if (fifty.length > 0 && twentyFive.length > 0) {
+          fifty.pop();
+          twentyFive.pop();
+          hundred.push(peopleInLine[i]);
+        } else if (twentyFive.length > 2) {
+          twentyFive.pop();
+          twentyFive.pop();
+          twenthyFive.pop();
+          hundred.push(peopleInLine[i]);
+        }
+      }
+    }
+  }
+
+  //Habit Templates
+  const templates = [{
+      goal: "Learn a New Skill",
+      habit: "Study",
+      difficulty: 2,
+      priority: 2
+    }, {
+      goal: "Learn a New Skill",
+      habit: "Practice",
+      difficulty: 2,
+      priority: 2
+    }, {
+      goal: "Learn a New Skill",
+      habit: "Create",
+      difficulty: 2,
+      priority: 2
+    }, {
+      goal: "Accomplish a Goal",
+      habit: "Do this thing",
+      difficulty: 2,
+      priority: 2
+    },
+    {
+      goal: "Accomplish a Goal",
+      habit: "Don't do this thing",
+      difficulty: 2,
+      priority: 2
+    }
+
+  ];
+
+  $('.templates').on('click',
+    function() {
+      $('table').hide();
+      $('#addGoal').show();
+      $('.now').hide();
+
+      addGoal();
+      $('.newHabit').remove();
+
+      thisGoal = this.innerHTML;
+      filteredHabits = templates.filter(g => g.goal === thisGoal);
+      console.log(filteredHabits);
+      for (let i = 0; i < filteredHabits.length; i++) {
+        habitElement.value = filteredHabits[i].habit;
+        addHabit();
+        $('.radio').eq((i * 6) + 1).removeClass('active');
+        $('.radio').eq((i * 6) + 4).removeClass('active');
+        $('.radio').eq((i * 6) + parseInt(filteredHabits[i].priority, 10)).addClass('active');
+        $('.radio').eq((i * 6) + 3 + parseInt(filteredHabits[i].difficulty, 10)).addClass('active');
+      }
+      goalElement.value = thisGoal;
+      return thisGoal;
+
+    });
 
 })();
