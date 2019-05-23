@@ -143,10 +143,11 @@
       //Edit a goal
       $('.editGoal').on('click',
         function() {
+          console.log(i);
           $('table').hide();
           $('#addGoal').show();
           $('.now').hide();
-
+          console.log(i);
           addGoal();
           $('.newHabit').remove();
 
@@ -164,6 +165,7 @@
           return thisGoal;
 
         });
+
     }
   };
 
@@ -221,6 +223,7 @@
     $('.habit').attr("id", `habit${i}`).removeClass('habit');
     $("button").removeClass("temptog");
     $('.input-group').eq(i).addClass('newHabit');
+    console.log('Added NewHabit to '+ i);
     $('.add').addClass('remove').removeClass('add');
     $(`        <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -355,34 +358,6 @@
     addGoal();
   }
 
-  function tickets(peopleInLine) {
-    hundred = [];
-    fifty = [];
-    twentyFive = [];
-    for (i = 0; i < peopleInLine.length; i++) {
-      if (peopleInLine[i] === 25) {
-        twentyFive.push(peopleInLine[i]);
-      } else if (peopleInLine[i] === 50) {
-        if (twentyFive.length > 0) {
-          fifty.push(peopleInLine[i]);
-          twentyFive.pop();
-        } else {
-          return "NO";
-        }
-      } else {
-        if (fifty.length > 0 && twentyFive.length > 0) {
-          fifty.pop();
-          twentyFive.pop();
-          hundred.push(peopleInLine[i]);
-        } else if (twentyFive.length > 2) {
-          twentyFive.pop();
-          twentyFive.pop();
-          twenthyFive.pop();
-          hundred.push(peopleInLine[i]);
-        }
-      }
-    }
-  }
 
   //Habit Templates
   const templates = [{
@@ -417,6 +392,7 @@
 
   $('.templates').on('click',
     function() {
+      i=0;
       $('table').hide();
       $('#addGoal').show();
       $('.now').hide();
@@ -437,7 +413,6 @@
       }
       goalElement.value = thisGoal;
       return thisGoal;
-
     });
 
 })();

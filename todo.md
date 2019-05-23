@@ -16,6 +16,7 @@ Features:
 - []Track time of task completion
 - []Use data to predict best times to suggest tasks
 - [x]Lower priority points after skipping task
+- []Reward
 
 
 Bugs:
