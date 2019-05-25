@@ -4,7 +4,7 @@ Features:
 - []Mobile friendly
 - [x]Track completed tasks
 - []Set frequency
-- []Goal templates
+- [x]Goal templates
 - []Suggestions
 - [x]Create extension
 - [x]Skip Button
@@ -17,6 +17,7 @@ Features:
 - []Use data to predict best times to suggest tasks
 - [x]Lower priority points after skipping task
 - []Reward
+- [x]Dropdown to skip to different task.
 
 
 Bugs:

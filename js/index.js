@@ -47,9 +47,7 @@
       i = 0;
       let d = new Date();
       date = `${d.getMonth()}:${d.getDate()}:${d.getYear()}`;
-      console.log(date);
       nextHabit = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != date);
-      console.log(nextHabit);
       $('.now').show();
       $('table').hide();
       $('#addGoal').hide();
@@ -70,13 +68,13 @@
             }
           }
           $('.skip').on('click', function() {
-            // nextHabit[i].points -= 0.01;
+
 
 
             thisHabit = $(this).attr('habit');
             i = parseInt(thisHabit, 10);
-            console.log(thisHabit);
-            // localStorage.setItem('allHabits', JSON.stringify(allHabits));
+            nextHabit[i].points += 0.01;
+            localStorage.setItem('allHabits', JSON.stringify(allHabits));
             dispGoal();
           });
         });
@@ -116,7 +114,6 @@
     if (nextHabit[i]) {
       let d = new Date();
       date = `${d.getMonth()}:${d.getDate()}:${d.getYear()}`;
-      console.log(nextHabit[i]);
       nextHabit[i].completed = date;
       localStorage.setItem('allHabits', JSON.stringify(allHabits));
       focus();
@@ -164,11 +161,9 @@
       //Edit a goal
       $('.editGoal').on('click',
         function() {
-          console.log(i);
           $('table').hide();
           $('#addGoal').show();
           $('.now').hide();
-          console.log(i);
           addGoal();
           $('.newHabit').remove();
 
@@ -244,7 +239,6 @@
     $('.habit').attr("id", `habit${i}`).removeClass('habit');
     $("button").removeClass("temptog");
     $('.input-group').eq(i).addClass('newHabit');
-    console.log('Added NewHabit to ' + i);
     $('.add').addClass('remove').removeClass('add');
     $(`        <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -329,7 +323,6 @@
   //Submit goal
   $("#submit").on('click',
     (function() {
-      console.log('this goal:' + thisGoal);
       allHabits = allHabits.filter(g => g.goal != thisGoal);
       if (goalElement.value.length > 0) {
         for (let j = 0; j < $('.newHabit').length; j++) {
@@ -429,7 +422,6 @@
 
       thisGoal = this.innerHTML;
       filteredHabits = templates.filter(g => g.goal === thisGoal);
-      console.log(filteredHabits);
       for (let i = 0; i < filteredHabits.length; i++) {
         habitElement.value = filteredHabits[i].habit;
         addHabit();
