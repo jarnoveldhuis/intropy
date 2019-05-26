@@ -18,6 +18,7 @@ Features:
 - [x]Lower priority points after skipping task
 - []Reward
 - [x]Dropdown to skip to different task.
+- []Subscribe
 
 
 Bugs:

@@ -15,6 +15,13 @@ body {
   top: 0;
 }
 
+.dropdown-toggle {
+  color: #393e46;
+}
+
+.dropdown-toggle:hover {
+    color: #393e46;
+}
 .goal {
   color: #ffffff
 }
