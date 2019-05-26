@@ -43,6 +43,7 @@
   }
 
   const focus = function() {
+
     if (allHabits.length > 0) {
       i = 0;
       let d = new Date();
@@ -55,18 +56,24 @@
       $('.habitG').hide();
       $('.progress').hide();
       $('.lds-roller').show();
-
+      if (nextHabit.length<2){
+        $('.switchHabits').hide();
+      } else {
+        $('.switchHabits').show();
+      }
       $('.switchHabits').on('click',
         function() {
           $('.skip').remove();
+
           // availableHabits = nextHabit.filter(h => h.habit !== nextHabit[i].habit);
-          for (let i = 0; i < nextHabit.length; i++) {
+          for (let i = 0; i < nextHabit.length; i++)
             if (nextHabit[i]!=thisHabit) {
               $('.remainingHabits').append(
                 `<a class="dropdown-item skip" habit='${i}' href="#">${nextHabit[i].habit}</a>`
               );
             }
-          }
+
+
           $('.skip').on('click', function() {
 
 
@@ -77,6 +84,7 @@
             localStorage.setItem('allHabits', JSON.stringify(allHabits));
             dispGoal();
           });
+
         });
 
       dispGoal = function() {
