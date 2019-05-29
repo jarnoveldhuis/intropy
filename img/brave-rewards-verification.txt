@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: instinite.com
+Token: 325232f3dea18c728ac37704160371609e9f49e64f08e0970d457837a76afa47

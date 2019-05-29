@@ -6,7 +6,10 @@ body {
 }
 .card {
   background-color: #222831;
-  position: relative;
+  /* position: absolute; */
+  margin: 0 auto; /* Added */
+float: none; /* Added */
+margin-bottom: 10px; /* Added */
 }
 
 .focusMenu {
@@ -14,7 +17,12 @@ body {
   right: 0;
   top: 0;
 }
-
+.notes {
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  cursor: pointer;
+}
 .dropdown-toggle {
   color: #393e46;
 }
@@ -26,6 +34,9 @@ body {
   color: #ffffff
 }
 
+.notes {
+  color: #6c757d
+}
 .btn-lg {
   margin: 25px;
 }
@@ -45,7 +56,8 @@ body {
 }
 
 .all {
-  padding: 15% 15% 15% 15%;
+  position: relative;
+  padding: 5% 5% 5% 5%;
 }
 
 h1 {
@@ -186,8 +198,8 @@ label {
 }
 
 body {
-  position: relative;
-  height: 100vh;
+  /* position: relative; */
+  height: 100%;
   width: 100%;
 }
 
@@ -251,10 +263,12 @@ body {	body {
 }	}
 
 
- .card {	.card {
-  background-color: #343a40;	  background-color: #222831;
-  position: relative;	  position: relative;
-}	}
+ .card {
+background-color: #222831;
+position: relative;
+max-width: 800px;
+
+}
 
 
  @@ -24,8 +24,12 @@ body {

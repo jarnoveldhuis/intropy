@@ -1,22 +1,20 @@
 //jshint esversion: 8
 
 (function() {
-  //   'use strict'; // this will throw more errors instead of hiding them
 
-  // unless you overwrite elements with .innerHTML = 'whatever' your id lookups should just work if run once
   const goalElement = document.getElementById('goal');
   let habitElement = document.getElementById('habit');
 
   let thisGoal;
   let habits = [];
   let i = 0;
-  // let goals = [];
   let allHabits = [];
   let nextHabit;
   let dispGoal;
   let percentComplete;
   let availableHabits;
   let thisHabit;
+  let date;
   try {
     allHabits = JSON.parse(localStorage.getItem('allHabits'));
     if (Array.isArray(allHabits) === false) {
@@ -24,12 +22,6 @@
     }
   } catch (e) {
     // might be invalid json in localstorage- because we initted goals on line 5 with [] we should be alright
-  }
-
-  //Goal constructor
-  function Goal(goal, habit) {
-    this.goal = goal;
-    this.habits = habits;
   }
 
   //Habit constructor
@@ -43,11 +35,10 @@
   }
 
   const focus = function() {
-
     if (allHabits.length > 0) {
       i = 0;
-      let d = new Date();
-      date = `${d.getMonth()}:${d.getDate()}:${d.getYear()}`;
+      let now = new Date();
+      date = `${now.getMonth()}:${now.getDate()}:${now.getYear()}`;
       nextHabit = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != date);
       $('.now').show();
       $('table').hide();
@@ -56,7 +47,7 @@
       $('.habitG').hide();
       $('.progress').hide();
       $('.lds-roller').show();
-      if (nextHabit.length<2){
+      if (nextHabit.length < 2) {
         $('.switchHabits').hide();
       } else {
         $('.switchHabits').show();
@@ -67,7 +58,7 @@
 
           // availableHabits = nextHabit.filter(h => h.habit !== nextHabit[i].habit);
           for (let i = 0; i < nextHabit.length; i++)
-            if (nextHabit[i]!=thisHabit) {
+            if (nextHabit[i] != thisHabit) {
               $('.remainingHabits').append(
                 `<a class="dropdown-item skip" habit='${i}' href="#">${nextHabit[i].habit}</a>`
               );
@@ -88,7 +79,7 @@
         });
 
       dispGoal = function() {
-        thisHabit=nextHabit[i];
+        thisHabit = nextHabit[i];
         if (nextHabit.length > 0) {
           $('.goal').text(nextHabit[i].goal + ':');
           $('.habitG').text(nextHabit[i].habit).show();
@@ -120,15 +111,20 @@
 
   const done = function() {
     if (nextHabit[i]) {
-      let d = new Date();
-      date = `${d.getMonth()}:${d.getDate()}:${d.getYear()}`;
+      let now = new Date();
+      date = `${now.getMonth()}:${now.getDate()}:${now.getYear()}`;
       nextHabit[i].completed = date;
       localStorage.setItem('allHabits', JSON.stringify(allHabits));
       focus();
     }
   };
 
-
+  $('.notes').on('click', function(){
+    $('form-control').toggleClass('.show');
+  });
+  $('textarea').on('click', function(){
+    event.stopPropagation();
+  });
   $('.done').on('click', done);
 
 
@@ -303,7 +299,7 @@
   addToggle();
 
   $('body').on('click', function(ev) {
-    $('.show').removeClass('show');
+    $('.dropdown-menu').removeClass('show');
 
   });
 
@@ -441,8 +437,6 @@
       goalElement.value = thisGoal;
       return thisGoal;
     });
-
-
 
 
 
