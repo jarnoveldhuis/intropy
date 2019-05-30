@@ -36,6 +36,7 @@
   }
 
   const focus = function() {
+
     if (allHabits.length > 0) {
       i = 0;
       let now = new Date();
@@ -127,7 +128,7 @@
       let now = new Date();
       date = `${now.getMonth()}:${now.getDate()}:${now.getYear()}`;
       nextHabit[i].completed = date;
-$('.collapse').collapse('hide');
+      $('.collapse').collapse('hide');
       localStorage.setItem('allHabits', JSON.stringify(allHabits));
       focus();
     }
@@ -205,6 +206,7 @@ $('.collapse').collapse('hide');
   };
 
   const addGoal = function() {
+    filteredHabits=null;
     $('.newHabit').remove();
     $('#addGoal').show();
     $('table').hide();
@@ -342,21 +344,27 @@ $('.collapse').collapse('hide');
   //Submit goal
   $("#submit").on('click',
     (function() {
-      allHabits = allHabits.filter(g => g.goal != thisGoal);
+      // allHabits = allHabits.filter(g => g.goal != thisGoal);
       if (goalElement.value.length > 0) {
         for (let j = 0; j < $('.newHabit').length; j++) {
           if (document.getElementById(`habit`) != null) {
-            let habit = new Habit(
-              goalElement.value,
-              $('.newHabit')[j].childNodes[3].value,
-              parseInt($('.active')[j * 2].id, 10),
-              parseInt($('.active')[(j * 2) + 1].id, 10),
-              []
+            if (filteredHabits) {
+              filteredHabits[j].goal = goalElement.value;
+              filteredHabits[j].habit = $('.newHabit')[j].childNodes[3].value;
+              filteredHabits[j].priority = parseInt($('.active')[j * 2].id, 10);
+              filteredHabits[j].difficulty = parseInt($('.active')[(j * 2) + 1].id, 10);
+            } else {
+              let habit = new Habit(
+                goalElement.value,
+                $('.newHabit')[j].childNodes[3].value,
+                parseInt($('.active')[j * 2].id, 10),
+                parseInt($('.active')[(j * 2) + 1].id, 10),
+                []
 
-            );
-            // habits.push(document.getElementById(`habit${j}`).value);
-            allHabits.push(habit);
-
+              );
+              // habits.push(document.getElementById(`habit${j}`).value);
+              allHabits.push(habit);
+            }
           }
         }
 
