@@ -25,13 +25,14 @@
   }
 
   //Habit constructor
-  function Habit(goal, habit, priority, difficulty, completed) {
+  function Habit(goal, habit, priority, difficulty, completed, points, notes) {
     this.goal = goal;
     this.habit = habit;
     this.priority = priority;
     this.difficulty = difficulty;
     this.completed = completed;
     this.points = priority + (2 - difficulty);
+    this.notes = [];
   }
 
   const focus = function() {
@@ -100,8 +101,11 @@
 
       };
 
-
-
+      $('.notes').on('click', function() {
+        $('.done').on('click', function() {
+          $('.show').removeClass('show');
+        });
+      });
       setTimeout(dispGoal, 1000);
 
     } else {
@@ -111,18 +115,29 @@
 
   const done = function() {
     if (nextHabit[i]) {
+      if ($('.note')[0].value.length > 0) {
+        let note = $('.note')[0].value;
+        $('.note')[0].value = '';
+        // nextHabit[i].notes.push()
+        let now = new Date();
+        thisHabit.notes.push([now, note]);
+        console.log(thisHabit);
+      }
+      // $('.show').removeClass('show');
       let now = new Date();
       date = `${now.getMonth()}:${now.getDate()}:${now.getYear()}`;
       nextHabit[i].completed = date;
+$('.collapse').collapse('hide');
       localStorage.setItem('allHabits', JSON.stringify(allHabits));
       focus();
     }
   };
 
-  $('.notes').on('click', function(){
-    $('form-control').toggleClass('.show');
-  });
-  $('textarea').on('click', function(){
+  // $('.notes').on('click', function() {
+  //   $('form-control').toggleClass('.show');
+  // });
+
+  $('textarea').on('click', function() {
     event.stopPropagation();
   });
   $('.done').on('click', done);
@@ -335,7 +350,9 @@
               goalElement.value,
               $('.newHabit')[j].childNodes[3].value,
               parseInt($('.active')[j * 2].id, 10),
-              parseInt($('.active')[(j * 2) + 1].id, 10)
+              parseInt($('.active')[(j * 2) + 1].id, 10),
+              []
+
             );
             // habits.push(document.getElementById(`habit${j}`).value);
             allHabits.push(habit);
