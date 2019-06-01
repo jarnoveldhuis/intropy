@@ -5,11 +5,48 @@
   const goalElement = document.getElementById('goal');
   let habitElement = document.getElementById('habit');
 
+  //Habit Templates
+  const templates = [{
+      goal: "Get in Shape",
+      habit: "Excercise",
+      difficulty: 2,
+      priority: 2
+    }, {
+      goal: "Learn a New Skill",
+      habit: "Practice",
+      difficulty: 2,
+      priority: 2
+    }, {
+      goal: "Learn a New Skill",
+      habit: "Create",
+      difficulty: 2,
+      priority: 2
+    }, {
+      goal: "Accomplish a Goal",
+      habit: "Do this thing",
+      difficulty: 2,
+      priority: 2
+    },
+    {
+      goal: "Accomplish a Goal",
+      habit: "Don't do this thing",
+      difficulty: 2,
+      priority: 2
+    },
+    {
+      goal: "Accomplish a Goal",
+      habit: "Do do this thing",
+      difficulty: 2,
+      priority: 2
+    }
+
+  ];
+
   let thisGoal;
   let habits = [];
   let i = 0;
   let allHabits = [];
-  let nextHabit;
+  let upcomingHabits;
   let dispGoal;
   let percentComplete;
   let availableHabits;
@@ -41,39 +78,40 @@
       i = 0;
       let now = new Date();
       date = `${now.getMonth()}:${now.getDate()}:${now.getYear()}`;
-      nextHabit = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != date);
+      upcomingHabits = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != date);
+      $('.goal').text(`Calculating Optimal Task:`);
       $('.now').show();
+      $('.lds-roller').show();
       $('table').hide();
       $('#addGoal').hide();
-      $('.goal').text(`Calculating Optimal Task:`);
       $('.habitG').hide();
       $('.progress').hide();
-      $('.lds-roller').show();
-      if (nextHabit.length < 2) {
+
+      //Switch Between Habits
+      if (upcomingHabits.length < 2) {
         $('.switchHabits').hide();
       } else {
         $('.switchHabits').show();
       }
+
       $('.switchHabits').on('click',
         function() {
+          //Removes previously loaded habits from dropdown
           $('.skip').remove();
 
-          // availableHabits = nextHabit.filter(h => h.habit !== nextHabit[i].habit);
-          for (let i = 0; i < nextHabit.length; i++)
-            if (nextHabit[i] != thisHabit) {
+          //Creates new dropdown
+          for (let i = 0; i < upcomingHabits.length; i++)
+            if (upcomingHabits[i] != thisHabit) {
               $('.remainingHabits').append(
-                `<a class="dropdown-item skip" habit='${i}' href="#">${nextHabit[i].habit}</a>`
+                `<a class="dropdown-item skip" habit='${i}' href="#">${upcomingHabits[i].habit}</a>`
               );
             }
 
-
+          //Click on new task to switch focus and add points to new habit
           $('.skip').on('click', function() {
-
-
-
             thisHabit = $(this).attr('habit');
             i = parseInt(thisHabit, 10);
-            nextHabit[i].points += 0.01;
+            upcomingHabits[i].points += 0.01;
             localStorage.setItem('allHabits', JSON.stringify(allHabits));
             dispGoal();
           });
@@ -81,10 +119,10 @@
         });
 
       dispGoal = function() {
-        thisHabit = nextHabit[i];
-        if (nextHabit.length > 0) {
-          $('.goal').text(nextHabit[i].goal + ':');
-          $('.habitG').text(nextHabit[i].habit).show();
+        thisHabit = upcomingHabits[i];
+        if (upcomingHabits.length > 0) {
+          $('.goal').text(upcomingHabits[i].goal + ':');
+          $('.habitG').text(upcomingHabits[i].habit).show();
           $('.lds-roller').hide();
           $('.progress').show();
           $('.goal').show();
@@ -114,38 +152,28 @@
     }
   };
 
+  //Mark current habit as completed add note along with completion date
   const done = function() {
-    if (nextHabit[i]) {
+    let now = new Date();
+    //Add note
+    if (upcomingHabits[i]) {
       if ($('.note')[0].value.length > 0) {
         let note = $('.note')[0].value;
         $('.note')[0].value = '';
-        // nextHabit[i].notes.push()
-        let now = new Date();
         thisHabit.notes.push([now, note]);
         console.log(thisHabit);
       }
-      // $('.show').removeClass('show');
-      let now = new Date();
+      //Update completion date
       date = `${now.getMonth()}:${now.getDate()}:${now.getYear()}`;
-      nextHabit[i].completed = date;
-      $('.collapse').collapse('hide');
+      upcomingHabits[i].completed = date;
       localStorage.setItem('allHabits', JSON.stringify(allHabits));
+      //Hide note field
+      $('.collapse').collapse('hide');
       focus();
     }
   };
 
-  // $('.notes').on('click', function() {
-  //   $('form-control').toggleClass('.show');
-  // });
-
-  $('textarea').on('click', function() {
-    event.stopPropagation();
-  });
-  $('.done').on('click', done);
-
-
-
-  //Load table from local storage
+  //Load Edit Goals menu from local storage
   const editGoals = function() {
     let goalsX = allHabits.map(a => a.goal);
     let uniqueGoals = goalsX.filter((e, i) => goalsX.indexOf(e) === i);
@@ -178,7 +206,7 @@
       $('#addGoal').hide();
       $('.now').hide();
 
-      //Edit a goal
+      //Load existing goal's edit menu
       $('.editGoal').on('click',
         function() {
           $('table').hide();
@@ -206,7 +234,7 @@
   };
 
   const addGoal = function() {
-    filteredHabits=null;
+    filteredHabits = [];
     $('.newHabit').remove();
     $('#addGoal').show();
     $('table').hide();
@@ -334,7 +362,6 @@
     (function() {
       thisGoal = this.closest('tr').getElementsByTagName('td')[0].innerHTML;
       allHabits = allHabits.filter(g => g.goal != thisGoal);
-      // localStorage.setItem('goals', JSON.stringify(goals));
       localStorage.setItem('allHabits', JSON.stringify(allHabits));
       $(this).parent("td").parent("tr").remove();
       return thisGoal;
@@ -348,22 +375,23 @@
       if (goalElement.value.length > 0) {
         for (let j = 0; j < $('.newHabit').length; j++) {
           if (document.getElementById(`habit`) != null) {
-            if (filteredHabits) {
+            // Update existing habit
+            if (filteredHabits[j]) {
               filteredHabits[j].goal = goalElement.value;
               filteredHabits[j].habit = $('.newHabit')[j].childNodes[3].value;
               filteredHabits[j].priority = parseInt($('.active')[j * 2].id, 10);
               filteredHabits[j].difficulty = parseInt($('.active')[(j * 2) + 1].id, 10);
             } else {
+              // Create new habit
               let habit = new Habit(
                 goalElement.value,
                 $('.newHabit')[j].childNodes[3].value,
                 parseInt($('.active')[j * 2].id, 10),
-                parseInt($('.active')[(j * 2) + 1].id, 10),
-                []
-
+                parseInt($('.active')[(j * 2) + 1].id, 10)
               );
               // habits.push(document.getElementById(`habit${j}`).value);
               allHabits.push(habit);
+              console.log(allHabits);
             }
           }
         }
@@ -394,6 +422,11 @@
   $('.editGoals').on('click', editGoals);
   $('.addGoal').on('click', addGoal);
   $('.focus').on('click', focus);
+  $('.done').on('click', done);
+
+  // $('textarea').on('click', function() {
+  //   event.stopPropagation();
+  // });
 
   if (allHabits.length > 0) {
     focus();
@@ -402,42 +435,7 @@
   }
 
 
-  //Habit Templates
-  const templates = [{
-      goal: "Get in Shape",
-      habit: "Excercise",
-      difficulty: 2,
-      priority: 2
-    }, {
-      goal: "Learn a New Skill",
-      habit: "Practice",
-      difficulty: 2,
-      priority: 2
-    }, {
-      goal: "Learn a New Skill",
-      habit: "Create",
-      difficulty: 2,
-      priority: 2
-    }, {
-      goal: "Accomplish a Goal",
-      habit: "Do this thing",
-      difficulty: 2,
-      priority: 2
-    },
-    {
-      goal: "Accomplish a Goal",
-      habit: "Don't do this thing",
-      difficulty: 2,
-      priority: 2
-    },
-    {
-      goal: "Accomplish a Goal",
-      habit: "Do do this thing",
-      difficulty: 2,
-      priority: 2
-    }
 
-  ];
 
   $('.templates').on('click',
     function() {
@@ -450,14 +448,14 @@
       $('.newHabit').remove();
 
       thisGoal = this.innerHTML;
-      filteredHabits = templates.filter(g => g.goal === thisGoal);
-      for (let i = 0; i < filteredHabits.length; i++) {
-        habitElement.value = filteredHabits[i].habit;
+      thisTemplate = templates.filter(g => g.goal === thisGoal);
+      for (let i = 0; i < thisTemplate.length; i++) {
+        habitElement.value = thisTemplate[i].habit;
         addHabit();
         $('.radio').eq((i * 6) + 1).removeClass('active');
         $('.radio').eq((i * 6) + 4).removeClass('active');
-        $('.radio').eq((i * 6) + parseInt(filteredHabits[i].priority, 10)).addClass('active');
-        $('.radio').eq((i * 6) + 3 + parseInt(filteredHabits[i].difficulty, 10)).addClass('active');
+        $('.radio').eq((i * 6) + parseInt(thisTemplate[i].priority, 10)).addClass('active');
+        $('.radio').eq((i * 6) + 3 + parseInt(thisTemplate[i].difficulty, 10)).addClass('active');
       }
       goalElement.value = thisGoal;
       return thisGoal;
