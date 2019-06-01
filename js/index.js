@@ -118,38 +118,40 @@
 
         });
 
-      dispGoal = function() {
-        thisHabit = upcomingHabits[i];
-        if (upcomingHabits.length > 0) {
-          $('.goal').text(upcomingHabits[i].goal + ':');
-          $('.habitG').text(upcomingHabits[i].habit).show();
-          $('.lds-roller').hide();
-          $('.progress').show();
-          $('.goal').show();
-        } else {
-          $('.goal').text('You did it!');
-          $('.habitG').show();
-          $('.habitG').text('Relax!');
-          $('.lds-roller').hide();
-          $('.progress').show();
-          $('.goal').show();
-        }
-        let percentComplete = 100 * (allHabits.filter(e => e.completed === date).length) / allHabits.length;
-        $('.progress-bar').attr('aria-valuenow', `${percentComplete}`);
-        $('.progress-bar').attr('style', 'width: ' + `${percentComplete}` + '%');
 
-      };
 
       $('.notes').on('click', function() {
         $('.done').on('click', function() {
           $('.show').removeClass('show');
         });
       });
-      setTimeout(dispGoal, 1000);
+      dispGoal();
 
     } else {
       addGoal();
     }
+  };
+
+  dispGoal = function() {
+    thisHabit = upcomingHabits[i];
+    if (upcomingHabits.length > 0) {
+      $('.goal').text(upcomingHabits[i].goal + ':');
+      $('.habitG').text(upcomingHabits[i].habit).show();
+      $('.lds-roller').hide();
+      $('.progress').show();
+      $('.goal').show();
+    } else {
+      $('.goal').text('You did it!');
+      $('.habitG').show();
+      $('.habitG').text('Relax!');
+      $('.lds-roller').hide();
+      $('.progress').show();
+      $('.goal').show();
+    }
+    let percentComplete = 100 * (allHabits.filter(e => e.completed === date).length) / allHabits.length;
+    $('.progress-bar').attr('aria-valuenow', `${percentComplete}`);
+    $('.progress-bar').attr('style', 'width: ' + `${percentComplete}` + '%');
+
   };
 
   //Mark current habit as completed add note along with completion date
@@ -170,6 +172,7 @@
       //Hide note field
       $('.collapse').collapse('hide');
       focus();
+      // setTimeout(dispGoal, 1000);
     }
   };
 
@@ -267,8 +270,16 @@
       });
   };
 
+  //Closes dropdowns when clicking on body
+  $('body').on('click', function(ev) {
+    $('.dropdown-menu').removeClass('show');
+
+  });
+
+  //adds temporary tag to dropdown button
   const addToggle = function() {
     $('.temptog').on('click', function(event) {
+      console.log('addToggle');
       event.stopPropagation();
       $('.show').removeClass('show');
       $(this).parent().toggleClass('show');
@@ -277,6 +288,7 @@
     });
 
     $('.radio').on('click', function(event) {
+      console.log('Radio');
       event.stopPropagation();
       $(this).button('toggle');
     });
@@ -296,7 +308,7 @@
                   </button>
                   <div class="dropdown-menu open">
                     <h6 class="dropdown-header">Priority</h6>
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="">
                       <div class="btn-group priority btn-group-toggle" id='priority' data-toggle="buttons">
                         <label class="btn radio btn-secondary" id='0'>
                           <input type="radio" name="options" id="option1" autocomplete="off"> Low
@@ -311,7 +323,7 @@
                     </a>
                     <div role="separator" class="dropdown-divider"></div>
                     <h6 class="dropdown-header">Challenge</h6>
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="">
                       <div class="btn-group challenge btn-group-toggle" data-toggle="buttons">
                         <label class="btn radio btn-secondary" id='0'>
                           <input type="radio" name="options" id="option1" autocomplete="off" checked> Low
@@ -343,10 +355,7 @@
 
   addToggle();
 
-  $('body').on('click', function(ev) {
-    $('.dropdown-menu').removeClass('show');
 
-  });
 
   $(document).on('click', '.add', addHabit);
 
@@ -424,9 +433,6 @@
   $('.focus').on('click', focus);
   $('.done').on('click', done);
 
-  // $('textarea').on('click', function() {
-  //   event.stopPropagation();
-  // });
 
   if (allHabits.length > 0) {
     focus();
