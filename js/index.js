@@ -1,7 +1,6 @@
 //jshint esversion: 8
 
 (function() {
-
   const goalElement = document.getElementById('goal');
   let habitElement = document.getElementById('habit');
 
@@ -12,30 +11,41 @@
       difficulty: 2,
       priority: 2
     }, {
+      goal: "Get in Shape",
+      habit: "Update Food Journal",
+      difficulty: 2,
+      priority: 2
+    }, {
       goal: "Learn a New Skill",
       habit: "Practice",
       difficulty: 2,
       priority: 2
     }, {
       goal: "Learn a New Skill",
-      habit: "Create",
+      habit: "Take a Lesson",
       difficulty: 2,
       priority: 2
     }, {
-      goal: "Accomplish a Goal",
-      habit: "Do this thing",
+      goal: "Mental Health",
+      habit: "Meditate",
       difficulty: 2,
       priority: 2
     },
     {
-      goal: "Accomplish a Goal",
-      habit: "Don't do this thing",
+      goal: "Be More Productive",
+      habit: "Make Your Bed",
       difficulty: 2,
       priority: 2
     },
     {
-      goal: "Accomplish a Goal",
-      habit: "Do do this thing",
+      goal: "Be More Productive",
+      habit: "Plan Out Your Day",
+      difficulty: 2,
+      priority: 2
+    },
+    {
+      goal: "Mental Health",
+      habit: "Write for 15 Minutes",
       difficulty: 2,
       priority: 2
     }
@@ -80,12 +90,12 @@
       date = `${now.getMonth()}:${now.getDate()}:${now.getYear()}`;
       upcomingHabits = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != date);
       $('.goal').text(`Calculating Optimal Task:`);
-      $('.now').show();
-      $('.lds-roller').show();
       $('table').hide();
       $('#addGoal').hide();
       $('.habitG').hide();
       $('.progress').hide();
+      $('.now').show();
+      // $('.lds-roller').show();
 
       //Switch Between Habits
       if (upcomingHabits.length < 2) {
@@ -276,7 +286,7 @@
 
   });
 
-  //adds temporary tag to dropdown button
+  //Adds temporary tag to dropdown button
   const addToggle = function() {
     $('.temptog').on('click', function(event) {
       console.log('addToggle');
@@ -441,31 +451,42 @@
   }
 
 
-
-
-  $('.templates').on('click',
+  $('.suggestions').on('click',
     function() {
-      i = 0;
-      $('table').hide();
-      $('#addGoal').show();
-      $('.now').hide();
-
-      addGoal();
-      $('.newHabit').remove();
-
-      thisGoal = this.innerHTML;
-      thisTemplate = templates.filter(g => g.goal === thisGoal);
-      for (let i = 0; i < thisTemplate.length; i++) {
-        habitElement.value = thisTemplate[i].habit;
-        addHabit();
-        $('.radio').eq((i * 6) + 1).removeClass('active');
-        $('.radio').eq((i * 6) + 4).removeClass('active');
-        $('.radio').eq((i * 6) + parseInt(thisTemplate[i].priority, 10)).addClass('active');
-        $('.radio').eq((i * 6) + 3 + parseInt(thisTemplate[i].difficulty, 10)).addClass('active');
+      $('.template').remove();
+      let templateGoals = [...new Set(templates.map(x=>x.goal))];
+      for (let i=0; i<templateGoals.length;i++){
+        $('.templates').append(`<a class="dropdown-item template" href="#">${templateGoals[i]}</a>`);
       }
-      goalElement.value = thisGoal;
-      return thisGoal;
-    });
+      $('.template').on('click',
+        function() {
+          console.log(this);
+          i = 0;
+          $('table').hide();
+          $('#addGoal').show();
+          $('.now').hide();
+
+          addGoal();
+          $('.newHabit').remove();
+
+          thisGoal = this.innerHTML;
+          console.log(thisGoal);
+          thisTemplate = templates.filter(g => g.goal === thisGoal);
+          for (let i = 0; i < thisTemplate.length; i++) {
+            habitElement.value = thisTemplate[i].habit;
+            addHabit();
+            $('.radio').eq((i * 6) + 1).removeClass('active');
+            $('.radio').eq((i * 6) + 4).removeClass('active');
+            $('.radio').eq((i * 6) + parseInt(thisTemplate[i].priority, 10)).addClass('active');
+            $('.radio').eq((i * 6) + 3 + parseInt(thisTemplate[i].difficulty, 10)).addClass('active');
+          }
+          goalElement.value = thisGoal;
+          return thisGoal;
+        });
+    }
+  );
+
+
 
 
 
