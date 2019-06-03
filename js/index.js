@@ -6,15 +6,15 @@
 
   //Habit Templates
   const templates = [{
-      goal: "Get in Shape",
+      goal: "Be Well",
       habit: "Excercise",
       difficulty: 2,
-      priority: 2
+      priority: 1
     }, {
-      goal: "Get in Shape",
+      goal: "Be Well",
       habit: "Update Food Journal",
-      difficulty: 2,
-      priority: 2
+      difficulty: 1,
+      priority: 1
     }, {
       goal: "Learn a New Skill",
       habit: "Practice",
@@ -24,30 +24,30 @@
       goal: "Learn a New Skill",
       habit: "Take a Lesson",
       difficulty: 2,
-      priority: 2
+      priority: 1
     }, {
-      goal: "Mental Health",
+      goal: "Be Well",
       habit: "Meditate",
-      difficulty: 2,
+      difficulty: 0,
       priority: 2
     },
     {
       goal: "Be More Productive",
       habit: "Make Your Bed",
-      difficulty: 2,
-      priority: 2
+      difficulty: 0,
+      priority: 1
     },
     {
       goal: "Be More Productive",
       habit: "Plan Out Your Day",
-      difficulty: 2,
-      priority: 2
+      difficulty: 1,
+      priority: 1
     },
     {
-      goal: "Mental Health",
+      goal: "Be Well",
       habit: "Write for 15 Minutes",
-      difficulty: 2,
-      priority: 2
+      difficulty: 1,
+      priority: 1
     }
 
   ];
@@ -79,7 +79,6 @@
     this.difficulty = difficulty;
     this.completed = completed;
     this.points = priority + (2 - difficulty);
-    this.notes = [];
   }
 
   const focus = function() {
@@ -136,11 +135,33 @@
         });
       });
       dispGoal();
+      $('.archive').remove();
+      for (i = 0; i < thisHabit.notes.length; i++) {
+        console.log(thisHabit.notes[i][1]);
+        $('.archives').append(`
+    <div class="archive">
+    <div class="card-header" id=${i}>
+      <div class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse${i}" aria-expanded="false" aria-controls="collapse${i}">
+          ${thisHabit.notes[i][0]}
+        </button>
+      </div>
+    </div>
 
+    <div id="collapse${i}" class="collapse" aria-labelledby="heading${i}" data-parent="#archives">
+      <div class="card-body">
+        ${thisHabit.notes[i][1]}
+      </div>
+    </div>
+  </div>`);
+      }
     } else {
       addGoal();
     }
+
   };
+
+
 
   dispGoal = function() {
     thisHabit = upcomingHabits[i];
@@ -161,6 +182,8 @@
     let percentComplete = 100 * (allHabits.filter(e => e.completed === date).length) / allHabits.length;
     $('.progress-bar').attr('aria-valuenow', `${percentComplete}`);
     $('.progress-bar').attr('style', 'width: ' + `${percentComplete}` + '%');
+
+
 
   };
 
@@ -454,8 +477,8 @@
   $('.suggestions').on('click',
     function() {
       $('.template').remove();
-      let templateGoals = [...new Set(templates.map(x=>x.goal))];
-      for (let i=0; i<templateGoals.length;i++){
+      let templateGoals = [...new Set(templates.map(x => x.goal))];
+      for (let i = 0; i < templateGoals.length; i++) {
         $('.templates').append(`<a class="dropdown-item template" href="#">${templateGoals[i]}</a>`);
       }
       $('.template').on('click',
@@ -487,7 +510,17 @@
   );
 
 
-
+  var uniqueInOrder = function(iterable) {
+    console.log(iterable);
+    console.log(iterable[0]);
+    if (typeof iterable === 'string') {
+      return iterable.split('').filter(
+        (v, i, a) => v !== a[i + 1]);
+    } else {
+      iterable.filter(
+        (v, i, a) => v !== a[i + 1]);
+    }
+  };
 
 
 })();
