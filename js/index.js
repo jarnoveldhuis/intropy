@@ -138,10 +138,10 @@
       dispGoal();
       $('.archive').remove();
       console.log(thisHabit);
-      if (thisHabit.notes.length!=undefined){
-      for (i = 0; i < thisHabit.notes.length; i++) {
-        console.log(thisHabit.notes[i][1]);
-        $('.archives').append(`
+      if (thisHabit.notes != undefined) {
+        for (i = 0; i < thisHabit.notes.length; i++) {
+          console.log(thisHabit.notes[i][1]);
+          $('.archives').append(`
     <div class="archive">
     <div class="card-header" id=${i}>
       <div class="mb-0">
@@ -157,7 +157,8 @@
       </div>
     </div>
   </div>`);
-}}
+        }
+      }
     } else {
       addGoal();
     }
