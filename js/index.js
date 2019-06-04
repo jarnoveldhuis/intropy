@@ -137,6 +137,7 @@
       });
       dispGoal();
       $('.archive').remove();
+      console.log(thisHabit);
       for (i = 0; i < thisHabit.notes.length; i++) {
         console.log(thisHabit.notes[i][1]);
         $('.archives').append(`
