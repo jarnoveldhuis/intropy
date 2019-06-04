@@ -145,7 +145,7 @@
       });
       dispGoal();
       $('.archive').remove();
-      if (thisHabit.notes != undefined) {
+      if (thisHabit!=undefined && thisHabit.notes != undefined) {
         for (i = 0; i < thisHabit.notes.length; i++) {
           $('.archives').append(`
     <div class="archive">
