@@ -92,8 +92,19 @@ h2 {
 
 .archives{
   color: #ffffff;
+  background-color: #222831;
   text-align: left;
 }
+.card-header{
+  color: #ffffff;
+  background-color: #222831;
+  text-align: left;
+  outline: none !important;
+}
+.card-body{
+  background-color: #222831;
+}
+
 thead {
   color: #ffffff;
 }

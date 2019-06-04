@@ -79,6 +79,7 @@
     this.difficulty = difficulty;
     this.completed = completed;
     this.points = priority + (2 - difficulty);
+    this.notes = [];
   }
 
   const focus = function() {
@@ -508,19 +509,6 @@
         });
     }
   );
-
-
-  var uniqueInOrder = function(iterable) {
-    console.log(iterable);
-    console.log(iterable[0]);
-    if (typeof iterable === 'string') {
-      return iterable.split('').filter(
-        (v, i, a) => v !== a[i + 1]);
-    } else {
-      iterable.filter(
-        (v, i, a) => v !== a[i + 1]);
-    }
-  };
 
 
 })();
