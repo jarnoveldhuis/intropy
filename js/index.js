@@ -138,6 +138,7 @@
       dispGoal();
       $('.archive').remove();
       console.log(thisHabit);
+      if (thisHabit.notes.length!=undefined){
       for (i = 0; i < thisHabit.notes.length; i++) {
         console.log(thisHabit.notes[i][1]);
         $('.archives').append(`
@@ -156,7 +157,7 @@
       </div>
     </div>
   </div>`);
-      }
+}}
     } else {
       addGoal();
     }
