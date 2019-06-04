@@ -24,3 +24,4 @@ Features:
 Bugs:
 
 -[x]Saving renamed habit will create new object.
+-[]using template when editing goal will not remove original habits.
