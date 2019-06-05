@@ -147,6 +147,7 @@
       $('.archive').remove();
       if (thisHabit!=undefined && thisHabit.notes != undefined) {
         for (i = 0; i < thisHabit.notes.length; i++) {
+          // Notes
           $('.archives').append(`
     <div class="archive">
     <div class="card-header" id=${i}>
@@ -260,7 +261,7 @@
           $('.now').hide();
           addGoal();
           $('.suggestions').hide();
-          $('label').text('Edit Goal');
+          $('label[for="Goal"]').text('Edit Goal');
           $('.newHabit').remove();
 
           thisGoal = this.closest('tr').getElementsByTagName('td')[0].innerHTML;
@@ -290,7 +291,7 @@
     $('.suggestions').show();
     goalElement.value = '';
     habitElement.value = '';
-    $('label').text('Add Goal');
+    $('label[for="Goal"]').text('Add Goal');
     $('.editGoal').on('click',
       function() {
         $('table').hide();

@@ -4,12 +4,16 @@ body {
   text-align: center;
   font-family: 'Mukta', sans-serif;
 }
+
 .card {
   background-color: #222831;
   /* position: absolute; */
-  margin: 0 auto; /* Added */
-float: none; /* Added */
-margin-bottom: 10px; /* Added */
+  margin: 0 auto;
+  /* Added */
+  float: none;
+  /* Added */
+  margin-bottom: 10px;
+  /* Added */
 }
 
 .focusMenu {
@@ -17,22 +21,26 @@ margin-bottom: 10px; /* Added */
   right: 0;
   top: 0;
 }
+
 .focus {
   word-wrap: break-word;
 }
+
 .notes {
   position: absolute;
   right: 10px;
   bottom: 0;
   cursor: pointer;
 }
+
 .dropdown-toggle {
   color: #393e46;
 }
 
 .dropdown-toggle:hover {
-    color: #393e46;
+  color: #393e46;
 }
+
 .goal {
   color: #ffffff
 }
@@ -40,16 +48,19 @@ margin-bottom: 10px; /* Added */
 .notes {
   color: #6c757d
 }
+
 .btn-lg {
   margin: 25px;
 }
 
-.btn-link{
+.btn-link {
   color: #6c757d
 }
-.btn-link:hover{
+
+.btn-link:hover {
   color: #ffffff
 }
+
 .navbar {
   background-color: #222831 !important;
 }
@@ -70,8 +81,8 @@ margin-bottom: 10px; /* Added */
 }
 
 h1 {
-font-family: 'Cinzel', serif;
-  font-size: 4em;
+  font-family: 'Cinzel', serif;
+  font-size:15vh;
   color: #F22643;
 }
 
@@ -93,18 +104,20 @@ h2 {
   text-align: center;
 }
 
-.archives{
+.archives {
   color: #ffffff;
   background-color: #222831;
   text-align: left;
 }
-.card-header{
+
+.card-header {
   color: #ffffff;
   background-color: #222831;
   text-align: left;
   outline: none !important;
 }
-.card-body{
+
+.card-body {
   background-color: #222831;
 }
 
@@ -279,63 +292,83 @@ body {
     background: #626262;
   }
 }
-body {	body {
-  background-color: #3e4149;	  background-color: #482E4E;
-  color: #e84545;	  color: #F22643;
-  text-align: center;	  text-align: center;
-  font-family: 'Mukta', sans-serif;	  font-family: 'Mukta', sans-serif;
-}	}
 
-
- .card {
-background-color: #222831;
-position: relative;
-max-width: 800px;
-
+body {
+  body {
+    background-color: #3e4149;
+    background-color: #482E4E;
+    color: #e84545;
+    color: #F22643;
+    text-align: center;
+    text-align: center;
+    font-family: 'Mukta', sans-serif;
+    font-family: 'Mukta', sans-serif;
+  }
 }
 
+.card {
+  background-color: #222831;
+  position: relative;
+  max-width: 800px;
+}
 
- @@ -24,8 +24,12 @@ body {
-  margin: 25px;	  margin: 25px;
-}	}
+@@ -24, 8+24, 12 @@ body {
+  margin: 25px;
+  margin: 25px;
+}
+}
 
-
- .navbar {
+.navbar {
   background-color: #222831 !important;
 }
 
- .btn {
+.btn {
   background-color: #222831;
   outline: none !important;
   box-shadow: none;
 }
-@@ -39,18 +43,18 @@ body {
-}	}
 
-
- h1 {	h1 {
-  font-family: 'Questrial', sans-serif;	font-family: 'Cinzel', serif;
-  font-size: 4em;	  font-size: 4em;
-  color: #e84545;	  color: #F22643;
-}	}
-
-
- h2 {	h2 {
-  font-family: 'Allerta Stencil', sans-serif;	  font-family: 'Allerta Stencil', sans-serif;
-  color: #e84545;	  color: #F22643;
-}	}
-
-
- .text-muted {	.text-muted {
-  color: #e84545 !important;	  color: #F22643 !important;
-}	}
-
-
- .form-text {	.form-text {
-@@ -89,7 +93,7 @@ label {
-  width: 12px;	  width: 12px;
-  height: 12px;	  height: 12px;
-  border-radius: 100%;	  border-radius: 100%;
-  background: #e84545;	  background: #F22643;
-  margin: -6px 0 0 -6px;	  margin: -6px 0 0 -6px;
+@@ -39, 18+43, 18 @@ body {}
 }
+
+h1 {
+  h1 {
+    font-family: 'Questrial', sans-serif;
+    font-family: 'Cinzel', serif;
+    font-size: 4em;
+    font-size: 4em;
+    color: #e84545;
+    color: #F22643;
+  }
+}
+
+h2 {
+  h2 {
+    font-family: 'Allerta Stencil', sans-serif;
+    font-family: 'Allerta Stencil', sans-serif;
+    color: #e84545;
+    color: #F22643;
+  }
+}
+
+.text-muted {
+  .text-muted {
+    color: #e84545 !important;
+    color: #F22643 !important;
+  }
+}
+
+.form-text {
+  .form-text {
+    @@ -89, 7+93, 7 @@ label {
+      width: 12px;
+      width: 12px;
+      height: 12px;
+      height: 12px;
+      border-radius: 100%;
+      border-radius: 100%;
+      background: #e84545;
+      background: #F22643;
+      margin: -6px 0 0 -6px;
+      margin: -6px 0 0 -6px;
+    }
