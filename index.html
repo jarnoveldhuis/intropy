@@ -16,9 +16,33 @@
   <title>Intropy</title>
 </head>
 <header>
-  <!-- <div class="container"> -->
+
   <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
 
+    <span class="navbar-brand mb-0 h1"><img class="img-responsive" src="img\Logo - Alternate Layout - Red Ribbon.png" alt=""></span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse text-right" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="addGoal p-2 text-light" href="#">Add Goal</a>
+        </li>
+        <li class="nav-item">
+          <a class="editGoals p-2 text-light" href="#">Edit Goals</a>
+        </li>
+        <li class="nav-item">
+          <a class="focus p-2 text-light" href="#">Focus</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+
+</header>
+
+<!-- <header>
+  <nav class="navbar navbar-dark bg-dark">
     <span class="navbar-brand mb-0 h1"><img class="img-responsive" src="img\Logo - Alternate Layout - Red Ribbon.png" alt=""></span>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -26,7 +50,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="addGoal p-1 text-light" href="#">Add Goal</a>
+        <a class="addGoal p-2 text-light" href="#">Add Goal</a>
       </li>
       <li class="nav-item">
         <a class="editGoals p-3 text-light" href="#">Edit Goals</a>
@@ -38,8 +62,7 @@
     </ul>
 </div>
   </nav>
-<!-- </div> -->
-</header>
+</header> -->
 
 <body class="pagination-centered  vertical-center mx-auto">
 
@@ -47,71 +70,71 @@
     <div class="card mx-auto shadow-lg p-3 mb-5 rounded container  pagination-centered">
       <!-- <div class="card-body"> -->
 
-        <table class="table table-striped mx-auto w-100" style="width: 800px;">
-          <thead class="thead">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Goal</th>
-              <th scope="col">Habits</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
+      <table class="table table-striped mx-auto w-100" style="width: 800px;">
+        <thead class="thead">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Goal</th>
+            <th scope="col">Habits</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
 
-          </tbody>
-        </table>
+        </tbody>
+      </table>
 
 
-        <form id="addGoal" class="container center_div pagination-centered">
-          <div class="btn-group focusMenu">
-            <button type="button" class="btn suggestions dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Suggestions</button>
-            <div class="dropdown-menu dropdown-menu-right templates dropdown-menu-lg-left">
+      <form id="addGoal" class="container center_div pagination-centered">
+        <div class="btn-group focusMenu">
+          <button type="button" class="btn suggestions dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Suggestions</button>
+          <div class="dropdown-menu dropdown-menu-right templates dropdown-menu-lg-left">
 
-            </div>
           </div>
-          <div class="form-group">
-            <label for="Goal">New Goal</label>
-            <small id="emailHelp" class="form-text text-muted">Think of a major goal in your life. List all of the habits you will need to develop in order to make this goal a reality.</small>
-            <input type="text" autocomplete="off" id="goal" class="form-control" placeholder="Goal">
-          </div>
+        </div>
+        <div class="form-group">
+          <label for="Goal">New Goal</label>
+          <small id="emailHelp" class="form-text text-muted">Think of a major goal in your life. List all of the habits you will need to develop in order to make this goal a reality.</small>
+          <input type="text" autocomplete="off" id="goal" class="form-control" placeholder="Goal">
+        </div>
 
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <button type="button" class="btn btn-outline-secondary dropdown-toggle temptog dropdown-toggle-split" aria-haspopup="true" aria-expanded="true">
-                <span class="sr-only">Toggle Dropdown</span>
-              </button>
-              <div class="dropdown-menu open">
-                <h6 class="dropdown-header">Priority</h6>
-                <a class="dropdown-item" href="#">
-                  <div class="btn-group priority btn-group-toggle" id='priority' data-toggle="buttons">
-                    <label class="btn radio btn-secondary" id='0'>
-                      <input type="radio" name="options" id="option1" autocomplete="off"> Low
-                    </label>
-                    <label class="btn radio btn-secondary active" id='1'>
-                      <input type="radio" name="options" id="option2" autocomplete="off" checked> Medium
-                    </label>
-                    <label class="btn radio btn-secondary" id='2'>
-                      <input type="radio" name="options" id="option3" autocomplete="off"> High
-                    </label>
-                  </div>
-                </a>
-                <div role="separator" class="dropdown-divider"></div>
-                <h6 class="dropdown-header">Challenge</h6>
-                <a class="dropdown-item" href="#">
-                  <div class="btn-group challenge btn-group-toggle" data-toggle="buttons">
-                    <label class="btn radio btn-secondary" id='0'>
-                      <input type="radio" name="options" id="option1" autocomplete="off" checked> Low
-                    </label>
-                    <label class="btn radio btn-secondary active" id='1'>
-                      <input type="radio" name="options" id="option2" autocomplete="off"> Medium
-                    </label>
-                    <label class="btn radio btn-secondary" id='2'>
-                      <input type="radio" name="options" id="option3" autocomplete="off"> High
-                    </label>
-                  </div>
-                </a>
-                <!-- <div role="separator" class="dropdown-divider"></div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <button type="button" class="btn btn-outline-secondary dropdown-toggle temptog dropdown-toggle-split" aria-haspopup="true" aria-expanded="true">
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu open">
+              <h6 class="dropdown-header">Priority</h6>
+              <a class="dropdown-item" href="#">
+                <div class="btn-group priority btn-group-toggle" id='priority' data-toggle="buttons">
+                  <label class="btn radio btn-secondary" id='0'>
+                    <input type="radio" name="options" id="option1" autocomplete="off"> Low
+                  </label>
+                  <label class="btn radio btn-secondary active" id='1'>
+                    <input type="radio" name="options" id="option2" autocomplete="off" checked> Medium
+                  </label>
+                  <label class="btn radio btn-secondary" id='2'>
+                    <input type="radio" name="options" id="option3" autocomplete="off"> High
+                  </label>
+                </div>
+              </a>
+              <div role="separator" class="dropdown-divider"></div>
+              <h6 class="dropdown-header">Challenge</h6>
+              <a class="dropdown-item" href="#">
+                <div class="btn-group challenge btn-group-toggle" data-toggle="buttons">
+                  <label class="btn radio btn-secondary" id='0'>
+                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Low
+                  </label>
+                  <label class="btn radio btn-secondary active" id='1'>
+                    <input type="radio" name="options" id="option2" autocomplete="off"> Medium
+                  </label>
+                  <label class="btn radio btn-secondary" id='2'>
+                    <input type="radio" name="options" id="option3" autocomplete="off"> High
+                  </label>
+                </div>
+              </a>
+              <!-- <div role="separator" class="dropdown-divider"></div>
                   <h6 class="dropdown-header">Link</h6>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -120,17 +143,17 @@
                     <input type="text" class="form-control" placeholder="Optional" aria-label="link" aria-describedby="basic-addon1">
                   </div> -->
 
-              </div>
-            </div>
-            <input type="text" autocomplete="off" id='habit' class="habit form-control" placeholder="Habit">
-            <div class"input-group-append">
-              <button class="add btn btn-primary" type="button">Add</button>
             </div>
           </div>
+          <input type="text" autocomplete="off" id='habit' class="habit form-control" placeholder="Habit">
+          <div class"input-group-append">
+            <button class="add btn btn-primary" type="button">Add</button>
+          </div>
+        </div>
 
-          <button type="button" id="submit" class="saveB btn btn-primary">Save</button>
+        <button type="button" id="submit" class="saveB btn btn-primary">Save</button>
 
-        </form>
+      </form>
 
       <!-- </div> -->
 
@@ -157,7 +180,7 @@
 
         </div>
 
-        <h1 style="font-size:8vw;" class="habitG"></h1>
+        <h1 style="font-size:15vw;" class="habitG"></h1>
         <div class="progress">
           <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
         </div>

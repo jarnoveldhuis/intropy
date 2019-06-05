@@ -17,6 +17,9 @@ margin-bottom: 10px; /* Added */
   right: 0;
   top: 0;
 }
+.focus {
+  word-wrap: break-word;
+}
 .notes {
   position: absolute;
   right: 10px;
