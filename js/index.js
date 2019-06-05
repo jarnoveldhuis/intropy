@@ -40,7 +40,7 @@
       goal: "Be More Productive",
       habit: "Make Your Bed",
       difficulty: 0,
-      priority: 1,
+      priority: 2,
       notes: []
     },
     {
@@ -91,12 +91,14 @@
   }
 
   const focus = function() {
-
+    console.log('focus: '+thisHabit);
     if (allHabits.length > 0) {
       i = 0;
       let now = new Date();
       date = `${now.getMonth()}:${now.getDate()}:${now.getYear()}`;
       upcomingHabits = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != date);
+      thisHabit=upcomingHabits[i];
+      console.log('focus on '+thisHabit);
       $('.goal').text(`Calculating Optimal Task:`);
       $('table').hide();
       $('#addGoal').hide();
@@ -127,8 +129,8 @@
 
           //Click on new task to switch focus and add points to new habit
           $('.skip').on('click', function() {
-            thisHabit = $(this).attr('habit');
-            i = parseInt(thisHabit, 10);
+            i = parseInt($(this).attr('habit'), 10);
+            console.log('Skip to '+upcomingHabits[i].habit);
             upcomingHabits[i].points += 0.01;
             localStorage.setItem('allHabits', JSON.stringify(allHabits));
             dispGoal();
@@ -138,11 +140,11 @@
 
 
 
-      $('.notes').on('click', function() {
-        $('.done').on('click', function() {
-          $('.show').removeClass('show');
-        });
-      });
+      // $('.notes').on('click', function() {
+      //   $('.done').on('click', function() {
+      //     $('.show').removeClass('show');
+      //   });
+      // });
       dispGoal();
       $('.archive').remove();
       if (thisHabit!=undefined && thisHabit.notes != undefined) {
@@ -175,8 +177,9 @@
 
 
   dispGoal = function() {
-    thisHabit = upcomingHabits[i];
     if (upcomingHabits.length > 0) {
+      thisHabit = upcomingHabits[i];
+      console.log('display: '+thisHabit.habit);
       $('.goal').text(upcomingHabits[i].goal + ':');
       $('.habitG').text(upcomingHabits[i].habit).show();
       $('.lds-roller').hide();
@@ -194,24 +197,25 @@
     $('.progress-bar').attr('aria-valuenow', `${percentComplete}`);
     $('.progress-bar').attr('style', 'width: ' + `${percentComplete}` + '%');
 
-
-
+    console.log(i);
   };
 
   //Mark current habit as completed add note along with completion date
   const done = function() {
+    console.log(i);
+    $('.show').removeClass('show');
     let now = new Date();
-    //Add note
-    if (upcomingHabits[i]) {
+    //Add note if note was added
+    if (thisHabit) {
       if ($('.note')[0].value.length > 0) {
         let note = $('.note')[0].value;
         $('.note')[0].value = '';
-        console.log(thisHabit);
         thisHabit.notes.push([now, note]);
       }
       //Update completion date
+      console.log('Done: '+thisHabit.habit);
       date = `${now.getMonth()}:${now.getDate()}:${now.getYear()}`;
-      upcomingHabits[i].completed = date;
+      thisHabit.completed = date;
       localStorage.setItem('allHabits', JSON.stringify(allHabits));
       //Hide note field
       $('.collapse').collapse('hide');
