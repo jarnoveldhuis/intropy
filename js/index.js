@@ -267,9 +267,9 @@
           $('.suggestions').hide();
           $('label[for="Goal"]').text('Edit Goal');
           $('.newHabit').remove();
-
           thisGoal = this.closest('tr').getElementsByTagName('td')[0].innerHTML;
           filteredHabits = allHabits.filter(g => g.goal === thisGoal);
+          console.log(filteredHabits);
           for (let i = 0; i < filteredHabits.length; i++) {
             habitElement.value = filteredHabits[i].habit;
             addHabit();
@@ -296,30 +296,30 @@
     goalElement.value = '';
     habitElement.value = '';
     $('label[for="Goal"]').text('Add Goal');
-    $('.editGoal').on('click',
-      function() {
-        $('table').hide();
-        $('#addGoal').show();
-        $('.now').hide();
-        addGoal();
-
-        $('.newHabit').remove();
-
-        thisGoal = this.closest('tr').getElementsByTagName('td')[0].innerHTML;
-        filteredHabits = allHabits.filter(g => g.goal === thisGoal);
-        for (let i = 0; i < filteredHabits.length; i++) {
-          habitElement.value = filteredHabits[i].habit;
-          addHabit();
-          $('.radio').eq((i * 6) + 1).removeClass('active');
-          $('.radio').eq((i * 6) + 4).removeClass('active');
-          $('.radio').eq((i * 6) + parseInt(filteredHabits[i].priority, 10)).addClass('active');
-          $('.radio').eq((i * 6) + 3 + parseInt(filteredHabits[i].difficulty, 10)).addClass('active');
-        }
-        goalElement.value = thisGoal;
-
-        return thisGoal;
-
-      });
+    // $('.editGoal').on('click',
+    //   function() {
+    //     $('table').hide();
+    //     $('#addGoal').show();
+    //     $('.now').hide();
+    //     addGoal();
+    //
+    //     $('.newHabit').remove();
+    //
+    //     thisGoal = this.closest('tr').getElementsByTagName('td')[0].innerHTML;
+    //     filteredHabits = allHabits.filter(g => g.goal === thisGoal);
+    //     for (let i = 0; i < filteredHabits.length; i++) {
+    //       habitElement.value = filteredHabits[i].habit;
+    //       addHabit();
+    //       $('.radio').eq((i * 6) + 1).removeClass('active');
+    //       $('.radio').eq((i * 6) + 4).removeClass('active');
+    //       $('.radio').eq((i * 6) + parseInt(filteredHabits[i].priority, 10)).addClass('active');
+    //       $('.radio').eq((i * 6) + 3 + parseInt(filteredHabits[i].difficulty, 10)).addClass('active');
+    //     }
+    //     goalElement.value = thisGoal;
+    //
+    //     return thisGoal;
+    //
+    //   });
   };
 
   //Closes dropdowns when clicking on body
