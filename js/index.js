@@ -70,6 +70,14 @@
   let availableHabits;
   let thisHabit;
   let date;
+
+  try {
+        return window.self !== window.top;
+      } catch (e) {
+        $('.navbar').hide();
+      }
+      }
+
   try {
     allHabits = JSON.parse(localStorage.getItem('allHabits'));
     if (Array.isArray(allHabits) === false) {
@@ -453,7 +461,7 @@
               // habits.push(document.getElementById(`habit${j}`).value);
               allHabits.push(habit);
             }
-          
+
         }
 
 
