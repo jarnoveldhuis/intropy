@@ -79,9 +79,12 @@
   } catch (e) {
     // might be invalid json in localstorage- because we initted goals on line 5 with [] we should be alright
   }
+
+  // For extension. If in iframe, hide nav.
   if (window.self !== window.top) {
     $('.navbar').hide();
   }
+  
   //Habit constructor
   function Habit(goal, habit, priority, difficulty, completed, points, notes) {
     this.goal = goal;
