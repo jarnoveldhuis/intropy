@@ -72,14 +72,6 @@
   let date;
 
   try {
-        return window.self !== window.top;
-      } catch (e) {
-        $('.navbar').hide();
-        console.log('Hide nav from iframe');
-      }
-
-
-  try {
     allHabits = JSON.parse(localStorage.getItem('allHabits'));
     if (Array.isArray(allHabits) === false) {
       allHabits = [];
@@ -87,7 +79,9 @@
   } catch (e) {
     // might be invalid json in localstorage- because we initted goals on line 5 with [] we should be alright
   }
-
+  if (window.self !== window.top) {
+    $('.navbar').hide();
+  }
   //Habit constructor
   function Habit(goal, habit, priority, difficulty, completed, points, notes) {
     this.goal = goal;
@@ -100,14 +94,14 @@
   }
 
   const focus = function() {
-    console.log('focus: '+thisHabit);
+    console.log('focus: ' + thisHabit);
     if (allHabits.length > 0) {
       i = 0;
       let now = new Date();
       date = `${now.getMonth()}:${now.getDate()}:${now.getYear()}`;
       upcomingHabits = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != date);
-      thisHabit=upcomingHabits[i];
-      console.log('focus on '+thisHabit);
+      thisHabit = upcomingHabits[i];
+      console.log('focus on ' + thisHabit);
       $('.goal').text(`Calculating Optimal Task:`);
       $('table').hide();
       $('#addGoal').hide();
@@ -139,7 +133,7 @@
           //Click on new task to switch focus and add points to new habit
           $('.skip').on('click', function() {
             i = parseInt($(this).attr('habit'), 10);
-            console.log('Skip to '+upcomingHabits[i].habit);
+            console.log('Skip to ' + upcomingHabits[i].habit);
             upcomingHabits[i].points += 0.01;
             localStorage.setItem('allHabits', JSON.stringify(allHabits));
             dispGoal();
@@ -156,7 +150,7 @@
       // });
       dispGoal();
       $('.archive').remove();
-      if (thisHabit!=undefined && thisHabit.notes != undefined) {
+      if (thisHabit != undefined && thisHabit.notes != undefined) {
         for (i = 0; i < thisHabit.notes.length; i++) {
           // Notes
           $('.archives').append(`
@@ -188,7 +182,7 @@
   dispGoal = function() {
     if (upcomingHabits.length > 0) {
       thisHabit = upcomingHabits[i];
-      console.log('display: '+thisHabit.habit);
+      console.log('display: ' + thisHabit.habit);
       $('.goal').text(upcomingHabits[i].goal + ':');
       $('.habitG').text(upcomingHabits[i].habit).show();
       $('.lds-roller').hide();
@@ -222,7 +216,7 @@
         thisHabit.notes.push([now, note]);
       }
       //Update completion date
-      console.log('Done: '+thisHabit.habit);
+      console.log('Done: ' + thisHabit.habit);
       date = `${now.getMonth()}:${now.getDate()}:${now.getYear()}`;
       thisHabit.completed = date;
       localStorage.setItem('allHabits', JSON.stringify(allHabits));
@@ -451,17 +445,17 @@
             //   filteredHabits[j].difficulty = parseInt($('.active')[(j * 2) + 1].id, 10);
             //   filteredHabits[j].notes = [];
             // } else {
-              // Create new habit
-              let habit = new Habit(
-                goalElement.value,
-                $('.newHabit')[j].childNodes[3].value,
-                parseInt($('.active')[j * 2].id, 10),
-                parseInt($('.active')[(j * 2) + 1].id, 10),
-                []
-              );
-              // habits.push(document.getElementById(`habit${j}`).value);
-              allHabits.push(habit);
-            }
+            // Create new habit
+            let habit = new Habit(
+              goalElement.value,
+              $('.newHabit')[j].childNodes[3].value,
+              parseInt($('.active')[j * 2].id, 10),
+              parseInt($('.active')[(j * 2) + 1].id, 10),
+              []
+            );
+            // habits.push(document.getElementById(`habit${j}`).value);
+            allHabits.push(habit);
+          }
 
         }
 
