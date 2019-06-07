@@ -75,8 +75,9 @@
         return window.self !== window.top;
       } catch (e) {
         $('.navbar').hide();
+        console.log('Hide nav from iframe');
       }
-      }
+
 
   try {
     allHabits = JSON.parse(localStorage.getItem('allHabits'));
