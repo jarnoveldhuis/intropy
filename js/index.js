@@ -83,7 +83,7 @@
   // For extension. If in iframe, hide nav.
   if (window.self !== window.top) {
     $('.navbar').hide();
-    $('.all').css('padding',0);
+    $('.all').css('padding', 0);
   }
   //Habit constructor
   function Habit(goal, habit, priority, difficulty, completed, points, notes) {
@@ -103,9 +103,14 @@
       let now = new Date();
       date = `${now.getMonth()}:${now.getDate()}:${now.getYear()}`;
       upcomingHabits = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != date);
-      i=JSON.parse(localStorage.getItem('i'));
-      if(i+1>upcomingHabits.length){
+
+      if (JSON.parse(localStorage.getItem('i')) != undefined) {
+        i = JSON.parse(localStorage.getItem('i'));
+      } else {
         i=0;
+      }
+      if (i + 1 > upcomingHabits.length) {
+        i = 0;
       }
       thisHabit = upcomingHabits[i];
       console.log('focus on ' + thisHabit);
