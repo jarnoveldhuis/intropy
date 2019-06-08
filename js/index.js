@@ -219,6 +219,7 @@
   //Mark current habit as completed add note along with completion date
   const done = function() {
     console.log(i);
+    i=0;
     $('.show').removeClass('show');
     let now = new Date();
     //Add note if note was added
@@ -249,6 +250,7 @@
       addGoal();
     } else {
       i = 0;
+
       $('.goals').remove();
       for (let i = 0; i < uniqueGoals.length; i++) {
 
