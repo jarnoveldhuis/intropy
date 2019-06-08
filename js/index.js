@@ -83,10 +83,8 @@
   // For extension. If in iframe, hide nav.
   if (window.self !== window.top) {
     $('.navbar').hide();
-    $('body').hide();
-    $('.card').show();
+    $('.all').css('padding',0);
   }
-
   //Habit constructor
   function Habit(goal, habit, priority, difficulty, completed, points, notes) {
     this.goal = goal;
