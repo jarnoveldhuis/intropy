@@ -99,10 +99,14 @@
   const focus = function() {
     console.log('focus: ' + thisHabit);
     if (allHabits.length > 0) {
-      i = 0;
+
       let now = new Date();
       date = `${now.getMonth()}:${now.getDate()}:${now.getYear()}`;
       upcomingHabits = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != date);
+      i=JSON.parse(localStorage.getItem('i'));
+      if(i+1>upcomingHabits.length){
+        i=0;
+      }
       thisHabit = upcomingHabits[i];
       console.log('focus on ' + thisHabit);
       $('.goal').text(`Calculating Optimal Task:`);
