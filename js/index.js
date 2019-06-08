@@ -83,8 +83,10 @@
   // For extension. If in iframe, hide nav.
   if (window.self !== window.top) {
     $('.navbar').hide();
+    $('body').hide();
+    $('.card').show();
   }
-  
+
   //Habit constructor
   function Habit(goal, habit, priority, difficulty, completed, points, notes) {
     this.goal = goal;
@@ -138,6 +140,7 @@
             i = parseInt($(this).attr('habit'), 10);
             console.log('Skip to ' + upcomingHabits[i].habit);
             upcomingHabits[i].points += 0.01;
+            localStorage.setItem('i', JSON.stringify(i));
             localStorage.setItem('allHabits', JSON.stringify(allHabits));
             dispGoal();
           });
