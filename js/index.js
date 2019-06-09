@@ -6,13 +6,13 @@
 
   //Habit Templates
   const templates = [{
-      goal: "Be Well",
+      goal: "Maintain Health",
       habit: "Excercise",
       difficulty: 2,
       priority: 1,
       notes: []
     }, {
-      goal: "Be Well",
+      goal: "Maintain Health",
       habit: "Update Food Journal",
       difficulty: 1,
       priority: 1,
@@ -30,7 +30,7 @@
       priority: 1,
       notes: []
     }, {
-      goal: "Be Well",
+      goal: "Maintain Health",
       habit: "Meditate",
       difficulty: 0,
       priority: 2,
@@ -51,10 +51,10 @@
       notes: []
     },
     {
-      goal: "Be Well",
-      habit: "Write for 15 Minutes",
-      difficulty: 1,
-      priority: 1,
+      goal: "Maintain Health",
+      habit: "Write 250 Words",
+      difficulty: 0,
+      priority: 2,
       notes: []
     }
 
@@ -70,10 +70,14 @@
   let availableHabits;
   let thisHabit;
   let date;
+  let key;
 
+console.log(key);
 
   $('.note').hide();
   $('.oneLine').hide();
+
+  //Display and make room for text area for notes.
   $('.notes').click(function() {
     $('.note').toggle();
     // $('.habitG').toggle();
@@ -96,7 +100,8 @@
     $('.all').css('padding', 0);
   }
   //Habit constructor
-  function Habit(goal, habit, priority, difficulty, completed, points, notes) {
+  function Habit(goal, habit, priority, difficulty, completed, points, notes, key) {
+    this.key = key;
     this.goal = goal;
     this.habit = habit;
     this.priority = priority;
@@ -107,11 +112,10 @@
   }
 
   const focus = function() {
-    console.log('focus: ' + thisHabit);
     if (allHabits.length > 0) {
 
-      let now = new Date();
-      date = `${now.getMonth()}:${now.getDate()}:${now.getYear()}`;
+      now = new Date();
+      date = `${now.getMonth()}/${now.getDate()}/${now.getYear()+1900}`;
       upcomingHabits = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != date);
 
       if (JSON.parse(localStorage.getItem('i')) != undefined) {
@@ -217,7 +221,7 @@
       thisHabit = upcomingHabits[i];
       console.log('display: ' + thisHabit.habit);
 
-      $('.goal').text(upcomingHabits[i].goal + ':'+' ');
+      $('.goal').text(upcomingHabits[i].goal + ':');
       $('.habitG').text(upcomingHabits[i].habit).show();
       $('.lds-roller').hide();
       $('.progress').show();
@@ -246,16 +250,17 @@
     $('.oneLine').hide();
     $('.twoLine').show();
     let now = new Date();
+    console.log(date);
     //Add note if note was added
     if (thisHabit) {
       if ($('.note')[0].value.length > 0) {
         let note = $('.note')[0].value;
         $('.note')[0].value = '';
-        thisHabit.notes.push([now, note]);
+        thisHabit.notes.push([date, note]);
       }
       //Update completion date
       console.log('Done: ' + thisHabit.habit);
-      date = `${now.getMonth()}:${now.getDate()}:${now.getYear()}`;
+      date = `${now.getMonth()}/${now.getDate()}/${now.getYear()+1900}`;
       thisHabit.completed = date;
       localStorage.setItem('allHabits', JSON.stringify(allHabits));
       //Hide note field
@@ -473,6 +478,7 @@
   //Submit goal
   $("#submit").on('click',
     (function() {
+
       allHabits = allHabits.filter(g => g.goal != thisGoal);
       if (goalElement.value.length > 0) {
         for (let j = 0; j < $('.newHabit').length; j++) {
@@ -511,6 +517,7 @@
         // localStorage.setItem('goals', JSON.stringify(goals));
         localStorage.setItem('allHabits', JSON.stringify(allHabits));
         editGoals();
+        console.log(allHabits);
         goal = '';
         habits = [];
         thisGoal = null;
