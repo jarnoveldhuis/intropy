@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="CSS/styles.css">
   <!-- Hotjar Tracking Code for https://intropy.instinite.com/ -->
   <script>
-      (function(h,o,t,j,a,r){
+    (function(h,o,t,j,a,r){
           h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
           h._hjSettings={hjid:1197936,hjsv:6};
           a=o.getElementsByTagName('head')[0];
@@ -177,7 +177,19 @@
             <h6 class="dropdown-header">Change Focus:</h6>
           </div>
         </div>
-        <p class="lead goal"></p>
+
+        <div style="display: flex;align-items: center;justify-content: center;" class='oneLine'>
+          <div class="lead goal"></div>
+          <div>&nbsp;&nbsp; </div>
+          <div style='font-size: 1.25rem;'class="habitG"></div>
+        </div>
+        <div class='twoLine'>
+          <div class="lead goal"></div>
+          <div class="habitG"></div>
+        </div>
+          <div class="form-group">
+            <textarea value='note' class="form-control note" id="exampleFormControlTextarea1" rows="4"></textarea>
+          </div>
 
         <div class="lds-roller">
           <div></div>
@@ -191,7 +203,12 @@
 
         </div>
 
-        <h1 style="font-size:10vw;" class="habitG"></h1>
+        <div class="collapse" id="collapseExample">
+
+          <div class="accordion archives" id="archives">
+
+          </div>
+        </div>
         <div class="progress">
           <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
         </div>
@@ -199,14 +216,7 @@
 
           <a href="#" class="done btn btn-lg btn-secondary">Done</a>
 
-          <div class="collapse" id="collapseExample">
-            <div class="form-group">
-              <textarea value='note' class="form-control note" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div>
-            <div class="accordion archives" id="archives">
 
-            </div>
-          </div>
         </p>
         <div class="notes btn-sml" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
           Notes</div>

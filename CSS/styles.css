@@ -5,6 +5,19 @@ body {
   font-family: 'Mukta', sans-serif;
 }
 
+.oneLine {
+  /* align-items: center; */
+  /* display: flex;
+  display: inline ; */
+  /* font-size: 1.25rem !important;
+  /* align-items: center; */
+}
+
+.habitG {
+  font-size:10vw;
+  font-family: 'Cinzel', serif;
+  color: #F22643;
+}
 .card {
   background-color: #222831;
   /* position: absolute; */

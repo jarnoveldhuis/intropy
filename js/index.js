@@ -71,6 +71,16 @@
   let thisHabit;
   let date;
 
+
+  $('.note').hide();
+  $('.oneLine').hide();
+  $('.notes').click(function() {
+    $('.note').toggle();
+    // $('.habitG').toggle();
+    $('.oneLine').toggle();
+    $('.twoLine').toggle();
+  });
+
   try {
     allHabits = JSON.parse(localStorage.getItem('allHabits'));
     if (Array.isArray(allHabits) === false) {
@@ -107,7 +117,7 @@
       if (JSON.parse(localStorage.getItem('i')) != undefined) {
         i = JSON.parse(localStorage.getItem('i'));
       } else {
-        i=0;
+        i = 0;
       }
       if (i + 1 > upcomingHabits.length) {
         i = 0;
@@ -128,6 +138,14 @@
       } else {
         $('.switchHabits').show();
       }
+
+      if (upcomingHabits.length < 1) {
+        $('.notes').hide();
+      } else {
+
+        $('.notes').show();
+      }
+
 
       $('.switchHabits').on('click',
         function() {
@@ -193,14 +211,18 @@
 
 
   dispGoal = function() {
+
     if (upcomingHabits.length > 0) {
+
       thisHabit = upcomingHabits[i];
       console.log('display: ' + thisHabit.habit);
-      $('.goal').text(upcomingHabits[i].goal + ':');
+
+      $('.goal').text(upcomingHabits[i].goal + ':'+' ');
       $('.habitG').text(upcomingHabits[i].habit).show();
       $('.lds-roller').hide();
       $('.progress').show();
       $('.goal').show();
+
     } else {
       $('.goal').text('You did it!');
       $('.habitG').show();
@@ -219,8 +241,10 @@
   //Mark current habit as completed add note along with completion date
   const done = function() {
     console.log(i);
-    i=0;
+    i = 0;
     $('.show').removeClass('show');
+    $('.oneLine').hide();
+    $('.twoLine').show();
     let now = new Date();
     //Add note if note was added
     if (thisHabit) {
@@ -236,6 +260,7 @@
       localStorage.setItem('allHabits', JSON.stringify(allHabits));
       //Hide note field
       $('.collapse').collapse('hide');
+      $('.note').hide();
       focus();
       // setTimeout(dispGoal, 1000);
     }
