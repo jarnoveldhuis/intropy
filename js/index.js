@@ -49,13 +49,6 @@
       difficulty: 1,
       priority: 1,
       notes: []
-    },
-    {
-      goal: "Maintain Health",
-      habit: "Write 250 Words",
-      difficulty: 0,
-      priority: 2,
-      notes: []
     }
 
   ];
@@ -113,7 +106,9 @@ console.log(key);
 
   const focus = function() {
     if (allHabits.length > 0) {
-
+      $('.newHabit').remove();
+      goalElement.value = '';
+      habitElement.value = '';
       now = new Date();
       date = `${now.getMonth()}/${now.getDate()}/${now.getYear()+1900}`;
       upcomingHabits = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != date);
@@ -273,6 +268,9 @@ console.log(key);
 
   //Load Edit Goals menu from local storage
   const editGoals = function() {
+    $('.newHabit').remove();
+    goalElement.value = '';
+    habitElement.value = '';
     let goalsX = allHabits.map(a => a.goal);
     let uniqueGoals = goalsX.filter((e, i) => goalsX.indexOf(e) === i);
     let counts = uniqueGoals.map(a => allHabits.filter(g => a === g.goal).length);
@@ -336,13 +334,11 @@ console.log(key);
 
   const addGoal = function() {
     filteredHabits = [];
-    $('.newHabit').remove();
+
     $('#addGoal').show();
     $('table').hide();
     $('.now').hide();
     $('.suggestions').show();
-    goalElement.value = '';
-    habitElement.value = '';
     $('label[for="Goal"]').text('Add Goal');
     // $('.editGoal').on('click',
     //   function() {
@@ -478,7 +474,6 @@ console.log(key);
   //Submit goal
   $("#submit").on('click',
     (function() {
-
       allHabits = allHabits.filter(g => g.goal != thisGoal);
       if (goalElement.value.length > 0) {
         for (let j = 0; j < $('.newHabit').length; j++) {
