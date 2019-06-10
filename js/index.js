@@ -6,13 +6,13 @@
 
   //Habit Templates
   const templates = [{
-      goal: "Maintain Health",
+      goal: "Maintain Physical Health",
       habit: "Excercise",
       difficulty: 2,
       priority: 1,
       notes: []
     }, {
-      goal: "Maintain Health",
+      goal: "Maintain Physical Health",
       habit: "Update Food Journal",
       difficulty: 1,
       priority: 1,
@@ -29,12 +29,6 @@
       difficulty: 2,
       priority: 1,
       notes: []
-    }, {
-      goal: "Maintain Health",
-      habit: "Meditate",
-      difficulty: 0,
-      priority: 2,
-      notes: []
     },
     {
       goal: "Be More Productive",
@@ -48,6 +42,18 @@
       habit: "Plan Out Your Day",
       difficulty: 1,
       priority: 1,
+      notes: []
+    }, {
+      goal: "Maintain Mental Health",
+      habit: "Meditate",
+      difficulty: 0,
+      priority: 2,
+      notes: []
+    }, {
+      goal: "Maintain Mental Health",
+      habit: "Write 250 Words",
+      difficulty: 0,
+      priority: 2,
       notes: []
     }
 
