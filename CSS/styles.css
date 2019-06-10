@@ -18,6 +18,19 @@ body {
   font-family: 'Cinzel', serif;
   color: #F22643;
 }
+
+@media screen and (min-width: 601px) {
+  div.habitG {
+    font-size: 80px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  div.habitG {
+    font-size: 30px;
+  }
+}
+
 .card {
   background-color: #222831;
   /* position: absolute; */
