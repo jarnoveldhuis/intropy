@@ -70,19 +70,57 @@
   let thisHabit;
   let date;
   let key;
+  let note;
 
-console.log(key);
 
   $('.note').hide();
   $('.oneLine').hide();
 
+
   //Display and make room for text area for notes.
   $('.notes').click(function() {
     $('.note').toggle();
+    $('.notes').toggle();
     // $('.habitG').toggle();
     $('.oneLine').toggle();
     $('.twoLine').toggle();
+    $('.saveLog').toggle();
+    $('.done').toggle();
+
+    if (thisHabit.notes.length != 0) {
+      if (thisHabit.notes[thisHabit.notes.length - 1][0] === date) {
+        $('.note')[0].value = thisHabit.notes[thisHabit.notes.length - 1][1];
+      }
+    }
   });
+
+  $('.saveLog').click(function() {
+    $('.note').toggle();
+    $('.notes').toggle();
+    // $('.habitG').toggle();
+    $('.oneLine').toggle();
+    $('.twoLine').toggle();
+    $('.saveLog').toggle();
+    $('.done').toggle();
+
+    if ($('.note')[0].value.length > 0) {
+      if (thisHabit.notes.length != 0) {
+        if (thisHabit.notes[thisHabit.notes.length - 1][0] === date) {
+          thisHabit.notes[thisHabit.notes.length - 1][1] = $('.note')[0].value;
+        }
+      } else {
+        note = $('.note')[0].value;
+        thisHabit.notes.push([date, note]);
+      }
+    }
+    localStorage.setItem('allHabits', JSON.stringify(allHabits));
+  });
+
+  $('.nav-item').click(function() {
+
+  });
+
+  $('.saveLog').hide();
 
   try {
     allHabits = JSON.parse(localStorage.getItem('allHabits'));
@@ -128,9 +166,8 @@ console.log(key);
         i = 0;
       }
       thisHabit = upcomingHabits[i];
-      console.log('focus on ' + thisHabit);
       $('.goal').text(`Calculating Optimal Task:`);
-      $('table').hide();
+      $('.editGoals').hide();
       $('#addGoal').hide();
       $('.habitG').hide();
       $('.progress').hide();
@@ -147,8 +184,7 @@ console.log(key);
       if (upcomingHabits.length < 1) {
         $('.notes').hide();
       } else {
-
-        $('.notes').show();
+        // $('.notes').show();
       }
 
 
@@ -168,7 +204,6 @@ console.log(key);
           //Click on new task to switch focus and add points to new habit
           $('.skip').on('click', function() {
             i = parseInt($(this).attr('habit'), 10);
-            console.log('Skip to ' + upcomingHabits[i].habit);
             upcomingHabits[i].points += 0.01;
             localStorage.setItem('i', JSON.stringify(i));
             localStorage.setItem('allHabits', JSON.stringify(allHabits));
@@ -220,7 +255,6 @@ console.log(key);
     if (upcomingHabits.length > 0) {
 
       thisHabit = upcomingHabits[i];
-      console.log('display: ' + thisHabit.habit);
 
       $('.goal').text(upcomingHabits[i].goal + ':');
       $('.habitG').text(upcomingHabits[i].habit).show();
@@ -240,18 +274,16 @@ console.log(key);
     $('.progress-bar').attr('aria-valuenow', `${percentComplete}`);
     $('.progress-bar').attr('style', 'width: ' + `${percentComplete}` + '%');
 
-    console.log(i);
+
   };
 
   //Mark current habit as completed add note along with completion date
   const done = function() {
-    console.log(i);
     i = 0;
     $('.show').removeClass('show');
     $('.oneLine').hide();
     $('.twoLine').show();
     let now = new Date();
-    console.log(date);
     //Add note if note was added
     if (thisHabit) {
       if ($('.note')[0].value.length > 0) {
@@ -260,7 +292,6 @@ console.log(key);
         thisHabit.notes.push([date, note]);
       }
       //Update completion date
-      console.log('Done: ' + thisHabit.habit);
       date = `${now.getMonth()}/${now.getDate()}/${now.getYear()+1900}`;
       thisHabit.completed = date;
       localStorage.setItem('allHabits', JSON.stringify(allHabits));
@@ -296,7 +327,7 @@ console.log(key);
         $('.table').append(
           `
       <tr class='goals'>
-        <th scope="row">${i+1}</th>
+
         <td id='goal'>${goalDiv.innerHTML}</td>
         <td>${habitDiv.innerHTML}</td>
         <td><button class="removeGoal btn btn-sm btn-secondary" type="button">Remove</button>
@@ -305,14 +336,16 @@ console.log(key);
       `
         );
       }
-      $('table').show();
+
+      $('.editGoals').show();
       $('#addGoal').hide();
       $('.now').hide();
 
       //Load existing goal's edit menu
       $('.editGoal').on('click',
         function() {
-          $('table').hide();
+
+          $('.editGoals').hide();
           $('#addGoal').show();
           $('.now').hide();
           addGoal();
@@ -321,7 +354,6 @@ console.log(key);
           $('.newHabit').remove();
           thisGoal = this.closest('tr').getElementsByTagName('td')[0].innerHTML;
           filteredHabits = allHabits.filter(g => g.goal === thisGoal);
-          console.log(filteredHabits);
           for (let i = 0; i < filteredHabits.length; i++) {
             habitElement.value = filteredHabits[i].habit;
             addHabit();
@@ -342,7 +374,7 @@ console.log(key);
     filteredHabits = [];
 
     $('#addGoal').show();
-    $('table').hide();
+    $('.editGoals').hide();
     $('.now').hide();
     $('.suggestions').show();
     $('label[for="Goal"]').text('Add Goal');
@@ -373,9 +405,8 @@ console.log(key);
   };
 
   //Closes dropdowns when clicking on body
-  $('body').on('click', function(ev) {
+  $(document).on('click', function(ev) {
     $('.dropdown-menu').removeClass('show');
-
   });
 
   //Adds temporary tag to dropdown button
@@ -518,7 +549,6 @@ console.log(key);
         // localStorage.setItem('goals', JSON.stringify(goals));
         localStorage.setItem('allHabits', JSON.stringify(allHabits));
         editGoals();
-        console.log(allHabits);
         goal = '';
         habits = [];
         thisGoal = null;
@@ -530,7 +560,7 @@ console.log(key);
 
   );
 
-  $('.editGoals').on('click', editGoals);
+  $('.editGoalsNav').on('click', editGoals);
   $('.addGoal').on('click', addGoal);
   $('.focus').on('click', focus);
   $('.done').on('click', done);
@@ -547,14 +577,13 @@ console.log(key);
     function() {
       $('.template').remove();
       let templateGoals = [...new Set(templates.map(x => x.goal))];
-      console.log(templateGoals);
       for (let i = 0; i < templateGoals.length; i++) {
         $('.templates').append(`<a class="dropdown-item template" href="#">${templateGoals[i]}</a>`);
       }
       $('.template').on('click',
         function() {
           i = 0;
-          $('table').hide();
+          $('.editGoals').hide();
           $('#addGoal').show();
           $('.now').hide();
 

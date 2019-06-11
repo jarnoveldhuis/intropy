@@ -37,10 +37,7 @@
     <div class="collapse navbar-collapse text-right" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="addGoal p-2 text-light" href="#">Add Goal</a>
-        </li>
-        <li class="nav-item">
-          <a class="editGoals p-2 text-light" href="#">Edit Goals</a>
+          <a class="editGoalsNav p-2 text-light" href="#">Edit Goals</a>
         </li>
         <li class="nav-item">
           <a class="focus p-2 text-light" href="#">Focus</a>
@@ -80,11 +77,11 @@
   <div class="all">
     <div class="card mx-auto p-3 mb-5 rounded container  pagination-centered">
       <!-- <div class="card-body"> -->
-
+<div class='editGoals'>
       <table class="table table-striped mx-auto w-100" style="width: 800px;">
         <thead class="thead">
           <tr>
-            <th scope="col">#</th>
+            <!-- <th scope="col">#</th> -->
             <th scope="col">Goal</th>
             <th scope="col">Habits</th>
             <th scope="col"></th>
@@ -93,8 +90,10 @@
         <tbody>
 
         </tbody>
-      </table>
 
+      </table>
+        <div class="addGoal btn-sml">Add Goal</div>
+</div>
 
       <form id="addGoal" class="container center_div pagination-centered">
         <div class="btn-group focusMenu">
@@ -190,7 +189,7 @@
           <div class="habitG"></div>
         </div>
         <div class="form-group">
-          <textarea value='note' class="form-control note" id="exampleFormControlTextarea1" rows="4"></textarea>
+          <textarea value='note' class="form-control note" id="exampleFormControlTextarea1" rows="8"></textarea>
         </div>
 
         <div class="lds-roller">
@@ -220,8 +219,10 @@
 
 
         </p>
-        <div class="notes btn-sml" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        <div class="notes btn-sml">
           Log Progress</div>
+        <div class="saveLog btn-sml">
+            Save</div>
 
 
     </div>

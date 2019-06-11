@@ -57,6 +57,23 @@ body {
   right: 10px;
   bottom: 0;
   cursor: pointer;
+  color: #6c757d
+}
+
+.addGoal {
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  cursor: pointer;
+  color: #6c757d
+}
+
+.saveLog {
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  cursor: pointer;
+  color: #6c757d
 }
 
 .dropdown-toggle {
@@ -71,9 +88,7 @@ body {
   color: #ffffff
 }
 
-.notes {
-  color: #6c757d
-}
+
 
 .btn-lg {
   margin: 25px;
