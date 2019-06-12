@@ -88,6 +88,9 @@
     $('.done').toggle();
 
     if (thisHabit.notes.length != 0) {
+      console.log(thisHabit.notes[thisHabit.notes.length - 1][0]);
+      console.log(date);
+      console.log(thisHabit.notes);
       if (thisHabit.notes[thisHabit.notes.length - 1][0] === date) {
         $('.note')[0].value = thisHabit.notes[thisHabit.notes.length - 1][1];
       }
@@ -102,15 +105,17 @@
     $('.twoLine').toggle();
     $('.saveLog').toggle();
     $('.done').toggle();
+    // If there is a note stored for this day, update it. Otherwise, add new note.
 
     if ($('.note')[0].value.length > 0) {
       if (thisHabit.notes.length != 0) {
         if (thisHabit.notes[thisHabit.notes.length - 1][0] === date) {
           thisHabit.notes[thisHabit.notes.length - 1][1] = $('.note')[0].value;
+        }else {
+          note = $('.note')[0].value;
+          console.log(note);
+          thisHabit.notes.push([date, note]);
         }
-      } else {
-        note = $('.note')[0].value;
-        thisHabit.notes.push([date, note]);
       }
     }
     localStorage.setItem('allHabits', JSON.stringify(allHabits));
