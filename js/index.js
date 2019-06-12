@@ -88,9 +88,6 @@
     $('.done').toggle();
 
     if (thisHabit.notes.length != 0) {
-      console.log(thisHabit.notes[thisHabit.notes.length - 1][0]);
-      console.log(date);
-      console.log(thisHabit.notes);
       if (thisHabit.notes[thisHabit.notes.length - 1][0] === date) {
         $('.note')[0].value = thisHabit.notes[thisHabit.notes.length - 1][1];
       }
@@ -113,7 +110,6 @@
           thisHabit.notes[thisHabit.notes.length - 1][1] = $('.note')[0].value;
         }else {
           note = $('.note')[0].value;
-          console.log(note);
           thisHabit.notes.push([date, note]);
         }
       }
@@ -160,6 +156,7 @@
       habitElement.value = '';
       now = new Date();
       date = `${now.getMonth()}/${now.getDate()}/${now.getYear()+1900}`;
+      $('.date').text(date);
       upcomingHabits = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != date);
 
       if (JSON.parse(localStorage.getItem('i')) != undefined) {

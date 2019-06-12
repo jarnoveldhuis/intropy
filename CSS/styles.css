@@ -48,6 +48,15 @@ body {
   top: 0;
 }
 
+.date {
+  position: absolute;
+  left: 15px;
+  top: 5px;
+  color: #6c757d;
+  font-size: .75rem;
+  /* font-family: 'Cinzel', serif; */
+}
+
 .focus {
   word-wrap: break-word;
 }
