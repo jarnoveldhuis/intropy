@@ -4,6 +4,7 @@
   const goalElement = document.getElementById('goal');
   let habitElement = document.getElementById('habit');
 
+
   //Habit Templates
   const templates = [{
       goal: "Maintain Physical Health",
@@ -77,6 +78,34 @@
   $('.oneLine').hide();
 
 
+
+
+  try {
+    allHabits = JSON.parse(localStorage.getItem('allHabits'));
+    if (Array.isArray(allHabits) === false) {
+      allHabits = [];
+    }
+  } catch (e) {
+    // might be invalid json in localstorage- because we initted goals on line 5 with [] we should be alright
+  }
+
+  // For extension. If in iframe, hide nav.
+  if (window.self !== window.top) {
+    $('.navbar').hide();
+    $('.all').css('padding', 0);
+  }
+  //Habit constructor
+  function Habit(goal, habit, priority, difficulty, completed, points, notes, key) {
+    this.key = key;
+    this.goal = goal;
+    this.habit = habit;
+    this.priority = priority;
+    this.difficulty = difficulty;
+    this.completed = completed;
+    this.points = priority + (2 - difficulty);
+    this.notes = [];
+  }
+
   //Display and make room for text area for notes.
   $('.notes').click(function() {
     $('.note').toggle();
@@ -105,16 +134,20 @@
     // If there is a note stored for this day, update it. Otherwise, add new note.
 
     if ($('.note')[0].value.length > 0) {
+
       if (thisHabit.notes.length != 0) {
+        console.log(thisHabit.notes);
         if (thisHabit.notes[thisHabit.notes.length - 1][0] === date) {
           thisHabit.notes[thisHabit.notes.length - 1][1] = $('.note')[0].value;
-        }else {
-          note = $('.note')[0].value;
-          thisHabit.notes.push([date, note]);
         }
+      } else {
+        note = $('.note')[0].value;
+        thisHabit.notes.push([date, note]);
       }
+
     }
     localStorage.setItem('allHabits', JSON.stringify(allHabits));
+
   });
 
   $('.nav-item').click(function() {
@@ -122,32 +155,6 @@
   });
 
   $('.saveLog').hide();
-
-  try {
-    allHabits = JSON.parse(localStorage.getItem('allHabits'));
-    if (Array.isArray(allHabits) === false) {
-      allHabits = [];
-    }
-  } catch (e) {
-    // might be invalid json in localstorage- because we initted goals on line 5 with [] we should be alright
-  }
-
-  // For extension. If in iframe, hide nav.
-  if (window.self !== window.top) {
-    $('.navbar').hide();
-    $('.all').css('padding', 0);
-  }
-  //Habit constructor
-  function Habit(goal, habit, priority, difficulty, completed, points, notes, key) {
-    this.key = key;
-    this.goal = goal;
-    this.habit = habit;
-    this.priority = priority;
-    this.difficulty = difficulty;
-    this.completed = completed;
-    this.points = priority + (2 - difficulty);
-    this.notes = [];
-  }
 
   const focus = function() {
     if (allHabits.length > 0) {
