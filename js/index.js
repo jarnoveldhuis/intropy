@@ -72,6 +72,7 @@
   let date;
   let key;
   let note;
+  let now;
 
 
   $('.note').hide();
@@ -104,6 +105,7 @@
     this.completed = completed;
     this.points = priority + (2 - difficulty);
     this.notes = [];
+    this.created= Math.floor(now/8.64e7);
   }
 
   //Display and make room for text area for notes.
@@ -437,6 +439,7 @@
 
   //Add new habit
   const addHabit = function() {
+
     $('.habit').attr("id", `habit${i}`).removeClass('habit');
     $("button").removeClass("temptog");
     $('.input-group').eq(i).addClass('newHabit');
@@ -533,6 +536,7 @@
             //   filteredHabits[j].notes = [];
             // } else {
             // Create new habit
+            now = new Date();
             let habit = new Habit(
               goalElement.value,
               $('.newHabit')[j].childNodes[3].value,
@@ -542,6 +546,7 @@
             );
             // habits.push(document.getElementById(`habit${j}`).value);
             allHabits.push(habit);
+            console.log(allHabits);
           }
 
         }
