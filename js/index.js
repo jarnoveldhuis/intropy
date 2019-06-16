@@ -73,6 +73,7 @@
   let key;
   let note;
   let now;
+  let repeat;
 
 
   $('.note').hide();
@@ -96,8 +97,7 @@
     $('.all').css('padding', 0);
   }
   //Habit constructor
-  function Habit(goal, habit, priority, difficulty, completed, points, notes, key) {
-    this.key = key;
+  function Habit(goal, habit, priority, difficulty, completed, points, notes, stack) {
     this.goal = goal;
     this.habit = habit;
     this.priority = priority;
@@ -105,7 +105,9 @@
     this.completed = completed;
     this.points = priority + (2 - difficulty);
     this.notes = [];
-    this.created= Math.floor(now/8.64e7);
+    this.created = Math.floor(now / 8.64e7);
+    this.count = 0;
+    this.stack = 1;
   }
 
   //Display and make room for text area for notes.
@@ -166,7 +168,7 @@
       now = new Date();
       date = `${now.getMonth()}/${now.getDate()}/${now.getYear()+1900}`;
       $('.date').text(date);
-      upcomingHabits = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed != date);
+      upcomingHabits = allHabits.sort((a, b) => b.points - a.points).filter(e => e.stack>0);
 
       if (JSON.parse(localStorage.getItem('i')) != undefined) {
         i = JSON.parse(localStorage.getItem('i'));
@@ -177,6 +179,7 @@
         i = 0;
       }
       thisHabit = upcomingHabits[i];
+      console.log(upcomingHabits);
       $('.goal').text(`Calculating Optimal Task:`);
       $('.editGoals').hide();
       $('#addGoal').hide();
@@ -264,11 +267,16 @@
   dispGoal = function() {
 
     if (upcomingHabits.length > 0) {
-
       thisHabit = upcomingHabits[i];
-
+      thisHabit.stack=(Math.floor(now / 8.64e7)-thisHabit.created) - thisHabit.count;
+      if (thisHabit.stack < 2) {
+        repeat='';
+      } else{
+        console.log(thisHabit);
+        repeat=` x ${thisHabit.stack}`;
+      }
       $('.goal').text(upcomingHabits[i].goal + ':');
-      $('.habitG').text(upcomingHabits[i].habit).show();
+      $('.habitG').text(upcomingHabits[i].habit.concat(repeat)).show();
       $('.lds-roller').hide();
       $('.progress').show();
       $('.goal').show();
@@ -281,7 +289,7 @@
       $('.progress').show();
       $('.goal').show();
     }
-    let percentComplete = 100 * (allHabits.filter(e => e.completed === date).length) / allHabits.length;
+    let percentComplete = 100 * (allHabits.filter(e => e.completed === date).length / allHabits.length);
     $('.progress-bar').attr('aria-valuenow', `${percentComplete}`);
     $('.progress-bar').attr('style', 'width: ' + `${percentComplete}` + '%');
 
@@ -305,6 +313,7 @@
       //Update completion date
       date = `${now.getMonth()}/${now.getDate()}/${now.getYear()+1900}`;
       thisHabit.completed = date;
+      thisHabit.count++;
       localStorage.setItem('allHabits', JSON.stringify(allHabits));
       //Hide note field
       $('.collapse').collapse('hide');
