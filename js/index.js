@@ -218,7 +218,7 @@
           //Click on new task to switch focus and add points to new habit
           $('.skip').on('click', function() {
             i = parseInt($(this).attr('habit'), 10);
-            upcomingHabits[i].points += 0.01;
+            // upcomingHabits[i].points += 0.01;
             localStorage.setItem('i', JSON.stringify(i));
             localStorage.setItem('allHabits', JSON.stringify(allHabits));
             dispGoal();
@@ -268,8 +268,8 @@
 
     if (upcomingHabits.length > 0) {
       thisHabit = upcomingHabits[i];
-      thisHabit.stack=(Math.floor(now / 8.64e7)-thisHabit.created) - thisHabit.count;
-      if (thisHabit.stack < 2) {
+      thisHabit.stack=(Math.floor(now / 8.64e7)-thisHabit.created)-thisHabit.count;
+      if (thisHabit.stack === 1) {
         repeat='';
       } else{
         console.log(thisHabit);
@@ -289,7 +289,7 @@
       $('.progress').show();
       $('.goal').show();
     }
-    let percentComplete = 100 * (allHabits.filter(e => e.completed === date).length / allHabits.length);
+    let percentComplete = 100 * (allHabits.filter(e => e.stack === 0).length / allHabits.length);
     $('.progress-bar').attr('aria-valuenow', `${percentComplete}`);
     $('.progress-bar').attr('style', 'width: ' + `${percentComplete}` + '%');
 
