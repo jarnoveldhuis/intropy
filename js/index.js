@@ -97,7 +97,7 @@
     $('.all').css('padding', 0);
   }
   //Habit constructor
-  function Habit(goal, habit, priority, difficulty, completed, points, notes, stack) {
+  function Habit(goal, habit, priority, difficulty, completed, points, notes, tasksDue) {
     this.goal = goal;
     this.habit = habit;
     this.priority = priority;
@@ -106,8 +106,8 @@
     this.points = priority + (2 - difficulty);
     this.notes = [];
     this.created = Math.floor(now / 8.64e7);
-    this.count = 0;
-    this.stack = 1;
+    this.tasksDone = 0;
+    this.tasksDue = 1;
   }
 
   //Display and make room for text area for notes.
@@ -168,8 +168,7 @@
       now = new Date();
       date = `${now.getMonth()}/${now.getDate()}/${now.getYear()+1900}`;
       $('.date').text(date);
-      upcomingHabits = allHabits.sort((a, b) => b.points - a.points).filter(e => e.stack>0);
-
+      upcomingHabits = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed!==date);
       if (JSON.parse(localStorage.getItem('i')) != undefined) {
         i = JSON.parse(localStorage.getItem('i'));
       } else {
@@ -218,7 +217,7 @@
           //Click on new task to switch focus and add points to new habit
           $('.skip').on('click', function() {
             i = parseInt($(this).attr('habit'), 10);
-            // upcomingHabits[i].points += 0.01;
+            upcomingHabits[i].points += 0.01;
             localStorage.setItem('i', JSON.stringify(i));
             localStorage.setItem('allHabits', JSON.stringify(allHabits));
             dispGoal();
@@ -268,15 +267,15 @@
 
     if (upcomingHabits.length > 0) {
       thisHabit = upcomingHabits[i];
-      thisHabit.stack=(Math.floor(now / 8.64e7)-thisHabit.created)-thisHabit.count;
-      if (thisHabit.stack === 1) {
-        repeat='';
-      } else{
-        console.log(thisHabit);
-        repeat=` x ${thisHabit.stack}`;
-      }
+      thisHabit.tasksDue=(Math.floor(now / 8.64e7)-thisHabit.created) - thisHabit.count;
+      // if (thisHabit.tasksDue < 2) {
+      //   repeat='';
+      // } else{
+      //   console.log(thisHabit);
+      //   repeat=` x ${thisHabit.tasksDue}`;
+      // }
       $('.goal').text(upcomingHabits[i].goal + ':');
-      $('.habitG').text(upcomingHabits[i].habit.concat(repeat)).show();
+      $('.habitG').text(upcomingHabits[i].habit).show();
       $('.lds-roller').hide();
       $('.progress').show();
       $('.goal').show();
@@ -289,7 +288,7 @@
       $('.progress').show();
       $('.goal').show();
     }
-    let percentComplete = 100 * (allHabits.filter(e => e.stack === 0).length / allHabits.length);
+    let percentComplete = 100 * (allHabits.filter(e => e.completed === date).length / allHabits.length);
     $('.progress-bar').attr('aria-valuenow', `${percentComplete}`);
     $('.progress-bar').attr('style', 'width: ' + `${percentComplete}` + '%');
 
