@@ -40,7 +40,7 @@
           <a class="editGoalsNav p-2 text-light" href="#">Edit Goals</a>
         </li>
         <li class="nav-item">
-          <a class="focus p-2 text-light" href="https://chrome.google.com/webstore/detail/intropy/abaloaeflcefmnofgbcligicnijdojbi">Extension</a>
+          <a class="focus p-2 text-light" target="_blank" href="https://chrome.google.com/webstore/detail/intropy/abaloaeflcefmnofgbcligicnijdojbi">Extension</a>
         </li>
         <li class="nav-item">
           <a class="focus p-2 text-light" href="#">Focus</a>
@@ -82,23 +82,23 @@
   <div class="all">
     <div class="card mx-auto p-3 mb-5 rounded container  pagination-centered">
       <!-- <div class="card-body"> -->
-<div class='editGoals'>
-      <table class="table table-striped mx-auto w-100" style="width: 800px;">
-        <thead class="thead">
-          <tr>
-            <!-- <th scope="col">#</th> -->
-            <th scope="col">Goal</th>
-            <th scope="col">Habits</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
+      <div class='editGoals'>
+        <table class="table table-striped mx-auto w-100" style="width: 800px;">
+          <thead class="thead">
+            <tr>
+              <!-- <th scope="col">#</th> -->
+              <th scope="col">Goal</th>
+              <th scope="col">Habits</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
 
-        </tbody>
+          </tbody>
 
-      </table>
+        </table>
         <div class="addGoal btn-sml">Add Goal</div>
-</div>
+      </div>
 
       <form id="addGoal" class="container center_div pagination-centered">
         <div class="btn-group focusMenu">
@@ -198,6 +198,11 @@
 
           </p>
           <textarea value='note' class="form-control note" id="exampleFormControlTextarea1" rows="8"></textarea>
+
+          <div class="collapse" id="collapseExample">
+
+
+          </div>
         </div>
 
         <div class="lds-roller">
@@ -212,12 +217,7 @@
 
         </div>
 
-        <div class="collapse" id="collapseExample">
 
-          <div class="accordion archives" id="archives">
-
-          </div>
-        </div>
         <div class="progress">
           <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
         </div>
@@ -228,11 +228,13 @@
 
         </p>
         <div class="notes btn-sml">
-          Log Progress</div>
+          Notes</div>
         <div class="saveLog btn-sml">
-            Save</div>
+          Save</div>
 
 
+    </div>
+    <div class="accordion archives" id="archives">
     </div>
     </main>
     <!-- <div class="accordion" id="accordionExample">

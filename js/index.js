@@ -1,64 +1,53 @@
 //jshint esversion: 8
 
 (function() {
-  const goalElement = document.getElementById('goal');
+  let goalElement = document.getElementById('goal');
   let habitElement = document.getElementById('habit');
 
 
-  //Habit Templates
-  const templates = [{
-      goal: "Maintain Physical Health",
-      habit: "Excercise",
-      difficulty: 2,
-      priority: 1,
-      notes: []
-    }, {
-      goal: "Maintain Physical Health",
-      habit: "Update Food Journal",
-      difficulty: 1,
-      priority: 1,
-      notes: []
-    }, {
-      goal: "Learn a New Skill",
-      habit: "Practice",
-      difficulty: 2,
-      priority: 2,
-      notes: []
-    }, {
-      goal: "Learn a New Skill",
-      habit: "Take a Lesson",
-      difficulty: 2,
-      priority: 1,
-      notes: []
-    },
-    {
-      goal: "Be More Productive",
-      habit: "Make Your Bed",
-      difficulty: 0,
-      priority: 2,
-      notes: []
-    },
-    {
-      goal: "Be More Productive",
-      habit: "Plan Out Your Day",
-      difficulty: 1,
-      priority: 1,
-      notes: []
-    }, {
-      goal: "Maintain Mental Health",
-      habit: "Meditate",
-      difficulty: 0,
-      priority: 2,
-      notes: []
-    }, {
-      goal: "Maintain Mental Health",
-      habit: "Write 250 Words",
-      difficulty: 0,
-      priority: 2,
-      notes: []
-    }
 
-  ];
+  //Habit Templates
+  let templates = [{
+    goal: "Physical Maintenance",
+    habit: "Excercise",
+    difficulty: 2,
+    priority: 1
+  }, {
+    goal: "Physical Maintenance",
+    habit: "Update Food Journal",
+    difficulty: 1,
+    priority: 1
+  }, {
+    goal: "Learn a New Skill",
+    habit: "Practice",
+    difficulty: 2,
+    priority: 2
+  }, {
+    goal: "Learn a New Skill",
+    habit: "Take Lesson",
+    difficulty: 2,
+    priority: 1
+  }, {
+    goal: "Be More Productive",
+    habit: "Make Your Bed",
+    difficulty: 0,
+    priority: 2
+  }, {
+    goal: "Be More Productive",
+    habit: "Plan Out Your Day",
+    difficulty: 1,
+    priority: 1
+  }, {
+    goal: "Mental Maintenance",
+    habit: "Meditate",
+    difficulty: 0,
+    priority: 2
+  }, {
+    goal: "Mental Maintenance",
+    habit: "Write 250 Words",
+    priority: 2,
+    difficulty: 0
+  }];
 
   let thisGoal;
   let habits = [];
@@ -75,12 +64,8 @@
   let now;
   let repeat;
 
-
   $('.note').hide();
   $('.oneLine').hide();
-
-
-
 
   try {
     allHabits = JSON.parse(localStorage.getItem('allHabits'));
@@ -96,62 +81,102 @@
     $('.navbar').hide();
     $('.all').css('padding', 0);
   }
+
   //Habit constructor
-  function Habit(goal, habit, priority, difficulty, completed, points, notes, tasksDue) {
+  function Habit(goal, habit, priority, difficulty, completed, points, notes, tasksDone, tasksDue, created) {
     this.goal = goal;
     this.habit = habit;
     this.priority = priority;
     this.difficulty = difficulty;
     this.completed = completed;
-    this.points = priority + (2 - difficulty);
+    this.points = this.priority + (2 - this.difficulty);
     this.notes = [];
-    this.created = Math.floor(now / 8.64e7);
     this.tasksDone = 0;
     this.tasksDue = 1;
+    this.created = Math.floor(now / 8.64e7);
   }
 
   //Display and make room for text area for notes.
   $('.notes').click(function() {
     $('.note').toggle();
     $('.notes').toggle();
-    // $('.habitG').toggle();
     $('.oneLine').toggle();
     $('.twoLine').toggle();
     $('.saveLog').toggle();
     $('.done').toggle();
+    $('.archives').show();
+        $('.archive').remove();
+    for (i = thisHabit.notes.length-1; i > -1; i--) {
+      // Notes
+      $('.archives').append(`
+  <div class="archive">
+  <div class="card-header" id=${i}>
+    <div class="mb-0">
+      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse${i}" aria-expanded="false" aria-controls="collapse${i}">
+        ${thisHabit.notes[i][0]}
+      </button>
+    </div>
+  </div>
 
-    if (thisHabit.notes.length != 0) {
-      if (thisHabit.notes[thisHabit.notes.length - 1][0] === date) {
-        $('.note')[0].value = thisHabit.notes[thisHabit.notes.length - 1][1];
-      }
+  <div id="collapse${i}" class="collapse" aria-labelledby="heading${i}" data-parent="#archives">
+    <div class="card-body">
+      ${thisHabit.notes[i][1]}
+    </div>
+  </div>
+  </div>`);
     }
+    // if (thisHabit.notes.length != 0 && thisHabit.notes[thisHabit.notes.length - 1][0] === date) {
+    //   $('.note')[0].value = thisHabit.notes[thisHabit.notes.length - 1][1];
+    // }
   });
 
   $('.saveLog').click(function() {
     $('.note').toggle();
     $('.notes').toggle();
-    // $('.habitG').toggle();
     $('.oneLine').toggle();
     $('.twoLine').toggle();
     $('.saveLog').toggle();
     $('.done').toggle();
-    // If there is a note stored for this day, update it. Otherwise, add new note.
+    $('.archives').hide();
+    console.log(thisHabit);
 
+    // If there is a note stored for this day, update it. Otherwise, add new note.
     if ($('.note')[0].value.length > 0) {
 
-      if (thisHabit.notes.length != 0) {
-        console.log(thisHabit.notes);
-        if (thisHabit.notes[thisHabit.notes.length - 1][0] === date) {
-          thisHabit.notes[thisHabit.notes.length - 1][1] = $('.note')[0].value;
-        }
-      } else {
-        note = $('.note')[0].value;
-        thisHabit.notes.push([date, note]);
-      }
+      // if (thisHabit.notes.length != 0) {
+      //   console.log(thisHabit.notes);
+      //   if (thisHabit.notes[thisHabit.notes.length - 1][0] === date) {
+      //     thisHabit.notes[thisHabit.notes.length - 1][1] = $('.note')[0].value;
+      //   }
+      // } else {
+      note = $('.note')[0].value;
+      thisHabit.notes.push([date, note]);
+      $('.note')[0].value='';
+      // }
 
     }
     localStorage.setItem('allHabits', JSON.stringify(allHabits));
-
+  //   $('.archive').remove();
+  //   // if (thisHabit != undefined && thisHabit.notes != undefined) {
+  //   for (i = thisHabit.notes.length; i > 0; i--) {
+  //     // Notes
+  //     $('.archives').append(`
+  // <div class="archive">
+  // <div class="card-header" id=${i}>
+  //   <div class="mb-0">
+  //     <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse${i}" aria-expanded="false" aria-controls="collapse${i}">
+  //       ${thisHabit.notes[i][0]}
+  //     </button>
+  //   </div>
+  // </div>
+  //
+  // <div id="collapse${i}" class="collapse" aria-labelledby="heading${i}" data-parent="#archives">
+  //   <div class="card-body">
+  //     ${thisHabit.notes[i][1]}
+  //   </div>
+  // </div>
+  // </div>`);
+  //   }
   });
 
   $('.nav-item').click(function() {
@@ -163,12 +188,13 @@
   const focus = function() {
     if (allHabits.length > 0) {
       $('.newHabit').remove();
+
       goalElement.value = '';
       habitElement.value = '';
       now = new Date();
       date = `${now.getMonth()}/${now.getDate()}/${now.getYear()+1900}`;
       $('.date').text(date);
-      upcomingHabits = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed!==date);
+      upcomingHabits = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed !== date);
       if (JSON.parse(localStorage.getItem('i')) != undefined) {
         i = JSON.parse(localStorage.getItem('i'));
       } else {
@@ -187,7 +213,7 @@
       $('.now').show();
       // $('.lds-roller').show();
 
-      //Switch Between Habits
+      //Show option to skip to habit, but only if there are more than 1 habits remaining.
       if (upcomingHabits.length < 2) {
         $('.switchHabits').hide();
       } else {
@@ -233,41 +259,19 @@
       //   });
       // });
       dispGoal();
-      $('.archive').remove();
-      if (thisHabit != undefined && thisHabit.notes != undefined) {
-        for (i = 0; i < thisHabit.notes.length; i++) {
-          // Notes
-          $('.archives').append(`
-    <div class="archive">
-    <div class="card-header" id=${i}>
-      <div class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse${i}" aria-expanded="false" aria-controls="collapse${i}">
-          ${thisHabit.notes[i][0]}
-        </button>
-      </div>
-    </div>
 
-    <div id="collapse${i}" class="collapse" aria-labelledby="heading${i}" data-parent="#archives">
-      <div class="card-body">
-        ${thisHabit.notes[i][1]}
-      </div>
-    </div>
-  </div>`);
-        }
-      }
     } else {
       addGoal();
     }
 
   };
 
-
-
+  //Focut
   dispGoal = function() {
-
+    $('.archives').hide();
     if (upcomingHabits.length > 0) {
       thisHabit = upcomingHabits[i];
-      thisHabit.tasksDue=(Math.floor(now / 8.64e7)-thisHabit.created) - thisHabit.count;
+      thisHabit.tasksDue = (Math.floor(now / 8.64e7) - thisHabit.created) - thisHabit.count;
       // if (thisHabit.tasksDue < 2) {
       //   repeat='';
       // } else{
@@ -293,6 +297,7 @@
     $('.progress-bar').attr('style', 'width: ' + `${percentComplete}` + '%');
 
 
+    // }
   };
 
   //Mark current habit as completed add note along with completion date
@@ -315,7 +320,7 @@
       thisHabit.count++;
       localStorage.setItem('allHabits', JSON.stringify(allHabits));
       //Hide note field
-      $('.collapse').collapse('hide');
+      // $('.collapse').collapse('hide');
       $('.note').hide();
       focus();
       // setTimeout(dispGoal, 1000);
@@ -389,9 +394,9 @@
     }
   };
 
+  //Loads add goal menu
   const addGoal = function() {
     filteredHabits = [];
-
     $('#addGoal').show();
     $('.editGoals').hide();
     $('.now').hide();
@@ -423,31 +428,8 @@
     //   });
   };
 
-  //Closes dropdowns when clicking on body
-  $(document).on('click', function(ev) {
-    $('.dropdown-menu').removeClass('show');
-  });
-
-  //Adds temporary tag to dropdown button
-  const addToggle = function() {
-    $('.temptog').on('click', function(event) {
-      event.stopPropagation();
-      $('.show').removeClass('show');
-      $(this).parent().toggleClass('show');
-      $(this).next('div').toggleClass('show');
-      $("button").removeClass("temptog");
-    });
-
-    $('.radio').on('click', function(event) {
-      event.stopPropagation();
-      $(this).button('toggle');
-    });
-
-  };
-
   //Add new habit
   const addHabit = function() {
-
     $('.habit').attr("id", `habit${i}`).removeClass('habit');
     $("button").removeClass("temptog");
     $('.input-group').eq(i).addClass('newHabit');
@@ -504,6 +486,32 @@
 
   };
 
+  //Closes dropdowns when clicking on body
+  $(document).on('click', function(ev) {
+    $('.dropdown-menu').removeClass('show');
+  });
+
+
+
+  //Adds temporary tag to dropdown button
+  const addToggle = function() {
+    $('.temptog').on('click', function(event) {
+      event.stopPropagation();
+      $('.show').removeClass('show');
+      $(this).parent().toggleClass('show');
+      $(this).next('div').toggleClass('show');
+      $("button").removeClass("temptog");
+    });
+
+    $('.radio').on('click', function(event) {
+      event.stopPropagation();
+      $(this).button('toggle');
+    });
+
+  };
+
+
+
   addToggle();
 
 
@@ -529,58 +537,54 @@
   );
 
   //Submit goal
-  $("#submit").on('click',
-    (function() {
-      allHabits = allHabits.filter(g => g.goal != thisGoal);
-      if (goalElement.value.length > 0) {
-        for (let j = 0; j < $('.newHabit').length; j++) {
-          if (document.getElementById(`habit`) != null) {
-            // // Update existing habit
-            // if (filteredHabits[j]) {
-            //   filteredHabits[j].goal = goalElement.value;
-            //   filteredHabits[j].habit = $('.newHabit')[j].childNodes[3].value;
-            //   filteredHabits[j].priority = parseInt($('.active')[j * 2].id, 10);
-            //   filteredHabits[j].difficulty = parseInt($('.active')[(j * 2) + 1].id, 10);
-            //   filteredHabits[j].notes = [];
-            // } else {
-            // Create new habit
-            now = new Date();
-            let habit = new Habit(
-              goalElement.value,
-              $('.newHabit')[j].childNodes[3].value,
-              parseInt($('.active')[j * 2].id, 10),
-              parseInt($('.active')[(j * 2) + 1].id, 10),
-              []
-            );
-            // habits.push(document.getElementById(`habit${j}`).value);
-            allHabits.push(habit);
-            console.log(allHabits);
-          }
-
+  $("#submit").on('click', (function() {
+    allHabits = allHabits.filter(g => g.goal != thisGoal);
+    if (goalElement.value.length > 0) {
+      for (let j = 0; j < $('.newHabit').length; j++) {
+        if (habitElement != null) {
+          // // Update existing habit
+          // if (filteredHabits[j]) {
+          //   filteredHabits[j].goal = goalElement.value;
+          //   filteredHabits[j].habit = $('.newHabit')[j].childNodes[3].value;
+          //   filteredHabits[j].priority = parseInt($('.active')[j * 2].id, 10);
+          //   filteredHabits[j].difficulty = parseInt($('.active')[(j * 2) + 1].id, 10);
+          //   filteredHabits[j].notes = [];
+          // } else {
+          // Create new habit
+          now = new Date();
+          let habit = new Habit(
+            goalElement.value,
+            $('.newHabit')[j].childNodes[3].value,
+            parseInt($('.active')[j * 2].id, 10),
+            parseInt($('.active')[(j * 2) + 1].id, 10)
+          );
+          // habits.push(document.getElementById(`habit${j}`).value);
+          allHabits.push(habit);
+          console.log(allHabits);
         }
 
-
-        // let goal = new Goal(goalElement.value, habits);
-        const goalValue = goalElement.value;
-        const temporaryDiv = document.createElement('div'); // this will create a div but only in memory and not attached to the page. we can use it to escape html so the user cant inject code- we can make this a helper function later. in jquery you can also do $('<div>').text('<b>value here</b>').html() - try the output in the console
-        temporaryDiv.textContent = goalValue;
-        goalElement.value = '';
-        habitElement.value = '';
-        $('.removeGoal').parent("div").parent("div").remove(); // anytime you need to fish around for parent x y z it's an indicator we can restructure the output of the row and its event handler, we'll make changes in another commit to try to tighten it up
-        // goals.push(goal);
-        // localStorage.setItem('goals', JSON.stringify(goals));
-        localStorage.setItem('allHabits', JSON.stringify(allHabits));
-        editGoals();
-        goal = '';
-        habits = [];
-        thisGoal = null;
-        i = 0;
-      } else {
-        alert("Please name your goal.");
       }
-    })
 
-  );
+
+      // let goal = new Goal(goalElement.value, habits);
+      const goalValue = goalElement.value;
+      const temporaryDiv = document.createElement('div'); // this will create a div but only in memory and not attached to the page. we can use it to escape html so the user cant inject code- we can make this a helper function later. in jquery you can also do $('<div>').text('<b>value here</b>').html() - try the output in the console
+      temporaryDiv.textContent = goalValue;
+      goalElement.value = '';
+      habitElement.value = '';
+      $('.removeGoal').parent("div").parent("div").remove(); // anytime you need to fish around for parent x y z it's an indicator we can restructure the output of the row and its event handler, we'll make changes in another commit to try to tighten it up
+      // goals.push(goal);
+      // localStorage.setItem('goals', JSON.stringify(goals));
+      localStorage.setItem('allHabits', JSON.stringify(allHabits));
+      editGoals();
+      goal = '';
+      habits = [];
+      thisGoal = null;
+      i = 0;
+    } else {
+      alert("Please name your goal.");
+    }
+  }));
 
   $('.editGoalsNav').on('click', editGoals);
   $('.addGoal').on('click', addGoal);
@@ -604,11 +608,10 @@
       }
       $('.template').on('click',
         function() {
-          i = 0;
+          let i = 0;
           $('.editGoals').hide();
           $('#addGoal').show();
           $('.now').hide();
-
           addGoal();
           $('.newHabit').remove();
 
@@ -616,6 +619,7 @@
           thisTemplate = templates.filter(g => g.goal === thisGoal);
           for (let i = 0; i < thisTemplate.length; i++) {
             habitElement.value = thisTemplate[i].habit;
+            console.log('habit' + i);
             addHabit();
             $('.radio').eq((i * 6) + 1).removeClass('active');
             $('.radio').eq((i * 6) + 4).removeClass('active');
@@ -627,6 +631,9 @@
         });
     }
   );
+
+
+
 
 
 })();
