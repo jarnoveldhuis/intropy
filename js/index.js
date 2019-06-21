@@ -302,6 +302,7 @@
 
   //Mark current habit as completed add note along with completion date
   const done = function() {
+    $('.archives').hide();
     i = 0;
     $('.show').removeClass('show');
     $('.oneLine').hide();
@@ -329,6 +330,7 @@
 
   //Load Edit Goals menu from local storage
   const editGoals = function() {
+    $('.archives').hide();
     $('.newHabit').remove();
     goalElement.value = '';
     habitElement.value = '';
