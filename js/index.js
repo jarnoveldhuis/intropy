@@ -8,45 +8,50 @@
 
   //Habit Templates
   let templates = [{
-    goal: "Physical Maintenance",
+    goal: "Get in Shape",
     habit: "Excercise",
     difficulty: 2,
-    priority: 1
-  }, {
-    goal: "Physical Maintenance",
-    habit: "Update Food Journal",
-    difficulty: 1,
-    priority: 1
-  }, {
-    goal: "Learn a New Skill",
-    habit: "Practice",
+    time: 1
+  },{
+    goal: "Get in Shape",
+    habit: "Take a Walk",
     difficulty: 2,
-    priority: 2
+    time: 1
   }, {
-    goal: "Learn a New Skill",
-    habit: "Take Lesson",
+    goal: "Learn to Program",
+    habit: "Update Project",
     difficulty: 2,
-    priority: 1
+    time: 2
   }, {
-    goal: "Be More Productive",
+    goal: "Learn to Program",
+    habit: "Study",
+    difficulty: 2,
+    time: 2
+  }, {
+    goal: "Get Organized",
     habit: "Make Your Bed",
     difficulty: 0,
-    priority: 2
-  }, {
-    goal: "Be More Productive",
-    habit: "Plan Out Your Day",
-    difficulty: 1,
-    priority: 1
+    time: 0
   }, {
     goal: "Mental Maintenance",
     habit: "Meditate",
     difficulty: 0,
-    priority: 2
+    time: 1
   }, {
     goal: "Mental Maintenance",
     habit: "Write 250 Words",
-    priority: 2,
-    difficulty: 0
+    time: 0,
+    difficulty: 1
+  }, {
+    goal: "Mental Maintenance",
+    habit: "Read 10 Pages",
+    time: 1,
+    difficulty: 1
+  }, {
+    goal: "Find a Job",
+    habit: "Apply for a Job",
+    time: 1,
+    difficulty: 1
   }];
 
   let thisGoal;
@@ -83,13 +88,13 @@
   }
 
   //Habit constructor
-  function Habit(goal, habit, priority, difficulty, completed, points, notes, tasksDone, tasksDue, created) {
+  function Habit(goal, habit, time, difficulty, completed, points, notes, tasksDone, tasksDue, created) {
     this.goal = goal;
     this.habit = habit;
-    this.priority = priority;
+    this.time = time;
     this.difficulty = difficulty;
     this.completed = completed;
-    this.points = this.priority + (2 - this.difficulty);
+    this.points = this.time + this.difficulty;
     this.notes = [];
     this.tasksDone = 0;
     this.tasksDue = 1;
@@ -243,7 +248,7 @@
           //Click on new task to switch focus and add points to new habit
           $('.skip').on('click', function() {
             i = parseInt($(this).attr('habit'), 10);
-            upcomingHabits[i].points += 0.01;
+            upcomingHabits[i].points += 0.5;
             localStorage.setItem('i', JSON.stringify(i));
             localStorage.setItem('allHabits', JSON.stringify(allHabits));
             dispGoal();
@@ -266,7 +271,7 @@
 
   };
 
-  //Focut
+  //Focus
   dispGoal = function() {
     $('.archives').hide();
     if (upcomingHabits.length > 0) {
@@ -385,7 +390,7 @@
             addHabit();
             $('.radio').eq((i * 6) + 1).removeClass('active');
             $('.radio').eq((i * 6) + 4).removeClass('active');
-            $('.radio').eq((i * 6) + parseInt(filteredHabits[i].priority, 10)).addClass('active');
+            $('.radio').eq((i * 6) + parseInt(filteredHabits[i].time, 10)).addClass('active');
             $('.radio').eq((i * 6) + 3 + parseInt(filteredHabits[i].difficulty, 10)).addClass('active');
           }
           goalElement.value = thisGoal;
@@ -420,7 +425,7 @@
     //       addHabit();
     //       $('.radio').eq((i * 6) + 1).removeClass('active');
     //       $('.radio').eq((i * 6) + 4).removeClass('active');
-    //       $('.radio').eq((i * 6) + parseInt(filteredHabits[i].priority, 10)).addClass('active');
+    //       $('.radio').eq((i * 6) + parseInt(filteredHabits[i].time, 10)).addClass('active');
     //       $('.radio').eq((i * 6) + 3 + parseInt(filteredHabits[i].difficulty, 10)).addClass('active');
     //     }
     //     goalElement.value = thisGoal;
@@ -442,17 +447,17 @@
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <div class="dropdown-menu open">
-                    <h6 class="dropdown-header">Priority</h6>
+                    <h6 class="dropdown-header">Time Commitment</h6>
                     <a class="dropdown-item" href="">
-                      <div class="btn-group priority btn-group-toggle" id='priority' data-toggle="buttons">
+                      <div class="btn-group time btn-group-toggle" id='time' data-toggle="buttons">
                         <label class="btn radio btn-secondary" id='0'>
-                          <input type="radio" name="options" id="option1" autocomplete="off"> Low
+                          <input type="radio" name="options" id="option1" autocomplete="off"> 0-30 Minutes
                         </label>
                         <label class="btn radio btn-secondary active" id='1'>
-                          <input type="radio" name="options" id="option2" autocomplete="off" checked> Medium
+                          <input type="radio" name="options" id="option2" autocomplete="off" checked> 30-60 Minutes
                         </label>
                         <label class="btn radio btn-secondary" id='2'>
-                          <input type="radio" name="options" id="option3" autocomplete="off"> High
+                          <input type="radio" name="options" id="option3" autocomplete="off"> Over 1 Hour
                         </label>
                       </div>
                     </a>
@@ -461,13 +466,13 @@
                     <a class="dropdown-item" href="">
                       <div class="btn-group challenge btn-group-toggle" data-toggle="buttons">
                         <label class="btn radio btn-secondary" id='0'>
-                          <input type="radio" name="options" id="option1" autocomplete="off" checked> Low
+                          <input type="radio" name="options" id="option1" autocomplete="off" checked> Enjoyable
                         </label>
                         <label class="btn radio btn-secondary active" id='1'>
-                          <input type="radio" name="options" id="option2" autocomplete="off"> Medium
+                          <input type="radio" name="options" id="option2" autocomplete="off"> Neutral
                         </label>
                         <label class="btn radio btn-secondary" id='2'>
-                          <input type="radio" name="options" id="option3" autocomplete="off"> High
+                          <input type="radio" name="options" id="option3" autocomplete="off"> Difficult
                         </label>
                       </div>
                     </a>
@@ -548,7 +553,7 @@
           // if (filteredHabits[j]) {
           //   filteredHabits[j].goal = goalElement.value;
           //   filteredHabits[j].habit = $('.newHabit')[j].childNodes[3].value;
-          //   filteredHabits[j].priority = parseInt($('.active')[j * 2].id, 10);
+          //   filteredHabits[j].time = parseInt($('.active')[j * 2].id, 10);
           //   filteredHabits[j].difficulty = parseInt($('.active')[(j * 2) + 1].id, 10);
           //   filteredHabits[j].notes = [];
           // } else {
@@ -625,7 +630,7 @@
             addHabit();
             $('.radio').eq((i * 6) + 1).removeClass('active');
             $('.radio').eq((i * 6) + 4).removeClass('active');
-            $('.radio').eq((i * 6) + parseInt(thisTemplate[i].priority, 10)).addClass('active');
+            $('.radio').eq((i * 6) + parseInt(thisTemplate[i].time, 10)).addClass('active');
             $('.radio').eq((i * 6) + 3 + parseInt(thisTemplate[i].difficulty, 10)).addClass('active');
           }
           goalElement.value = thisGoal;
