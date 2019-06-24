@@ -10,38 +10,38 @@
   let templates = [{
     goal: "Get in Shape",
     habit: "Excercise",
-    difficulty: 2,
-    time: 1
+    time: 0,
+    difficulty: 2
   },{
     goal: "Get in Shape",
     habit: "Take a Walk",
-    difficulty: 2,
-    time: 1
+    time: 1,
+    difficulty: 1
   }, {
     goal: "Learn to Program",
     habit: "Update Project",
-    difficulty: 2,
-    time: 2
+    time: 2,
+    difficulty: 2
   }, {
     goal: "Learn to Program",
     habit: "Study",
-    difficulty: 2,
-    time: 2
+    time: 2,
+    difficulty: 2
   }, {
     goal: "Get Organized",
-    habit: "Make Your Bed",
-    difficulty: 0,
-    time: 0
+    habit: "Make Your Bed",  
+    time: 0,
+    difficulty: 0
   }, {
     goal: "Mental Maintenance",
     habit: "Meditate",
-    difficulty: 0,
-    time: 1
+    time: 1,
+    difficulty: 0
   }, {
     goal: "Mental Maintenance",
     habit: "Write 250 Words",
     time: 0,
-    difficulty: 1
+    difficulty: 0
   }, {
     goal: "Mental Maintenance",
     habit: "Read 10 Pages",
@@ -439,6 +439,7 @@
   const addHabit = function() {
     $('.habit').attr("id", `habit${i}`).removeClass('habit');
     $("button").removeClass("temptog");
+    console.log(i);
     $('.input-group').eq(i).addClass('newHabit');
     $('.add').addClass('remove').removeClass('add');
     $(`        <div class="input-group mb-3">
@@ -451,13 +452,13 @@
                     <a class="dropdown-item" href="">
                       <div class="btn-group time btn-group-toggle" id='time' data-toggle="buttons">
                         <label class="btn radio btn-secondary" id='0'>
-                          <input type="radio" name="options" id="option1" autocomplete="off">0-30 Min
+                          <input type="radio" name="options" id="option1" autocomplete="off">Low
                         </label>
                         <label class="btn radio btn-secondary active" id='1'>
-                          <input type="radio" name="options" id="option2" autocomplete="off" checked>30-60 Min
+                          <input type="radio" name="options" id="option2" autocomplete="off" checked>Medium
                         </label>
                         <label class="btn radio btn-secondary" id='2'>
-                          <input type="radio" name="options" id="option3" autocomplete="off">Over 1 Hr
+                          <input type="radio" name="options" id="option3" autocomplete="off">High
                         </label>
                       </div>
                     </a>
@@ -466,16 +467,17 @@
                     <a class="dropdown-item" href="">
                       <div class="btn-group challenge btn-group-toggle" data-toggle="buttons">
                         <label class="btn radio btn-secondary" id='0'>
-                          <input type="radio" name="options" id="option1" autocomplete="off" checked> Enjoyable
+                          <input type="radio" name="options" id="option1" autocomplete="off" checked> Low
                         </label>
                         <label class="btn radio btn-secondary active" id='1'>
-                          <input type="radio" name="options" id="option2" autocomplete="off"> Neutral
+                          <input type="radio" name="options" id="option2" autocomplete="off"> Medium
                         </label>
                         <label class="btn radio btn-secondary" id='2'>
-                          <input type="radio" name="options" id="option3" autocomplete="off"> Difficult
+                          <input type="radio" name="options" id="option3" autocomplete="off"> High
                         </label>
                       </div>
                     </a>
+                    
                   </div>
                 </div>
                 <input type="text" autocomplete="off" id='habit' class="habit form-control" placeholder="Habit">
@@ -615,7 +617,7 @@
       }
       $('.template').on('click',
         function() {
-          let i = 0;
+          i = 0;
           $('.editGoals').hide();
           $('#addGoal').show();
           $('.now').hide();
@@ -626,7 +628,6 @@
           thisTemplate = templates.filter(g => g.goal === thisGoal);
           for (let i = 0; i < thisTemplate.length; i++) {
             habitElement.value = thisTemplate[i].habit;
-            console.log('habit' + i);
             addHabit();
             $('.radio').eq((i * 6) + 1).removeClass('active');
             $('.radio').eq((i * 6) + 4).removeClass('active');
