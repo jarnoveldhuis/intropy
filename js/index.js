@@ -444,7 +444,7 @@
     $('.add').addClass('remove').removeClass('add');
     $(`        <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <button type="button" class="btn btn-outline-secondary dropdown-toggle temptog dropdown-toggle-split" aria-haspopup="true" aria-expanded="true">
+                  <button type="button" class="btn btn-outline-secondary dropdown-toggle temptog dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <div class="dropdown-menu open">
@@ -489,24 +489,31 @@
     habitElement = document.getElementById('habit');
     $('.remove').text('Remove');
     i++;
-
+    // $(button).on('click', function() {
+    //   $('.dropdown-menu').removeClass('show');
+    //   console.log('click')
+    // });
     addToggle();
 
 
   };
 
-  //Closes dropdowns when clicking on body
+  // Closes dropdowns when clicking on body
   $(document).on('click', function(ev) {
     $('.dropdown-menu').removeClass('show');
   });
 
+  // $('.dropdown-toggle').on('click', function(ev) {
+  //   $('.dropdown-toggle').dropdown()
+  // });
+ 
 
 
   //Adds temporary tag to dropdown button
   const addToggle = function() {
     $('.temptog').on('click', function(event) {
       event.stopPropagation();
-      $('.show').removeClass('show');
+      // $('.show').removeClass('show');
       $(this).parent().toggleClass('show');
       $(this).next('div').toggleClass('show');
       $("button").removeClass("temptog");
@@ -517,11 +524,16 @@
       $(this).button('toggle');
     });
 
+    // $('.show').on('click', function(event) {
+    //   $('.dropdown-menu').removeClass('show');
+    //   console.log('click')
+    // });
   };
 
 
 
   addToggle();
+
 
 
 
