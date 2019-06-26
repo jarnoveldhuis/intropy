@@ -199,7 +199,7 @@
       now = new Date();
       date = `${now.getMonth()}/${now.getDate()}/${now.getYear()+1900}`;
       $('.date').text(date);
-      upcomingHabits = allHabits.sort((a, b) => b.points - a.points).filter(e => e.completed !== date);
+      upcomingHabits = allHabits.sort((b, a) => a.points - b.points).filter(e => e.completed !== date);
       if (JSON.parse(localStorage.getItem('i')) != undefined) {
         i = JSON.parse(localStorage.getItem('i'));
       } else {
