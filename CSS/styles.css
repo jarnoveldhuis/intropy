@@ -117,6 +117,7 @@ body {
 
 .navbar {
   background-color: #222831 !important;
+  
 }
 
 .btn {
@@ -166,12 +167,14 @@ h2 {
 .card-header {
   color: #ffffff;
   background-color: #222831;
+  opacity: 0.3;
   text-align: left;
   outline: none !important;
 }
 
 .card-body {
   background-color: #222831;
+  opacity: 0.3;
 }
 
 thead {
