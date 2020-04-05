@@ -173,7 +173,6 @@ h2 {
 
 .card-body {
   background-color: #222831;
-  opacity: 0.3;
 }
 
 thead {
@@ -363,7 +362,7 @@ body {
 
 .card {
   background-color: #222831;
-  opacity: 0.3;
+  opacity: 0.8;
   position: relative;
   max-width: 800px;
 }
