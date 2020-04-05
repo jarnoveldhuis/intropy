@@ -38,7 +38,6 @@ body {
 .card {
   background-color: #222831;
   /* position: absolute; */
-  opacity: 
   margin: 0 auto;
   /* Added */
   float: none;
@@ -168,7 +167,6 @@ h2 {
 .card-header {
   color: #ffffff;
   background-color: #222831;
-  opacity: 0.3;
   text-align: left;
   outline: none !important;
 }
