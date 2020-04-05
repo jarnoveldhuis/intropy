@@ -38,6 +38,7 @@ body {
 .card {
   background-color: #222831;
   /* position: absolute; */
+  opacity: 
   margin: 0 auto;
   /* Added */
   float: none;
@@ -364,6 +365,7 @@ body {
 
 .card {
   background-color: #222831;
+  opacity: 0.3;
   position: relative;
   max-width: 800px;
 }
